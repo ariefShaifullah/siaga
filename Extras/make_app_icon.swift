@@ -33,13 +33,37 @@ glyph.addLines(between: [(150, y), (370, y), (430, y - 70), (490, y + 150), (560
 glyph.strokePath()
 let heart = glyph.makeImage()!
 
-// Dark mode: transparent, iOS supplies the dark backdrop.
-save(heart, "AppIcon-Dark.png")
-
 // Light mode: same look on an opaque dark gradient (App Store icons must not have alpha).
 let any = context(opaque: true)
 any.drawLinearGradient(CGGradient(colorsSpace: nil, colors: [rgb(0x2C2C2E), rgb(0x0B0B0C)] as CFArray, locations: nil)!,
                        start: .zero, end: CGPoint(x: 0, y: size), options: [])
 any.scaleBy(x: 1, y: -1); any.translateBy(x: 0, y: -size) // back to CG's bottom-left origin, or draw() flips the image
 any.draw(heart, in: CGRect(x: 0, y: 0, width: size, height: size))
-save(any.makeImage()!, "AppIcon.png")
+let light = any.makeImage()!
+
+// Xcode's iOS "All Sizes" list: (points, scales). 1024 is the App Store marketing icon.
+let sizes: [(Double, [Int])] = [(20, [2, 3]), (29, [2, 3]), (38, [2, 3]), (40, [2, 3]), (60, [2, 3]),
+                                (64, [2, 3]), (68, [2]), (76, [2]), (83.5, [2]), (1024, [1])]
+var entries: [[String: Any]] = []
+for (points, scales) in sizes {
+    for scale in scales {
+        let label = points.truncatingRemainder(dividingBy: 1) == 0 ? String(Int(points)) : String(points)
+        let px = Int(points * Double(scale))
+        // Dark mode: transparent, iOS supplies the dark backdrop.
+        for (image, dark) in [(light, false), (heart, true)] {
+            let name = "AppIcon\(dark ? "-Dark" : "")" + (scale == 1 ? "" : "-\(label)@\(scale)x") + ".png"
+            let small = CGContext(data: nil, width: px, height: px, bitsPerComponent: 8, bytesPerRow: 0, space: sRGB,
+                                  bitmapInfo: (dark ? CGImageAlphaInfo.premultipliedLast : .noneSkipLast).rawValue)!
+            small.interpolationQuality = .high
+            small.draw(image, in: CGRect(x: 0, y: 0, width: px, height: px))
+            save(small.makeImage()!, name)
+            var entry: [String: Any] = ["filename": name, "idiom": "universal", "platform": "ios", "size": "\(label)x\(label)"]
+            if scale != 1 { entry["scale"] = "\(scale)x" }
+            if dark { entry["appearances"] = [["appearance": "luminosity", "value": "dark"]] }
+            entries.append(entry)
+        }
+    }
+}
+let json = try! JSONSerialization.data(withJSONObject: ["images": entries, "info": ["author": "xcode", "version": 1]],
+                                       options: [.prettyPrinted, .sortedKeys])
+try! json.write(to: URL(fileURLWithPath: "siaga/Assets.xcassets/AppIcon.appiconset/Contents.json"))
