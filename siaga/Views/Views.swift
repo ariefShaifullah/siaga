@@ -1,6 +1,7 @@
 import SwiftUI
 import SwiftData
 import PhotosUI
+import UIKit
 
 // MARK: - UI/UX, Apple Human Interface Guidelines
 //
@@ -28,12 +29,17 @@ import PhotosUI
 //    (approving a draft never sends it), and empty states use
 //    ContentUnavailableView instead of a blank list.
 
+// Two steps, not three (21 Nov 2026): the separate Review screen is
+// gone. In a real emergency nobody should proofread a form before
+// getting help — Analyse goes straight to the action plan, where the
+// brief is shown at the top and still editable (Edit opens this same
+// editor as a sheet; saving rebuilds the plan). The human gate moves,
+// it does not disappear.
 enum SiagaStep: Int, CaseIterable {
-    case note = 1, brief, plan
+    case note = 1, plan
     var title: String {
         switch self {
         case .note: return "Describe"
-        case .brief: return "Review"
         case .plan: return "Act"
         }
     }
@@ -46,7 +52,6 @@ struct ContentView: View {
     @State private var store = SiagaStore()
     @State private var agent: SiagaAgent?
     @State private var step: SiagaStep = .note
-    @State private var note = ""
     @State private var draftBrief: EmergencyBrief?
     @State private var draftApproved = false
     @State private var showHistory = false
@@ -55,7 +60,7 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                // HIG: orient the user. A 3-step flow always shows where
+                // HIG: orient the user. A 2-step flow always shows where
                 // they are, so a panicked user never wonders what is next.
                 StepProgressView(current: step)
                     .padding(.horizontal, 20)
@@ -64,47 +69,41 @@ struct ContentView: View {
                 switch step {
                 case .note:
                     EmergencyNoteView(
-                        note: $note,
+                        messages: agent?.messages ?? [],
                         profiles: profiles,
                         selectedProfile: $store.selectedProfile,
                         isWorking: agent?.isWorking ?? false,
+                        streamingText: agent?.streamingText ?? "",
+                        imageDescription: agent?.imageDescription,
                         problem: agent?.problem,
                         fallbackUsed: agent?.fallbackUsed ?? false,
-                        onAnalyse: { image in
+                        unavailableReason: agent?.unavailableReason,
+                        onSend: { text, image in
+                            Task { await agent?.sendChat(text, image: image) }
+                        },
+                        onBuildPlan: { image in
                             Task {
-                                if let brief = await agent?.analyse(note: note, image: image) {
+                                if let brief = await agent?.analyse(image: image) {
                                     draftBrief = brief
-                                    step = .brief
-                                }
-                            }
-                        }
-                    )
-                case .brief:
-                    if let briefBinding = Binding($draftBrief) {
-                        BriefEditorView(
-                            brief: briefBinding,
-                            onBack: { step = .note },
-                            onContinue: {
-                                store.currentBrief = draftBrief
-                                if let brief = draftBrief {
+                                    store.currentBrief = brief
                                     let incident = IncidentHistory(brief: brief)
                                     modelContext.insert(incident)
                                     try? modelContext.save()
                                     SiagaSpotlightIndexer.indexIncident(incident)
+                                    step = .plan
+                                    await agent?.buildActionPlan()
                                 }
-                                step = .plan
-                                Task { await agent?.buildActionPlan() }
                             }
-                        )
-                    }
+                        }
+                    )
                 case .plan:
                     ActionPlanView(
                         store: store,
                         agent: agent,
+                        brief: $draftBrief,
                         draftApproved: $draftApproved,
                         onNewIncident: {
                             agent?.newIncident()
-                            note = ""
                             draftBrief = nil
                             draftApproved = false
                             step = .note
@@ -150,6 +149,7 @@ struct ContentView: View {
             let created = SiagaAgent(store: store)
             agent = created
             created.prewarm()
+            created.greetIfNeeded()
         }
         .onAppear {
             seedProfilesIfNeeded()
@@ -194,7 +194,7 @@ struct StepProgressView: View {
                         .foregroundStyle(step == current ? .primary : .secondary)
                 }
                 .accessibilityElement(children: .combine)
-                .accessibilityLabel("Step \(step.rawValue) of 3: \(step.title)\(step == current ? ", current step" : "")")
+                .accessibilityLabel("Step \(step.rawValue) of 2: \(step.title)\(step == current ? ", current step" : "")")
                 if step != .plan { Spacer(minLength: 4) }
             }
         }
@@ -274,178 +274,296 @@ struct SeverityBadge: View {
     }
 }
 
-// MARK: - Step 1: Emergency note
+// MARK: - Step 1: Chat (Describe)
+
+// The input knows what it was given (21 Nov 2026): a description of
+// Step 1 is a CHAT now (21 Nov 2026, WorkspaceAssistant pattern): the
+// user talks to Siaga like Claude — messages stream in, the agent asks
+// at most one short question at a time, and the brief is extracted from
+// the whole conversation when the user taps "Build action plan". The old
+// deterministic question detector (NoteKind) is gone: in a chat, a
+// question is answered by the agent, not blocked by the input.
+struct ChatBubble: View {
+    var message: ChatMessage
+
+    var body: some View {
+        HStack {
+            if message.role == .user { Spacer(minLength: 40) }
+            Text(message.text)
+                .font(.body)
+                .padding(12)
+                .background(message.role == .user ? Color.accentColor : Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 16))
+                .foregroundStyle(message.role == .user ? Color.white : Color.primary)
+            if message.role == .agent { Spacer(minLength: 40) }
+        }
+    }
+}
 
 struct EmergencyNoteView: View {
-    @Binding var note: String
+    var messages: [ChatMessage]
     var profiles: [MedicalProfile]
     @Binding var selectedProfile: MedicalProfile?
     var isWorking: Bool
+    var streamingText: String
+    var imageDescription: String?
     var problem: String?
     var fallbackUsed: Bool
-    var onAnalyse: (UIImage?) -> Void
+    var unavailableReason: String?
+    var onSend: (String, UIImage?) -> Void
+    var onBuildPlan: (UIImage?) -> Void
+
+    @State private var draft = ""
     @State private var photoItem: PhotosPickerItem?
     @State private var photoImage: UIImage?
     @State private var showCamera = false
+    @State private var showLibrary = false
+    @State private var photoLoadError: String?
+
+    private var hasUserMessage: Bool { messages.contains { $0.role == .user } }
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                // HIG hierarchy: one large title, one short explanation.
-                // The badge proves the offline claim at a glance.
-                HStack {
-                    OnDeviceBadge()
-                    Spacer()
-                }
-                Text("What happened?")
-                    .font(.largeTitle.bold())
-                    .accessibilityAddTraits(.isHeader)
-                Text("Type or dictate it in your own words. Siaga turns it into a brief, checks the medical profile and first-aid steps, and drafts a message. Nothing leaves this phone.")
-                    .font(.body)
-                    .foregroundStyle(.secondary)
+        ScrollViewReader { proxy in
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    // HIG hierarchy: one large title, one short explanation.
+                    // The badge proves the offline claim at a glance.
+                    HStack {
+                        OnDeviceBadge()
+                        Spacer()
+                    }
+                    // 21 Nov 2026: the model was silently unavailable on the
+                    // test iPhone, so every answer came from the template
+                    // fallback and looked like the AI was not working. The
+                    // reason now shows BEFORE anything is sent, with what
+                    // to do about it — never a silent fallback again.
+                    if let unavailableReason {
+                        Label("\(unavailableReason) Until then Siaga uses the offline fallback, so answers look like templates.", systemImage: "exclamationmark.triangle.fill")
+                            .font(.subheadline)
+                            .foregroundStyle(.orange)
+                            .padding(12)
+                            .background(Color.orange.opacity(0.12), in: RoundedRectangle(cornerRadius: 12))
+                            .accessibilityLabel("Apple Intelligence unavailable. \(unavailableReason)")
+                    }
+                    Text("What happened?")
+                        .font(.largeTitle.bold())
+                        .accessibilityAddTraits(.isHeader)
+                    Text("Tell me what happened. Siaga asks only what it needs, then builds the action plan.")
+                        .font(.body)
+                        .foregroundStyle(.secondary)
 
-                // Who is this about? The user picks a real profile here.
-                // Nothing is assumed: no selection means "Unknown", and the
-                // app never silently falls back to the first profile.
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Who is this about?")
-                        .font(.headline)
-                    Picker("Who is this about?", selection: $selectedProfile) {
-                        Text("Someone else / unknown").tag(nil as MedicalProfile?)
-                        ForEach(profiles) { profile in
-                            Text(profile.name).tag(profile as MedicalProfile?)
+                    // Who is this about? The user picks a real profile here.
+                    // Nothing is assumed: no selection means "Unknown", and the
+                    // app never silently falls back to the first profile.
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Who is this about?")
+                            .font(.headline)
+                        Picker("Who is this about?", selection: $selectedProfile) {
+                            Text("Someone else / unknown").tag(nil as MedicalProfile?)
+                            ForEach(profiles) { profile in
+                                Text(profile.name).tag(profile as MedicalProfile?)
+                            }
+                        }
+                        .pickerStyle(.menu)
+                        .frame(minHeight: 44)
+                        .accessibilityLabel("Who is this about?")
+                        if let selectedProfile {
+                            Text(selectedProfile.summary).font(.subheadline).foregroundStyle(.secondary)
+                        } else {
+                            Text("Optional. Without a profile, Siaga skips allergy and contact details.")
+                                .font(.subheadline).foregroundStyle(.secondary)
                         }
                     }
-                    .pickerStyle(.menu)
-                    .frame(minHeight: 44)
-                    .accessibilityLabel("Who is this about?")
-                    if let selectedProfile {
-                        Text(selectedProfile.summary).font(.subheadline).foregroundStyle(.secondary)
-                    } else {
-                        Text("No profile selected. Siaga will still build a brief, draft a message and show first-aid steps — but without allergy or contact details. Pick a profile above for the full flow.")
-                            .font(.subheadline).foregroundStyle(.secondary)
-                    }
-                }
 
-                // HIG: a text field shows its purpose even when empty.
-                // TextEditor has no placeholder, so one is drawn over it.
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Describe what happened")
-                        .font(.headline)
-                    ZStack(alignment: .topLeading) {
-                        TextEditor(text: $note)
-                            .frame(minHeight: 140)
-                            .scrollContentBackground(.hidden)
-                            .padding(8)
-                        if note.isEmpty {
-                            Text("Example: My mother fell in the bathroom, she is bleeding from her head, she is awake but dizzy.")
-                                .font(.body)
-                                .foregroundStyle(.tertiary)
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 16)
-                                .allowsHitTesting(false)
-                        }
-                    }
-                    .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 16))
-                    .accessibilityLabel("Describe what happened")
-                }
-
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("Photo (optional)").font(.headline)
-                    HStack(spacing: 12) {
-                        Button { showCamera = true } label: {
-                            Label("Camera", systemImage: "camera.fill")
-                                .frame(maxWidth: .infinity, minHeight: 44)
-                        }
-                        .buttonStyle(.bordered)
-                        PhotosPicker(selection: $photoItem, matching: .images) {
-                            Label("Library", systemImage: "photo")
-                                .frame(maxWidth: .infinity, minHeight: 44)
-                        }
-                        .buttonStyle(.bordered)
-                    }
-                    .sheet(isPresented: $showCamera) {
-                        CameraPicker(image: $photoImage)
-                    }
-                    .onChange(of: photoItem) { _, newValue in
-                        Task {
-                            if let data = try? await newValue?.loadTransferable(type: Data.self),
-                               let image = UIImage(data: data) {
-                                photoImage = image
+                    // Samples are shortcuts that SEND, not text that fills
+                    // a field — one tap starts the conversation.
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Try a sample")
+                            .font(.headline)
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 8) {
+                                ForEach(SampleNotes.all, id: \.title) { sample in
+                                    Button(sample.title) { onSend(sample.text, nil) }
+                                        .buttonStyle(.bordered)
+                                        .frame(minHeight: 44)
+                                        .disabled(isWorking)
+                                }
                             }
                         }
                     }
-                    // Bundled samples: one tap, image loads directly.
-                    // Each sample also fills the matching note, so the demo
-                    // is one tap, not type-then-pick-then-analyse.
-                    ForEach(SamplePhoto.allCases) { sample in
-                        Button {
-                            photoImage = sample.load()
-                            note = sample.note
-                        } label: {
-                            Label(sample.title, systemImage: sample.systemImage)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .frame(minHeight: 44)
-                        }
-                        .buttonStyle(.bordered)
-                    }
+
+                    // Attached photo preview. Camera, Library and the
+                    // bundled samples live in the + menu in the composer.
+                    // A failed library load used to fail silently (try?) —
+                    // now it says so.
                     if let photoImage {
                         Image(uiImage: photoImage)
                             .resizable().scaledToFit().frame(maxHeight: 180)
                             .clipShape(RoundedRectangle(cornerRadius: 16))
                             .accessibilityLabel("Attached photo")
-                        Text("Photo stays on this phone. Siaga describes it on-device.")
-                            .font(.caption).foregroundStyle(.secondary)
+                        if let imageDescription, !imageDescription.isEmpty {
+                            Text(imageDescription).font(.subheadline)
+                        } else {
+                            Text("Photo stays on this phone. Siaga describes it on-device.")
+                                .font(.caption).foregroundStyle(.secondary)
+                        }
+                    }
+                    if let photoLoadError {
+                        Text(photoLoadError).font(.subheadline).foregroundStyle(.red)
+                    }
+
+                    // The conversation. The streaming reply shows as a
+                    // live agent bubble while it arrives, word by word.
+                    VStack(alignment: .leading, spacing: 12) {
+                        ForEach(messages) { message in
+                            ChatBubble(message: message)
+                        }
+                        if isWorking && !streamingText.isEmpty {
+                            ChatBubble(message: ChatMessage(role: .agent, text: streamingText))
+                        }
+                    }
+
+                    if fallbackUsed {
+                        Label("Offline fallback is on (model unavailable). Please check the brief carefully.", systemImage: "exclamationmark.triangle.fill")
+                            .font(.subheadline)
+                            .foregroundStyle(.orange)
+                    }
+                    if let problem {
+                        Text(problem).font(.subheadline).foregroundStyle(.red)
+                    }
+
+                    // The plan is built on demand, from the whole
+                    // conversation — the agent's questions and the user's
+                    // answers are facts too.
+                    if hasUserMessage {
+                        Button { onBuildPlan(photoImage) } label: {
+                            Label("Build action plan", systemImage: "list.clipboard.fill")
+                                .frame(maxWidth: .infinity, minHeight: 52)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .controlSize(.large)
+                        .disabled(isWorking)
+                        .accessibilityHint("Siaga turns the conversation into a brief, then builds the action plan.")
+                    }
+
+                    Color.clear.frame(height: 1).id("bottom")
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 16)
+            }
+            .scrollDismissesKeyboard(.interactively)
+            .safeAreaInset(edge: .bottom) { composer }
+            .onChange(of: messages.count) { _, _ in scrollToBottom(proxy) }
+            .onChange(of: streamingText) { _, _ in proxy.scrollTo("bottom", anchor: .bottom) }
+        }
+    }
+
+    // The composer is pinned to the bottom of the note screen, chat-style:
+    // + menu on the left, Send on the right. It sits above Call 112,
+    // which keeps its own bottom safe-area inset in ContentView.
+    private var composer: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            ZStack(alignment: .topLeading) {
+                TextEditor(text: $draft)
+                    .frame(minHeight: 44, maxHeight: 120)
+                    .scrollContentBackground(.hidden)
+                    .padding(8)
+                if draft.isEmpty {
+                    Text("Type a message…")
+                        .font(.body)
+                        .foregroundStyle(.tertiary)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 16)
+                        .allowsHitTesting(false)
+                }
+            }
+            HStack {
+                // Camera and Library are one + button inside the input
+                // box. The menu holds Camera, Library, and the two bundled
+                // sample photos — a sample sends its note as a message.
+                Menu {
+                    Button { showCamera = true } label: {
+                        Label("Take Photo", systemImage: "camera.fill")
+                    }
+                    Button { showLibrary = true } label: {
+                        Label("Choose from Library", systemImage: "photo")
+                    }
+                    Divider()
+                    ForEach(SamplePhoto.allCases) { sample in
+                        Button {
+                            let image = sample.load()
+                            photoImage = image
+                            onSend(sample.note, image)
+                        } label: {
+                            Label(sample.title, systemImage: sample.systemImage)
+                        }
+                    }
+                } label: {
+                    Image(systemName: "plus.circle.fill")
+                        .font(.title2)
+                        .frame(minWidth: 44, minHeight: 44)
+                        .contentShape(Rectangle())
+                }
+                .accessibilityLabel("Add photo")
+                .sheet(isPresented: $showCamera) {
+                    CameraPicker(image: $photoImage)
+                }
+                .photosPicker(isPresented: $showLibrary, selection: $photoItem, matching: .images)
+                .onChange(of: photoItem) { _, newValue in
+                    Task {
+                        do {
+                            if let data = try await newValue?.loadTransferable(type: Data.self),
+                               let image = UIImage(data: data) {
+                                photoImage = image
+                                photoLoadError = nil
+                            } else if newValue != nil {
+                                photoLoadError = "Could not load that photo. Try another one."
+                            }
+                        } catch {
+                            photoLoadError = "Could not load that photo. Try another one."
+                        }
                     }
                 }
-
-                if fallbackUsed {
-                    Label("Offline fallback is on (model unavailable). Please check the brief carefully.", systemImage: "exclamationmark.triangle.fill")
-                        .font(.subheadline)
-                        .foregroundStyle(.orange)
-                }
-                if let problem {
-                    Text(problem).font(.subheadline).foregroundStyle(.red)
-                }
-
-                // HIG: one primary action per screen, large and unmistakable.
-                Button(action: { onAnalyse(photoImage) }) {
+                Spacer()
+                Button(action: send) {
                     if isWorking {
-                        ProgressView("Siaga is working…")
-                            .frame(maxWidth: .infinity, minHeight: 52)
+                        ProgressView()
+                            .frame(minWidth: 44, minHeight: 44)
                     } else {
-                        Text("Analyse — build the brief")
+                        Label("Send", systemImage: "arrow.up.circle.fill")
                             .font(.headline)
-                            .frame(maxWidth: .infinity, minHeight: 52)
-                    }
-                }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.large)
-                .disabled(note.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isWorking)
-                .accessibilityLabel("Analyse, build the brief")
-                .accessibilityHint("Siaga reads your note on-device and builds a structured emergency brief.")
-
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("Try a sample")
-                        .font(.headline)
-                    ForEach(SampleNotes.all, id: \.title) { sample in
-                        Button(sample.title) { note = sample.text }
-                            .buttonStyle(.bordered)
                             .frame(minHeight: 44)
                     }
                 }
+                .buttonStyle(.borderedProminent)
+                .disabled(draft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isWorking)
+                .accessibilityLabel("Send message")
             }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 16)
+            .padding(.horizontal, 8)
+            .padding(.bottom, 8)
         }
-        .scrollDismissesKeyboard(.interactively)
+        .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 16))
+        .padding(.horizontal, 20)
+        .padding(.bottom, 8)
+        .accessibilityLabel("Message Siaga")
     }
+
+    private func send() {
+        let text = draft
+        draft = ""
+        onSend(text, photoImage)
+    }
+
+    private func scrollToBottom(_ proxy: ScrollViewProxy) {
+        withAnimation { proxy.scrollTo("bottom", anchor: .bottom) }
+    }
+
 }
 
 enum SampleNotes {
     struct Sample: Identifiable { var id: String { title }; let title: String; let text: String }
     static let all: [Sample] = [
         Sample(title: "Mother fell, bleeding", text: "My mother fell in the bathroom, she is bleeding from her head, she is awake but dizzy. We are at home in Bandung, no signal here."),
+        Sample(title: "Heart attack, chest pain", text: "My father is clutching his chest, the pain is spreading to his left arm. He is sweating and short of breath. We are at home."),
         Sample(title: "Child choking", text: "My 5-year-old son is choking on a grape, he cannot breathe."),
         Sample(title: "Burn", text: "My wife burned her hand cooking, blistering, in pain."),
         Sample(title: "Allergic reaction", text: "My brother ate peanuts, his lips are swelling, difficulty breathing."),
@@ -456,12 +574,17 @@ enum SampleNotes {
     ]
 }
 
-// MARK: - Step 2: Brief review (editable, severity can be overridden — Q20)
+// MARK: - Brief editor (editable, severity can be overridden — Q20)
+//
+// Was a full step (Review) until 21 Nov 2026. Now it opens as a sheet
+// from the action plan's brief card: same editor, same corrections,
+// one less screen between a panicked user and help.
 
 struct BriefEditorView: View {
     @Binding var brief: EmergencyBrief
     var onBack: () -> Void
     var onContinue: () -> Void
+    var continueLabel: String = "Continue — build the action plan"
     @State private var symptomsText = ""
 
     var body: some View {
@@ -521,7 +644,7 @@ struct BriefEditorView: View {
             Section {
                 Button("Back", action: onBack)
                     .frame(minHeight: 44)
-                Button("Continue — build the action plan", action: onContinue)
+                Button(continueLabel, action: onContinue)
                     .buttonStyle(.borderedProminent)
                     .controlSize(.large)
                     .frame(maxWidth: .infinity, minHeight: 52)
@@ -531,13 +654,27 @@ struct BriefEditorView: View {
     }
 }
 
-// MARK: - Step 3: Action plan (tools, draft approval, handover)
+// MARK: - Step 2: Action plan (tools, draft, handover)
 
 struct ActionPlanView: View {
     let store: SiagaStore
     let agent: SiagaAgent?
+    var brief: Binding<EmergencyBrief?>
     @Binding var draftApproved: Bool
     var onNewIncident: () -> Void
+    @State private var draftCopied = false
+    @State private var showBriefEditor = false
+
+    // Opens Messages with the draft pre-filled to the emergency contact.
+    // Nothing is sent by the app — the user taps Send in Messages, or
+    // sends nothing at all. In Airplane Mode the compose sheet still
+    // opens; sending waits for signal, which is honest, not a fake send.
+    private func smsURL(for draft: String) -> URL? {
+        guard let phone = store.lastProfile?.emergencyContactPhone else { return nil }
+        let digits = phone.filter { $0.isNumber || $0 == "+" }
+        guard let body = draft.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return nil }
+        return URL(string: "sms:\(digits)&body=\(body)")
+    }
 
     var body: some View {
         ScrollView {
@@ -545,8 +682,50 @@ struct ActionPlanView: View {
                 Text("Action plan")
                     .font(.largeTitle.bold())
                     .accessibilityAddTraits(.isHeader)
-                Text("Everything below comes from tools and pre-approved steps — not from the model's imagination. Review it, then approve the draft.")
+                Text("Everything below comes from tools and pre-approved steps — not from the model's imagination.")
                     .font(.body).foregroundStyle(.secondary)
+
+                // The brief lives here now that Review is not a separate
+                // step. The user sees what Siaga understood at the top of
+                // the plan — and can still correct it. Saving rebuilds
+                // the plan from the corrected brief.
+                if let briefValue = brief.wrappedValue {
+                    SiagaCard(icon: "doc.text.fill", title: "Brief — what Siaga understood", tint: .blue) {
+                        HStack {
+                            SeverityBadge(severity: briefValue.severity)
+                            Spacer()
+                            Text(briefValue.situationCode.rawValue)
+                                .font(.caption).foregroundStyle(.secondary)
+                        }
+                        Text(briefValue.situationTitle).font(.headline)
+                        Text("\(briefValue.personName) • \(briefValue.locationDescription)")
+                            .font(.subheadline).foregroundStyle(.secondary)
+                        Text(briefValue.whatHappened).font(.body)
+                        Button("Edit brief") { showBriefEditor = true }
+                            .buttonStyle(.bordered)
+                            .frame(minHeight: 44)
+                    }
+                    .sheet(isPresented: $showBriefEditor) {
+                        if let briefBinding = Binding(brief) {
+                            NavigationStack {
+                                BriefEditorView(
+                                    brief: briefBinding,
+                                    onBack: { showBriefEditor = false },
+                                    onContinue: {
+                                        showBriefEditor = false
+                                        store.currentBrief = brief.wrappedValue
+                                        draftApproved = false
+                                        draftCopied = false
+                                        Task { await agent?.buildActionPlan() }
+                                    },
+                                    continueLabel: "Save — rebuild the plan"
+                                )
+                                .navigationTitle("Edit brief")
+                                .navigationBarTitleDisplayMode(.inline)
+                            }
+                        }
+                    }
+                }
 
                 if agent?.isWorking == true {
                     SiagaCard(icon: "brain.head.profile", title: "Siaga is working") {
@@ -577,20 +756,50 @@ struct ActionPlanView: View {
                     }
                 }
                 if let draft = store.lastDraft {
-                    SiagaCard(icon: "message.fill", title: "Draft message — needs your approval", tint: .orange) {
+                    SiagaCard(icon: "message.fill", title: "Draft message to send", tint: .orange) {
+                        // UX fix 21 Nov 2026: the draft never said WHO it is
+                        // for. It is an SMS to the family emergency contact
+                        // from the selected profile — never to 112, and
+                        // Siaga never sends it. The recipient line makes
+                        // that unmistakable at a glance.
+                        if let profile = store.lastProfile {
+                            Label("To: \(profile.emergencyContactName) (\(profile.emergencyContactRelation)) • \(profile.emergencyContactPhone)", systemImage: "person.fill")
+                                .font(.subheadline).foregroundStyle(.secondary)
+                        }
+                        Text("SMS draft for the family emergency contact — not for 112. Siaga only writes it; you send it from Messages.")
+                            .font(.caption).foregroundStyle(.secondary)
                         Text(draft).font(.body)
-                        Button(draftApproved ? "Approved — not sent" : "Approve draft") {
+                        // UX 21 Nov 2026: "Approve" did nothing useful —
+                        // the draft's whole point is leaving this app. So
+                        // the actions are Copy (paste it anywhere) and Open
+                        // in Messages (pre-filled SMS to the contact).
+                        // Either one counts as the user acting on the draft.
+                        Button(draftCopied ? "Copied" : "Copy draft") {
+                            UIPasteboard.general.string = draft
+                            draftCopied = true
                             draftApproved = true
                         }
                         .buttonStyle(.borderedProminent)
                         .controlSize(.large)
                         .frame(maxWidth: .infinity, minHeight: 52)
-                        .disabled(draftApproved)
-                        .accessibilityHint("Approving only marks the draft as reviewed. Siaga never sends it by itself.")
-                        Text("Approving only marks the draft as reviewed. Siaga never sends it by itself.")
+                        .accessibilityHint("Copies the draft message so you can paste it into Messages.")
+                        if let url = smsURL(for: draft) {
+                            Button {
+                                draftApproved = true
+                                UIApplication.shared.open(url)
+                            } label: {
+                                Label("Open in Messages", systemImage: "message.fill")
+                                    .font(.headline)
+                                    .frame(maxWidth: .infinity, minHeight: 52)
+                            }
+                            .buttonStyle(.bordered)
+                            .accessibilityHint("Opens Messages with the draft pre-filled to the emergency contact. Nothing is sent until you tap Send there.")
+                        }
+                        Text("Copy it into Messages, or open it there directly. Siaga never sends it by itself.")
                             .font(.caption).foregroundStyle(.secondary)
                     }
                     .sensoryFeedback(.success, trigger: draftApproved)
+                    .sensoryFeedback(.success, trigger: draftCopied)
                 }
                 if let handover = store.lastHandover {
                     SiagaCard(icon: "doc.text.fill", title: "Handover for paramedics", tint: .purple) {

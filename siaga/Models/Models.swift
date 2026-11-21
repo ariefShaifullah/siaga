@@ -17,6 +17,7 @@ enum SituationCode: String, CaseIterable {
     case allergicReaction
     case fainting
     case sprain
+    case heartAttack
     case unknown
 }
 
@@ -25,7 +26,9 @@ struct EmergencyBrief {
     @Guide(description: "Short title, e.g. Mother fell in bathroom")
     var situationTitle: String
     var personName: String
+    @Guide(description: "A factual description of the emergency in one or two sentences. Never a question. If the user's note is a question or has no facts (e.g. 'what happened to this man?'), describe what the photo shows instead — never copy the question.")
     var whatHappened: String
+    @Guide(description: "Symptoms from the note AND from the photo description, e.g. chest pain, sweating, shortness of breath, bleeding, clutching chest. Empty only if truly none are visible or described.")
     var symptoms: [String]
     var severity: Severity
     var situationCode: SituationCode

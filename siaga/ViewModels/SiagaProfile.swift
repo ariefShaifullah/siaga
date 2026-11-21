@@ -3,8 +3,9 @@ import FoundationModels
 import Vision
 
 // iOS 27 — Dynamic Profiles (WWDC26 session 241, "Build agentic app experiences").
-// One session, three agents, transcript preserved. This replaces the two separate
-// sessions in Siaga v1 (briefSession + actionSession).
+// One session, four agents (chat → triage → action → handover),
+// transcript preserved. This replaces the two separate sessions in
+// Siaga v1 (briefSession + actionSession).
 //
 // The app changes the mode by setting orchestrator.mode. The profile re-resolves
 // in place — instructions, tools and generation settings swap, history stays.
@@ -54,6 +55,7 @@ import Vision
 // If autocomplete shows a different spelling, use autocomplete, not this file.
 
 enum SiagaMode {
+    case chat
     case triage
     case action
     case handover
@@ -70,6 +72,29 @@ struct SiagaProfile: LanguageModelSession.DynamicProfile {
 
     var body: some DynamicProfile {
         switch orchestrator.mode {
+        case .chat:
+            // Interactive chat (21 Nov 2026, after the WorkspaceAssistant
+            // labs): the agent talks like Claude, not like a form. It asks
+            // at most one short question at a time, only about the most
+            // urgent missing fact. No tools here — the chat gathers facts;
+            // the action profile runs the tools when the plan is built.
+            Profile {
+                SiagaSafetyInstructions(brief: store.currentBrief, profile: store.lastProfile)
+                Instructions {
+                    """
+                    You are Siaga, a calm offline first-responder assistant talking to a panicked family member.
+                    Reply in 1-2 short sentences, in plain words. Ask at most ONE short question at a time, and only about the most urgent missing fact: is the person conscious? Are they breathing? Are they bleeding? Where are you?
+                    If the user already described the emergency clearly, do not ask questions — acknowledge what you understood in one sentence and say you are ready to build the action plan.
+                    Never diagnose. Never invent symptoms, allergies or medical steps. If the situation sounds critical, tell the user to call 112 now.
+                    If the user asks a question instead of describing the emergency, do not answer it as a chatbot — ask them to describe what they see, or to attach a photo.
+                    """
+                }
+            }
+            .model(SystemLanguageModel())
+            .temperature(0.3)
+            .reasoningLevel(.light)
+            .toolCallingMode(.none)
+
         case .triage:
             // Fast, deterministic extraction. No tools: the model only fills the brief.
             Profile {

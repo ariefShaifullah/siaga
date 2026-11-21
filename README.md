@@ -59,8 +59,8 @@ with a 16pt radius, not hand-drawn shadows), touch (every control at
 least 44pt, primary action `.borderedProminent` + `.controlSize(.large)`),
 and feedback (progress while working, sensory feedback on step change
 and draft approval, errors name the next step). Call 112 is always in
-the bottom safe area, full width, 52pt, red and prominent. The 3-step
-flow shows a progress indicator (Describe → Review → Act). Empty states
+the bottom safe area, full width, 52pt, red and prominent. The 2-step
+flow shows a progress indicator (Describe → Act). Empty states
 use `ContentUnavailableView`. Severity is colour-coded (critical red,
 high orange, medium yellow, low green) with a badge. The brief editor
 uses a segmented control for severity. See the header comment in
@@ -69,17 +69,15 @@ uses a segmented control for severity. See the header comment in
 ## How it works
 
 ```
-Note (typed / dictated, optional photo)
-  → Triage: on-device model extracts an EmergencyBrief (@Generable)
-  → Brief Review: user checks and edits it (severity is editable)
-  → Action: agent calls tools, streamed live
+Chat (typed / dictated, optional photo)
+  → Triage: on-device model extracts an EmergencyBrief (@Generable) from the whole conversation
+  → Action: agent calls tools, streamed live; the brief shows at the top, editable (Edit opens the brief editor as a sheet, saving rebuilds the plan)
   → Handover: one page for paramedics
 ```
 
-1. **Note.** The caregiver types or dictates what happened, picks who it is about, and optionally attaches a photo — in-app camera, or a bundled sample image (see "Photos" below). Nothing leaves the phone.
-2. **Triage.** One Dynamic Profile session extracts a structured `EmergencyBrief`. Constrained decoding locks `Severity` (low / medium / high / critical) and `SituationCode` (bleedingFall, choking, burn, allergicReaction, fainting, sprain, unknown) to the defined cases, so the model cannot invent "extreme" or a new code. If severity is uncertain, it defaults **up**.
-3. **Brief Review.** The user checks the brief before anything else happens. Severity, situation, location and ambulance need are all editable.
-4. **Action plan.** The agent calls tools in order and streams what it is doing:
+1. **Chat.** The caregiver talks to Siaga like Claude: types what happened, picks who it is about, optionally attaches a photo (in-app camera, library, or a bundled sample image — see "Photos" below). The agent replies in 1–2 short sentences, asks at most one question at a time about the most urgent missing fact, and streams its replies live. A question from the user is answered by the agent, not blocked. When the conversation has enough facts, the user taps **Build action plan**. Nothing leaves the phone.
+2. **Triage.** One Dynamic Profile session extracts a structured `EmergencyBrief` from the whole conversation (the agent's questions and the user's answers are facts too). Constrained decoding locks `Severity` (low / medium / high / critical) and `SituationCode` (bleedingFall, choking, burn, allergicReaction, fainting, sprain, heartAttack, unknown) to the defined cases, so the model cannot invent "extreme" or a new code. If severity is uncertain, it defaults **up**.
+3. **Action plan.** The agent calls tools in order and streams what it is doing. The brief is shown at the top of the plan — the user can correct it there (Edit opens the brief editor as a sheet; severity, situation, location and ambulance need are all editable, and saving rebuilds the plan):
    - `LookupMedicalProfile` (read-only) — blood type, allergies, medication, emergency contact
    - `LookupFirstAid` (read-only) — pre-approved steps for the situation code
    - `DraftEmergencyMessage` (needs approval) — draft only, to the family emergency contact, never to 112 by SMS, never sent by itself
@@ -91,10 +89,10 @@ If Apple Intelligence is unavailable, Siaga does not invent a brief with a fake 
 ## Demo script (60 seconds)
 
 1. Phone in **Airplane Mode**, on stage. Say: "No signal, no cloud."
-2. Tap the sample "Hero: mother fell, bleeding" — or paste the note below.
-3. Show the brief: severity **high**, ambulance needed.
+2. Tap the sample "Mother fell, bleeding" — it sends as the first chat message; Siaga answers and asks one question (is she conscious?).
+3. Tap **Build action plan**. Show the brief: severity **high**, ambulance needed.
 4. Show streaming + tool calls: profile, first-aid steps, draft message.
-5. Tap **Approve** on the draft. Do **not** send it live. Show the handover.
+5. Tap **Copy draft** (or **Open in Messages**). Do **not** send it live. Show the handover.
 6. Close: "Cloud AI would have failed at step 1. Siaga worked because it never needed the cloud."
 
 Hero note (verbatim):
@@ -123,20 +121,21 @@ MVVM is a pattern of roles. Files are arranged by role, so the pattern is visibl
 | Layer | Responsibility | Files |
 |---|---|---|
 | **Model** | Data, rules, store | `Models.swift` — `EmergencyBrief`, `Severity`, `SituationCode`, `MedicalProfile` (@Model / SwiftData), `FirstAidCase`, `IncidentHistory`, `TokenBudget`, `SiagaStore` |
-| **View** | SwiftUI only, no model calls | `Views.swift` — Note → Brief Review → Action Plan, Call 112, History; `SamplePhotos.swift` — camera + bundled samples |
-| **ViewModel / Agent** | The brain | `SiagaAgent.swift` — analyse, action plan, token budget, transcript compacting; `SiagaProfile.swift` — Dynamic Profiles; `SiagaSafetyInstructions.swift` — Dynamic Instructions |
+| **View** | SwiftUI only, no model calls | `Views.swift` — Chat → Action Plan (brief card on top, editable), Call 112, History; `SamplePhotos.swift` — camera + bundled samples |
+| **ViewModel / Agent** | The brain | `SiagaAgent.swift` — chat, analyse, action plan, token budget, transcript compacting; `SiagaProfile.swift` — Dynamic Profiles; `SiagaSafetyInstructions.swift` — Dynamic Instructions |
 | **Services** | Tools + platform services | `Tools.swift` — 4 custom tools; `SiagaSpotlightIndexer.swift`; `AppIntents.swift` |
 | **App** | Entry point | `SiagaApp.swift` — `ModelContainer` for `MedicalProfile` + `IncidentHistory` |
 | **Evaluation** | Tests, not app code | `SiagaEvaluationData.swift` (app target), `SiagaEvaluationTests.swift` (test target only) |
 | **Resources** | Bundled data | `FirstAid.json` (7 situation codes), `SampleImages/` (2 OCR-readable cards) |
 
-### One session, three agents
+### One session, four agents
 
 iOS 27 Dynamic Profiles replace the two separate sessions of the first version. One `LanguageModelSession` keeps its transcript while instructions, tools and generation settings swap in place:
 
 | Mode | Instructions | Tools | Settings |
 |---|---|---|---|
-| **Triage** | Extract a brief, nothing else | None | Temperature 0, reasoning `.light`, tool calling `.none` |
+| **Chat** | Talk back: 1–2 short sentences, one question at a time | None | Temperature 0.3, reasoning `.light`, tool calling `.none` |
+| **Triage** | Extract a brief from the conversation, nothing else | None | Temperature 0, reasoning `.light`, tool calling `.none` |
 | **Action** | Act only by calling tools | 4 custom tools + `SpotlightSearchTool` | Temperature 0.2, reasoning `.moderate`, tool calling `.required` |
 | **Handover** | Facts only, for paramedics | `CreateHandoverTool` | Temperature 0, reasoning `.light`, tool calling `.none` |
 
@@ -146,7 +145,7 @@ Every branch uses `SystemLanguageModel()` — on-device only. `.deep` reasoning 
 
 | Feature | Where | Why it matters |
 |---|---|---|
-| Multimodal prompts — `Attachment(image)` | `SiagaAgent.analyse(note:image:)` | A photo of the injury, a medication bottle or an allergy card is described on-device, then fed as text into strict extraction. |
+| Multimodal prompts — `Attachment(image)` | `SiagaAgent.sendChat(_:image:)`, `SiagaAgent.analyse(image:)` | A photo of the injury, a medication bottle or an allergy card is described on-device, then fed as text into the chat and into strict extraction. |
 | Built-in Vision tools — `OCRTool()`, `BarcodeReaderTool()` | *Removed 21 Nov* | Xcode 27 reports them as not in scope in this SDK, despite `import Vision`. Photos still reach the model as `Attachment(image)`. |
 | Spotlight local RAG — `SpotlightSearchTool()` | `SiagaProfile.swift`, `SiagaSpotlightIndexer.swift` | First-aid guide + incident history are indexed as `CSSearchableItem`s once. The model can answer "has she had a fall before?" from the app's own data — no server, no embedding store. Activated by `import CoreSpotlight`. Retrieved text is untrusted data: it never overrides the safety instructions. |
 | Dynamic Instructions | `SiagaSafetyInstructions.swift` | Re-evaluated before every request. Allergy and critical-severity rules follow the current brief and profile, instead of being frozen at session creation. |
@@ -207,7 +206,7 @@ Metrics (each 0 or 1 per sample, then averaged): `severityCorrect` (got ≥ expe
 
 ### Test protocol — before the demo, in Airplane Mode
 
-Run the hero note 3×. Severity must stay high, tools must be called, no network. Then run samples 2–10 once each. If severity is unstable across the 3 hero runs, lock it manually in Brief Review before the demo.
+Run the hero note 3×. Severity must stay high, tools must be called, no network. Then run samples 2–9 once each. If severity is unstable across the 3 hero runs, lock it manually with Edit brief on the action plan before the demo.
 
 ## Verification checklist — Xcode 27, in order
 

@@ -46,7 +46,7 @@ struct LookupMedicalProfileTool: Tool {
 
 struct DraftEmergencyMessageTool: Tool {
     let name = "draftEmergencyMessage"
-    let description = "NEEDS APPROVAL. Drafts an SMS to the emergency contact with location, brief, severity and allergies. It only drafts. Nothing is sent until the user taps Approve in the app."
+    let description = "Drafts an SMS to the emergency contact with location, brief, severity and allergies. It only drafts — the user copies it or opens it in Messages; the app never sends anything itself."
     let store: SiagaStore
 
     @Generable
