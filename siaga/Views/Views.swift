@@ -178,17 +178,6 @@ struct ContentView: View {
 
 // MARK: - Always-on header
 
-struct OnDeviceBadge: View {
-    var body: some View {
-        Label("On-Device • Offline", systemImage: "wifi.slash")
-            .font(.caption.bold())
-            .padding(.horizontal, 10).padding(.vertical, 6)
-            .background(.green.opacity(0.15), in: Capsule())
-            .foregroundStyle(.green)
-            .accessibilityLabel("On-device, offline. Nothing leaves this phone.")
-    }
-}
-
 struct Call112Button: View {
     var body: some View {
         Link(destination: URL(string: "tel://112")!) {
@@ -324,11 +313,6 @@ struct EmergencyNoteView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     // HIG hierarchy: one large title, one short explanation.
-                    // The badge proves the offline claim at a glance.
-                    HStack {
-                        OnDeviceBadge()
-                        Spacer()
-                    }
                     // 21 Nov 2026: the model was silently unavailable on the
                     // test iPhone, so every answer came from the template
                     // fallback and looked like the AI was not working. The
@@ -481,44 +465,23 @@ struct EmergencyNoteView: View {
                     .padding(.horizontal, 8)
                     .padding(.top, 8)
             }
-            ZStack(alignment: .topLeading) {
-                TextEditor(text: $draft)
-                    .focused($isComposerFocused)
-                    .frame(minHeight: 44, maxHeight: 120)
-                    .scrollContentBackground(.hidden)
-                    .padding(8)
-                if draft.isEmpty {
-                    Text("Type a message…")
-                        .font(.body)
-                        .foregroundStyle(.tertiary)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 16)
-                        .allowsHitTesting(false)
-                }
-            }
+            // A vertical-axis TextField grows with the text, like a chat
+            // app: one line when empty, up to 5 lines, then it scrolls
+            // inside. The old TextEditor sat at its max height even when
+            // empty, so the box looked big before a word was typed.
+            TextField("Type a message…", text: $draft, axis: .vertical)
+                .focused($isComposerFocused)
+                .lineLimit(1...5)
+                .padding(8)
             HStack {
                 // Camera and Library are one + button inside the input
-                // box. The menu holds Camera, Library, and the two bundled
-                // sample photos — a sample sends its note as a message.
+                // box. The menu holds Camera and Library only.
                 Menu {
                     Button { showCamera = true } label: {
                         Label("Take Photo", systemImage: "camera.fill")
                     }
                     Button { showLibrary = true } label: {
                         Label("Choose from Library", systemImage: "photo")
-                    }
-                    Divider()
-                    ForEach(SamplePhoto.allCases) { sample in
-                        Button {
-                            // A sample sends immediately as a chat message —
-                            // it never sits in the composer. The photo reaches
-                            // the brief through imageDescription, which
-                            // sendChat sets while describing it.
-                            isComposerFocused = false
-                            onSend(sample.note, sample.load())
-                        } label: {
-                            Label(sample.title, systemImage: sample.systemImage)
-                        }
                     }
                 } label: {
                     Image(systemName: "plus.circle.fill")

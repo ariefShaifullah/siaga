@@ -28,9 +28,6 @@ siaga/
     SiagaEvaluationData.swift
   Resources/
     FirstAid.json
-    SampleImages/
-      sample-medication.png
-      sample-allergy-card.png
   README.md
 
 Tests/ (sibling of siaga/, test target only — NOT inside siaga/)
@@ -75,7 +72,7 @@ Chat (typed / dictated, optional photo)
   → Handover: one page for paramedics
 ```
 
-1. **Chat.** The caregiver talks to Siaga like Claude: types what happened, picks who it is about, optionally attaches a photo (in-app camera, library, or a bundled sample image — see "Photos" below). The agent replies in 1–2 short sentences, asks at most one question at a time about the most urgent missing fact, and streams its replies live. A question from the user is answered by the agent, not blocked. When the conversation has enough facts, the user taps **Build action plan**. Nothing leaves the phone.
+1. **Chat.** The caregiver talks to Siaga like Claude: types what happened, picks who it is about, optionally attaches a photo (in-app camera or library — see "Photos" below). The agent replies in 1–2 short sentences, asks at most one question at a time about the most urgent missing fact, and streams its replies live. A question from the user is answered by the agent, not blocked. When the conversation has enough facts, the user taps **Build action plan**. Nothing leaves the phone.
 2. **Triage.** One Dynamic Profile session extracts a structured `EmergencyBrief` from the whole conversation (the agent's questions and the user's answers are facts too). Constrained decoding locks `Severity` (low / medium / high / critical) and `SituationCode` (bleedingFall, choking, burn, allergicReaction, fainting, sprain, heartAttack, unknown) to the defined cases, so the model cannot invent "extreme" or a new code. If severity is uncertain, it defaults **up**.
 3. **Action plan.** The agent calls tools in order and streams what it is doing. The brief is shown at the top of the plan — the user can correct it there (Edit opens the brief editor as a sheet; severity, situation, location and ambulance need are all editable, and saving rebuilds the plan):
    - `LookupMedicalProfile` (read-only) — blood type, allergies, medication, emergency contact
@@ -107,7 +104,7 @@ Expected: severity high, code `bleedingFall`, ambulance needed.
 
 1. Xcode → New App project, name `Siaga`, iOS 27, SwiftUI, SwiftData, iPhone only.
 2. Drag the whole `siaga` folder into the project, tick **Copy items if needed**.
-3. Check target membership for `FirstAid.json` and the two PNGs in `SampleImages/` (without it, `UIImage(named:)` finds nothing and the guide falls back to the copy in code).
+3. Check target membership for `FirstAid.json` (without it, the guide falls back to the copy in code).
 4. Delete the template `ContentView` — `Views.swift` replaces it.
 5. `Cmd+B`, then run on a real iPhone.
 6. **Test file — read this, it broke the build once.** `SiagaEvaluationTests.swift` uses `import Evaluations` and `import Testing`, which exist only in a test target. It lives in `Tests/` next to the project, OUTSIDE the `siaga/` app folder — this project uses folder-based target membership, so any file inside `siaga/` is compiled into the app. Do not move it into `siaga/`. To run it, add a Unit Testing Bundle target (SiagaTests) and add the file to that target only. Until then, the app builds and runs without it.
@@ -121,12 +118,12 @@ MVVM is a pattern of roles. Files are arranged by role, so the pattern is visibl
 | Layer | Responsibility | Files |
 |---|---|---|
 | **Model** | Data, rules, store | `Models.swift` — `EmergencyBrief`, `Severity`, `SituationCode`, `MedicalProfile` (@Model / SwiftData), `FirstAidCase`, `IncidentHistory`, `TokenBudget`, `SiagaStore` |
-| **View** | SwiftUI only, no model calls | `Views.swift` — Chat → Action Plan (brief card on top, editable), Call 112, History; `SamplePhotos.swift` — camera + bundled samples |
+| **View** | SwiftUI only, no model calls | `Views.swift` — Chat → Action Plan (brief card on top, editable), Call 112, History; `SamplePhotos.swift` — in-app camera |
 | **ViewModel / Agent** | The brain | `SiagaAgent.swift` — chat, analyse, action plan, token budget, transcript compacting; `SiagaProfile.swift` — Dynamic Profiles; `SiagaSafetyInstructions.swift` — Dynamic Instructions |
 | **Services** | Tools + platform services | `Tools.swift` — 4 custom tools; `SiagaSpotlightIndexer.swift`; `AppIntents.swift` |
 | **App** | Entry point | `SiagaApp.swift` — `ModelContainer` for `MedicalProfile` + `IncidentHistory` |
 | **Evaluation** | Tests, not app code | `SiagaEvaluationData.swift` (app target), `SiagaEvaluationTests.swift` (test target only) |
-| **Resources** | Bundled data | `FirstAid.json` (8 situation codes), `SampleImages/` (2 OCR-readable cards) |
+| **Resources** | Bundled data | `FirstAid.json` (8 situation codes) |
 
 ### One session, four agents
 
@@ -176,12 +173,9 @@ What the app never does: silently fall back to the first profile when a name doe
 
 ## Photos — without leaving the flow
 
-Picking from the photo library leaves the emergency screen, needs photo permission, and eats demo time. Siaga uses two in-context options instead:
+Picking from the photo library leaves the emergency screen, needs photo permission, and eats demo time. Siaga uses the in-app camera instead: a sheet inside Siaga, never the Photos app. This is the real emergency path: photograph the actual injury, bottle or card.
 
-1. **Bundled sample images** — `UIImage(named:)` directly, one tap, no picker, no permission. The two PNGs in `SampleImages/` are text cards, not fake injury photos: a medication label ("Amlodipine 5 mg") and an allergy card ("ALLERGY: PENICILLIN"). Neither carries a patient name, age or blood type. The on-device model can actually read them as an attached image, so the demo proves the multimodal path works. Each sample button sends its note as a chat message, with the image attached.
-2. **In-app camera** — a sheet inside Siaga, never the Photos app. This is the real emergency path: photograph the actual injury, bottle or card.
-
-The library picker is still there as a third, optional path. SF Symbols (`Image(systemName:)`) are used for UI icons and as a never-crash fallback if a PNG was not added to the target — never as the analysed image, because a "bandage" icon carries no medical detail.
+The library picker is still there as a second, optional path. SF Symbols (`Image(systemName:)`) are used for UI icons only — never as the analysed image, because a "bandage" icon carries no medical detail.
 
 ## Testing
 
