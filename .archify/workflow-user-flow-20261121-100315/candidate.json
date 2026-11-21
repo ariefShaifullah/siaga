@@ -1,0 +1,176 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Siaga — User Flow, Note to Paramedic Handover",
+    "locale": "en",
+    "quality_profile": "showcase",
+    "output": ".archify/workflow-user-flow-20261121-100315/siaga-user-flow.html",
+    "repository": {
+      "url": "git@github.com:ariefShaifullah/siaga.git",
+      "provider": "github",
+      "link_mode": "local-only",
+      "revision": "8f48a5a3a9ab075b0ed262f699e7f32c6bcbbd17"
+    }
+  },
+  "lanes": [
+    { "id": "user", "label": "Caregiver" },
+    { "id": "ui", "label": "Siaga screens" },
+    { "id": "agent", "label": "On-device agent" },
+    { "id": "recovery", "label": "Fallback & recovery", "variant": "exception" },
+    { "id": "data", "label": "Local tools & data" }
+  ],
+  "phases": [
+    { "id": "describe_phase", "label": "1 · Describe", "fromCol": 0, "toCol": 2 },
+    { "id": "review_phase", "label": "2 · Review", "fromCol": 3, "toCol": 3, "variant": "emphasis" },
+    { "id": "act_phase", "label": "3 · Act", "fromCol": 4, "toCol": 5 }
+  ],
+  "mainPath": ["emergency", "describe", "triage", "review", "action", "handover", "act", "approve"],
+  "nodes": [
+    {
+      "id": "emergency", "lane": "user", "col": 0, "type": "external", "icon": "person",
+      "label": "Emergency", "sublabel": "no signal, panic",
+      "sources": [{ "path": "README.md", "line": 69, "end_line": 79, "label": "How it works" }]
+    },
+    {
+      "id": "call112", "lane": "user", "col": 2, "type": "security", "icon": "stop",
+      "label": "Call 112", "sublabel": "always on screen", "tag": "user dials",
+      "sources": [
+        { "path": "siaga/Views/Views.swift", "line": 137, "end_line": 146, "label": "bottom safe area" },
+        { "path": "siaga/Views/Views.swift", "line": 218, "end_line": 230, "label": "tel://112 link" },
+        { "path": "siaga/Views/Views.swift", "line": 514, "end_line": 519, "label": "high/critical banner" }
+      ]
+    },
+    {
+      "id": "approve", "lane": "user", "col": 5, "type": "external", "icon": "success",
+      "label": "Approve draft", "sublabel": "marked, never sent",
+      "sources": [{ "path": "siaga/Views/Views.swift", "line": 579, "end_line": 593, "label": "approve button" }]
+    },
+    {
+      "id": "describe", "lane": "ui", "col": 1, "type": "frontend",
+      "label": "Describe", "sublabel": "note · who · photo",
+      "sources": [
+        { "path": "siaga/Views/Views.swift", "line": 64, "end_line": 81, "label": "note step" },
+        { "path": "siaga/Views/Views.swift", "line": 353, "end_line": 420, "label": "photo + analyse" }
+      ]
+    },
+    {
+      "id": "review", "lane": "ui", "col": 3, "type": "frontend",
+      "label": "Review brief", "sublabel": "edit severity, code", "tag": "human check",
+      "sources": [
+        { "path": "siaga/Views/Views.swift", "line": 461, "end_line": 530, "label": "BriefEditorView" },
+        { "path": "siaga/Views/Views.swift", "line": 82, "end_line": 98, "label": "continue" }
+      ]
+    },
+    {
+      "id": "act", "lane": "ui", "col": 5, "type": "frontend",
+      "label": "Action plan", "sublabel": "steps · draft · handover",
+      "sources": [
+        { "path": "siaga/Views/Views.swift", "line": 536, "end_line": 617, "label": "ActionPlanView" },
+        { "path": "siaga/Views/Views.swift", "line": 100, "end_line": 112, "label": "new incident" }
+      ]
+    },
+    {
+      "id": "triage", "lane": "agent", "col": 2, "type": "backend",
+      "label": "Triage", "sublabel": "EmergencyBrief", "tag": "no tools, temp 0",
+      "sources": [
+        { "path": "siaga/ViewModels/SiagaAgent.swift", "line": 105, "end_line": 164, "label": "analyse" },
+        { "path": "siaga/ViewModels/SiagaProfile.swift", "line": 73, "end_line": 88, "label": "triage mode" }
+      ]
+    },
+    {
+      "id": "action", "lane": "agent", "col": 4, "type": "backend",
+      "label": "Action agent", "sublabel": "streams tool calls", "tag": "tools required",
+      "sources": [
+        { "path": "siaga/ViewModels/SiagaAgent.swift", "line": 181, "end_line": 203, "label": "buildActionPlan" },
+        { "path": "siaga/ViewModels/SiagaProfile.swift", "line": 90, "end_line": 117, "label": "action mode" }
+      ]
+    },
+    {
+      "id": "handover", "lane": "agent", "col": 5, "type": "backend",
+      "label": "Handover", "sublabel": "for paramedics",
+      "sources": [
+        { "path": "siaga/ViewModels/SiagaAgent.swift", "line": 204, "end_line": 206, "label": "handover mode" },
+        { "path": "siaga/Models/Models.swift", "line": 300, "end_line": 317, "label": "createHandover" }
+      ]
+    },
+    {
+      "id": "compact", "lane": "recovery", "col": 1, "type": "security", "icon": "waiting",
+      "label": "Fresh session", "sublabel": "compact brief kept",
+      "sources": [
+        { "path": "siaga/ViewModels/SiagaAgent.swift", "line": 152, "end_line": 158, "label": "budget check" },
+        { "path": "siaga/ViewModels/SiagaAgent.swift", "line": 165, "end_line": 169, "label": "context exceeded" }
+      ]
+    },
+    {
+      "id": "fallback", "lane": "recovery", "col": 2, "type": "security", "icon": "decision",
+      "label": "Keyword fallback", "sublabel": "labelled on screen",
+      "sources": [
+        { "path": "siaga/ViewModels/SiagaAgent.swift", "line": 115, "end_line": 120, "label": "model unavailable" },
+        { "path": "siaga/ViewModels/SiagaAgent.swift", "line": 170, "end_line": 176, "label": "model error" },
+        { "path": "siaga/ViewModels/SiagaAgent.swift", "line": 188, "end_line": 195, "label": "fallback plan" }
+      ]
+    },
+    {
+      "id": "profiles", "lane": "data", "col": 0, "type": "database",
+      "label": "Family profiles", "sublabel": "SwiftData, on device",
+      "sources": [
+        { "path": "siaga/Views/Views.swift", "line": 164, "end_line": 176, "label": "demo seed" },
+        { "path": "siaga/Views/Views.swift", "line": 677, "end_line": 736, "label": "ProfilesView" }
+      ]
+    },
+    {
+      "id": "history", "lane": "data", "col": 3, "type": "database",
+      "label": "Incident history", "sublabel": "+ Spotlight index",
+      "sources": [
+        { "path": "siaga/Views/Views.swift", "line": 89, "end_line": 94, "label": "save + index" },
+        { "path": "siaga/Services/SiagaSpotlightIndexer.swift", "line": 1, "end_line": 46 }
+      ]
+    },
+    {
+      "id": "tools", "lane": "data", "col": 4, "type": "messagebus",
+      "label": "Local tools", "sublabel": "profile · first aid · draft",
+      "sources": [
+        { "path": "siaga/Services/Tools.swift", "line": 16, "end_line": 77, "label": "4 custom tools" },
+        { "path": "siaga/Models/Models.swift", "line": 268, "end_line": 298, "label": "store lookups" }
+      ]
+    }
+  ],
+  "edges": [
+    { "id": "e-open", "from": "emergency", "to": "describe", "label": "open app" },
+    { "id": "e-analyse", "from": "describe", "to": "triage", "label": "Analyse", "variant": "emphasis" },
+    { "id": "e-brief", "from": "triage", "to": "review", "label": "brief", "variant": "emphasis" },
+    { "id": "e-continue", "from": "review", "to": "action", "label": "Continue", "variant": "emphasis" },
+    { "id": "e-handover", "from": "action", "to": "handover" },
+    { "id": "e-show", "from": "handover", "to": "act", "label": "show" },
+    { "id": "e-approve", "from": "act", "to": "approve", "label": "review draft", "variant": "emphasis" },
+    { "id": "e-who", "from": "profiles", "to": "describe", "label": "who is it about?", "role": "branch" },
+    { "id": "e-call", "from": "review", "to": "call112", "label": "high / critical", "variant": "security", "role": "branch" },
+    { "id": "e-unavailable", "from": "triage", "to": "fallback", "label": "no model", "variant": "security", "role": "error" },
+    { "id": "e-fallback-brief", "from": "fallback", "to": "review", "label": "keyword brief", "variant": "dashed" },
+    { "id": "e-budget", "from": "triage", "to": "compact", "label": "too long", "variant": "security", "role": "error" },
+    { "id": "e-retry", "from": "compact", "to": "describe", "label": "retry shorter", "variant": "dashed", "role": "return" },
+    { "id": "e-save", "from": "review", "to": "history", "label": "save", "variant": "dashed", "role": "branch" },
+    { "id": "e-tools", "from": "action", "to": "tools", "label": "call tools", "role": "branch" },
+    { "id": "e-new", "from": "act", "to": "describe", "label": "New incident", "variant": "dashed", "role": "return" }
+  ],
+  "cards": [
+    {
+      "dot": "rose",
+      "title": "Safety rules in the flow",
+      "items": [
+        "Call 112 stays in the bottom safe area on every step",
+        "First-aid steps come only from bundled FirstAid.json",
+        "Draft message and handover are drafts; Siaga never sends or calls"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "One session, three modes",
+      "items": [
+        "Triage, action and handover swap instructions and tools in one LanguageModelSession",
+        "Without Apple Intelligence, the plan step fills profile, steps, draft and handover directly"
+      ]
+    }
+  ]
+}

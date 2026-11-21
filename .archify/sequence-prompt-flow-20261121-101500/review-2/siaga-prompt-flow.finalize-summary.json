@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "sequence",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/sequence-prompt-flow-20261121-101500/candidate.json",
+    "sha256": "957983db0726baf4efbd874f9af4865d7980232f2c5af3c3c7899eff420f2c86",
+    "bytes": 10978
+  },
+  "artifact": {
+    "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/sequence-prompt-flow-20261121-101500/siaga-prompt-flow.html",
+    "sha256": "4cf4a8322904abd73b3326f9aa29bd069eae18b218a4009fc2aa7fa6aaec6690",
+    "bytes": 857132
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/sequence-prompt-flow-20261121-101500/review-2/siaga-prompt-flow.finalize.json",
+    "summaryReceipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/sequence-prompt-flow-20261121-101500/review-2/siaga-prompt-flow.finalize-summary.json",
+    "browserCheckReceipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/sequence-prompt-flow-20261121-101500/review-2/siaga-prompt-flow.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-21T03:03:51.779Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 2533,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

@@ -1,0 +1,223 @@
+{
+ "title": "Choose the visual world for the Siaga test checklist",
+ "question": "The roll assigned Evacuation Route. Keep it, take an alternate, or re-roll.",
+ "options": [
+  {
+   "id": "assigned",
+   "label": "Evacuation Route",
+   "kicker": "THE ROLL",
+   "lineage": "ISO 7010 safe-condition signage on BNPB evacuation routes",
+   "thesis": "The test run is an evacuation route: each app area is a station you clear in order.",
+   "palette": [
+    "#14633f",
+    "#ffffff",
+    "#ffb300",
+    "#a51d1d",
+    "#111a14"
+   ],
+   "materials": [
+    "safety-green sign plates",
+    "route line with stations"
+   ],
+   "viewport": "Green route rail with per-area progress and a You-are-here marker, run summary and failing list on top, case cards with expected-value chips and a Protects line.",
+   "risk": "Green means both 'safe route' and 'pass', so pass and the shell colour must stay distinguishable.",
+   "raised": [
+    {
+     "from": "challenger-timetable",
+     "raise": "Each case's result sits in one fixed cell at the row's right edge: filled when recorded, hollow when untested."
+    },
+    {
+     "from": "challenger-warm-app",
+     "raise": "Only controls you can press carry the action colour; status colour never doubles as a button."
+    },
+    {
+     "from": "challenger-saville",
+     "raise": "The case ID is the handle everywhere: card, failing list and export row."
+    },
+    {
+     "from": "challenger-crouwel",
+     "raise": "Rail and case column lock to one shared grid and gutter."
+    },
+    {
+     "from": "challenger-emission",
+     "raise": "Status never relies on hue alone: every result also carries a drawn icon and a word."
+    }
+   ],
+   "html": ".impeccable/mocks/decision/assigned.html"
+  },
+  {
+   "id": "model-pick",
+   "label": "Triage Tag Board",
+   "kicker": "IMPECCABLE\u2019S PICK",
+   "lineage": "START mass-casualty triage tags",
+   "thesis": "Every case is a triage tag; its result is the colour strip you tear off.",
+   "palette": [
+    "#eee8da",
+    "#1d1a14",
+    "#2e7d32",
+    "#b71c1c",
+    "#f2b705"
+   ],
+   "materials": [
+    "manila tag stock",
+    "tear-off colour strips"
+   ],
+   "viewport": "Dark header with run totals, a grid of tags each listing expected values and what it protects, result strip at the foot.",
+   "risk": "The most familiar reading of an emergency subject, and triage red/yellow/green collide with fail/blocked/pass meanings."
+  },
+  {
+   "id": "challenger-ticket",
+   "label": "Ticket Wallet",
+   "verdict": "competitive",
+   "lineage": "jet-age airline ticket wallets",
+   "thesis": "Each case is a coupon; running it stamps PASS or FAIL and nothing disappears.",
+   "palette": [
+    "#1a2a55",
+    "#f1efe8",
+    "#c62828",
+    "#1f7a3a",
+    "#5b2a86"
+   ],
+   "materials": [
+    "coupon stock",
+    "rubber stamps",
+    "perforations"
+   ],
+   "viewport": "Navy wallet index of areas with counts, coupons with fare-box expected values and a stamped result.",
+   "case": "Stamps make results unmissable; loses on audience identification, airline travel is not this tester's world.",
+   "risk": "Reads as travel nostalgia if the stamps get decorative.",
+   "html": ".impeccable/mocks/decision/challenger-ticket.html",
+   "hero": "https://impeccable.style/worlds/cards/vernacular-ephemera-jet-age-ticket-wallet-hero.webp"
+  },
+  {
+   "id": "challenger-timetable",
+   "label": "Timetable Slide Rack",
+   "verdict": "declined",
+   "lineage": "1971 pocket airline timetable",
+   "thesis": "One type size, raked glass slides.",
+   "palette": [
+    "#d9a521",
+    "#2b2b2b",
+    "#f3ecd8",
+    "#d0391f"
+   ],
+   "materials": [
+    "tinted glass",
+    "goldenrod stock"
+   ],
+   "viewport": "Raked rack of slides.",
+   "case": "Single type size contradicts the bigger-type request; raked panes hurt scanning.",
+   "risk": "Unreadable at a glance.",
+   "kept": "Result as a mark in a fixed cell.",
+   "hero": "https://impeccable.style/worlds/cards/rw-timetable-slide-rack-hero.webp"
+  },
+  {
+   "id": "challenger-warm-app",
+   "label": "Warm Consumer App",
+   "verdict": "declined",
+   "lineage": "consumer app surfaces",
+   "thesis": "Soft cards, one action colour.",
+   "palette": [
+    "#f6efe6",
+    "#ffffff",
+    "#ff5a36"
+   ],
+   "materials": [
+    "soft radii",
+    "bottom bar"
+   ],
+   "viewport": "Single column of cards with bottom bar.",
+   "case": "A phone pattern on a laptop QA tool; no tie to the emergency world.",
+   "risk": "Generic.",
+   "kept": "Action colour only on what can be pressed.",
+   "hero": "https://impeccable.style/worlds/cards/digital-design-canon-warm-consumer-app-surface-hero.webp"
+  },
+  {
+   "id": "challenger-saville",
+   "label": "Catalog Sleeve",
+   "verdict": "declined",
+   "lineage": "Factory Records catalog identity",
+   "thesis": "Everything is a numbered entry.",
+   "palette": [
+    "#0b0b0b",
+    "#ffffff"
+   ],
+   "materials": [
+    "matte black",
+    "hairline plot"
+   ],
+   "viewport": "Black field with one plot.",
+   "case": "Coded colour strips hide the expected values the tester needs.",
+   "risk": "Obscure.",
+   "kept": "The ID as the primary handle.",
+   "hero": "https://impeccable.style/worlds/cards/brand-identity-canon-saville-catalog-sleeve-hero.webp"
+  },
+  {
+   "id": "challenger-crouwel",
+   "label": "Grid Specimen",
+   "verdict": "declined",
+   "lineage": "Wim Crouwel grid posters",
+   "thesis": "The grid is the proof.",
+   "palette": [
+    "#ffffff",
+    "#1f4fd1",
+    "#111111"
+   ],
+   "materials": [
+    "construction grid"
+   ],
+   "viewport": "Monumental grid letterforms.",
+   "case": "Poster logic, not a working checklist.",
+   "risk": "Costume.",
+   "kept": "One strict shared grid.",
+   "hero": "https://impeccable.style/worlds/cards/crouwel-grid-specimen-hero.webp"
+  },
+  {
+   "id": "challenger-emission",
+   "label": "Emission Line Rail",
+   "verdict": "declined",
+   "lineage": "glass spectrograms",
+   "thesis": "State as line form on one rail.",
+   "palette": [
+    "#2a2a2a",
+    "#e8e2d4",
+    "#ffd34d"
+   ],
+   "materials": [
+    "charcoal continuum",
+    "hairlines"
+   ],
+   "viewport": "Off-centre rail of hairlines.",
+   "case": "Hairline states at tiny type fight the bigger-type request.",
+   "risk": "Too subtle.",
+   "kept": "State shown by shape and word, not hue alone.",
+   "hero": "https://impeccable.style/worlds/cards/operate-c-emission-line-rail-hero.webp"
+  }
+ ],
+ "reroll": {
+  "registers": [
+   "safer",
+   "bolder"
+  ]
+ },
+ "canon": true,
+ "canonCard": {
+  "label": "The category standard",
+  "thesis": "A test navigator: sidebar tree of cases with status diamonds, detail pane on the right.",
+  "palette": [
+   "#ffffff",
+   "#f5f5f7",
+   "#0a84ff",
+   "#34c759",
+   "#ff3b30"
+  ],
+  "materials": [
+   "source-list sidebar",
+   "detail pane"
+  ],
+  "viewport": "Xcode-style test navigator beside the selected case's steps and expected result.",
+  "risk": "Indistinguishable from any test tool by design.",
+  "html": ".impeccable/mocks/decision/canon.html"
+ },
+ "steer": true
+}

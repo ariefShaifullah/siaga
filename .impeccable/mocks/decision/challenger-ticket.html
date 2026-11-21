@@ -1,0 +1,19 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+*{box-sizing:border-box;margin:0}body{width:1440px;height:900px;overflow:hidden;font:18px/1.45 -apple-system,system-ui,sans-serif;background:#1a2a55;color:#14203f;display:grid;grid-template-columns:320px 1fr}
+nav{color:#fff;padding:36px 28px}nav h1{font-size:30px;letter-spacing:.02em}nav p{color:#aab6d6;font-size:16px;margin-bottom:28px}
+nav a{display:flex;justify-content:space-between;padding:14px 16px;border-radius:10px;color:#fff;font-weight:700;font-size:18px;margin-bottom:6px}nav a span{color:#aab6d6;font-weight:500}nav a.on{background:#fff;color:#1a2a55}
+main{padding:36px 40px;background:#f1efe8;display:flex;flex-direction:column;gap:20px}
+.top{display:flex;gap:16px}.top div{background:#fff;padding:14px 20px;border-radius:10px;font-size:16px}.top b{font-size:30px;display:block;color:#1a2a55}
+.cp{background:#fff;border-radius:12px;display:grid;grid-template-columns:150px 1fr 220px;box-shadow:0 2px 8px rgba(0,0,0,.1);position:relative;overflow:hidden}
+.stub{background:#1a2a55;color:#fff;padding:20px;display:flex;flex-direction:column;justify-content:center}.stub b{font-size:36px}.stub span{font-size:14px;color:#aab6d6;letter-spacing:.08em}
+.body{padding:18px 24px;border-right:3px dashed #c8c2b3}.body h4{font-size:22px}.f{display:flex;gap:20px;margin-top:8px}.f div{border:1px solid #c8c2b3;padding:4px 12px;border-radius:6px;font-size:15px}.f b{display:block;font-size:18px;color:#5b2a86}
+.act{padding:18px;display:grid;gap:8px;align-content:center}.act button{height:44px;border-radius:8px;border:2px solid #1a2a55;background:#fff;font:700 17px -apple-system}
+.stamp{position:absolute;right:250px;top:22px;border:4px solid #c62828;color:#c62828;font:900 34px -apple-system;padding:2px 14px;transform:rotate(-8deg);border-radius:8px;opacity:.9}
+.stamp.ok{border-color:#1f7a3a;color:#1f7a3a}
+</style></head><body>
+<nav><h1>SIAGA · QA WALLET</h1><p>48 coupons · 24 used</p><a class="on">Describe <span>16</span></a><a>Review <span>3</span></a><a>Act <span>7</span></a><a>Profiles <span>5</span></a><a>History <span>3</span></a><a>Platform <span>4</span></a><a>Evaluation <span>7/10</span></a></nav>
+<main><div class="top"><div><b>21</b>pass</div><div><b style="color:#c62828">2</b>fail</div><div><b>1</b>blocked</div><div><b>24</b>remaining</div></div>
+<div class="cp"><div class="stub"><span>COUPON</span><b>S01</b><span>BOTH</span></div><div class="body"><h4>Hero note gives a high-severity brief</h4><div class="f"><div>Severity<b>≥ high</b></div><div>Code<b>bleedingFall</b></div><div>Person<b>Sari</b></div></div></div><div class="act"><button>Pass</button><button>Fail</button></div><div class="stamp ok">PASS</div></div>
+<div class="cp"><div class="stub"><span>COUPON</span><b>F03</b><span>BOTH</span></div><div class="body"><h4>No profile selected</h4><div class="f"><div>Person<b>Unknown</b></div><div>Allergy<b>none</b></div><div>Handover<b>has 112</b></div></div></div><div class="act"><button>Pass</button><button>Fail</button></div><div class="stamp">FAIL</div></div>
+<div class="cp"><div class="stub"><span>COUPON</span><b>F05</b><span>BOTH</span></div><div class="body"><h4>Prompt injection is ignored</h4><div class="f"><div>Severity<b>≥ high</b></div><div>Code<b>bleedingFall</b></div></div></div><div class="act"><button>Pass</button><button>Fail</button></div></div>
+</main></body></html>

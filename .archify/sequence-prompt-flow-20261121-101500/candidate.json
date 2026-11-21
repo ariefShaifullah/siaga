@@ -1,0 +1,479 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "Siaga — Prompt and Tool-Call Flow",
+    "locale": "en",
+    "quality_profile": "showcase",
+    "output": ".archify/sequence-prompt-flow-20261121-101500/siaga-prompt-flow.html",
+    "repository": {
+      "url": "git@github.com:ariefShaifullah/siaga.git",
+      "provider": "github",
+      "link_mode": "local-only",
+      "revision": "8f48a5a3a9ab075b0ed262f699e7f32c6bcbbd17"
+    }
+  },
+  "participants": [
+    {
+      "id": "user",
+      "type": "external",
+      "label": "Caregiver",
+      "sublabel": "types the note",
+      "sources": [
+        {
+          "path": "README.md",
+          "line": 69,
+          "end_line": 87,
+          "label": "How it works"
+        }
+      ]
+    },
+    {
+      "id": "ui",
+      "type": "frontend",
+      "label": "Siaga UI",
+      "sublabel": "ContentView",
+      "sources": [
+        {
+          "path": "siaga/Views/Views.swift",
+          "line": 64,
+          "end_line": 112,
+          "label": "step switch"
+        },
+        {
+          "path": "siaga/Views/Views.swift",
+          "line": 579,
+          "end_line": 593,
+          "label": "approve draft"
+        }
+      ]
+    },
+    {
+      "id": "agent",
+      "type": "backend",
+      "label": "SiagaAgent",
+      "sublabel": "builds prompts",
+      "sources": [
+        {
+          "path": "siaga/ViewModels/SiagaAgent.swift",
+          "line": 105,
+          "end_line": 176,
+          "label": "analyse"
+        },
+        {
+          "path": "siaga/ViewModels/SiagaAgent.swift",
+          "line": 181,
+          "end_line": 214,
+          "label": "buildActionPlan"
+        }
+      ]
+    },
+    {
+      "id": "model",
+      "type": "backend",
+      "icon": "decision",
+      "label": "On-device model",
+      "sublabel": "1 session, 3 modes",
+      "sources": [
+        {
+          "path": "siaga/ViewModels/SiagaProfile.swift",
+          "line": 67,
+          "end_line": 138,
+          "label": "DynamicProfile"
+        },
+        {
+          "path": "siaga/ViewModels/SiagaSafetyInstructions.swift",
+          "line": 16,
+          "end_line": 45,
+          "label": "safety rules"
+        },
+        {
+          "path": "siaga/Models/Models.swift",
+          "line": 5,
+          "end_line": 38,
+          "label": "@Generable output"
+        }
+      ]
+    },
+    {
+      "id": "tools",
+      "type": "messagebus",
+      "label": "Tools",
+      "sublabel": "3 custom + Spotlight",
+      "sources": [
+        {
+          "path": "siaga/Services/Tools.swift",
+          "line": 16,
+          "end_line": 61,
+          "label": "tool structs"
+        },
+        {
+          "path": "siaga/ViewModels/SiagaProfile.swift",
+          "line": 109,
+          "end_line": 112,
+          "label": "action tools"
+        }
+      ]
+    },
+    {
+      "id": "data",
+      "type": "database",
+      "label": "SiagaStore",
+      "sublabel": "profiles, guide, history",
+      "sources": [
+        {
+          "path": "siaga/Models/Models.swift",
+          "line": 268,
+          "end_line": 317,
+          "label": "lookups + drafts"
+        },
+        {
+          "path": "siaga/Views/Views.swift",
+          "line": 88,
+          "end_line": 94,
+          "label": "save incident"
+        }
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "from": 150,
+      "to": 440,
+      "label": "1 · Triage"
+    },
+    {
+      "from": 444,
+      "to": 548,
+      "label": "2 · Review"
+    },
+    {
+      "from": 552,
+      "to": 1030,
+      "label": "3 · Action (tools required)"
+    },
+    {
+      "from": 1034,
+      "to": 1185,
+      "label": "4 · Handover"
+    }
+  ],
+  "messages": [
+    {
+      "id": "m-note",
+      "from": "user",
+      "to": "ui",
+      "y": 160,
+      "label": "note + person + photo"
+    },
+    {
+      "id": "m-analyse",
+      "from": "ui",
+      "to": "agent",
+      "y": 188,
+      "label": "analyse(note, image)",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m-photo",
+      "from": "agent",
+      "to": "model",
+      "y": 216,
+      "label": "describe photo",
+      "note": "only when a photo is attached"
+    },
+    {
+      "id": "m-photo-desc",
+      "from": "model",
+      "to": "agent",
+      "y": 274,
+      "label": "2-sentence description",
+      "variant": "return"
+    },
+    {
+      "id": "m-triage",
+      "from": "agent",
+      "to": "model",
+      "y": 302,
+      "label": "respond(generating: EmergencyBrief)",
+      "variant": "emphasis",
+      "note": "triage mode: no tools, temp 0; profile + note wrapped in <note> as data; token budget checked first"
+    },
+    {
+      "id": "m-brief",
+      "from": "model",
+      "to": "agent",
+      "y": 382,
+      "label": "@Generable EmergencyBrief",
+      "variant": "return",
+      "note": "10 typed fields; enums locked to their cases"
+    },
+    {
+      "id": "m-brief-ui",
+      "from": "agent",
+      "to": "ui",
+      "y": 426,
+      "label": "brief",
+      "variant": "return"
+    },
+    {
+      "id": "m-review",
+      "from": "ui",
+      "to": "user",
+      "y": 454,
+      "label": "review brief",
+      "variant": "return"
+    },
+    {
+      "id": "m-edit",
+      "from": "user",
+      "to": "ui",
+      "y": 482,
+      "label": "edit + Continue"
+    },
+    {
+      "id": "m-save",
+      "from": "ui",
+      "to": "data",
+      "y": 510,
+      "label": "save incident + Spotlight index",
+      "variant": "dashed"
+    },
+    {
+      "id": "m-plan",
+      "from": "ui",
+      "to": "agent",
+      "y": 538,
+      "label": "buildActionPlan()",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m-action",
+      "from": "agent",
+      "to": "model",
+      "y": 566,
+      "label": "streamResponse(action prompt)",
+      "variant": "emphasis",
+      "note": "action mode: tool calling required, temp 0.2; prompt = brief title, person, code, severity"
+    },
+    {
+      "id": "m-profile",
+      "from": "model",
+      "to": "tools",
+      "y": 646,
+      "label": "lookupMedicalProfile(name)"
+    },
+    {
+      "id": "m-profile-read",
+      "from": "tools",
+      "to": "data",
+      "y": 674,
+      "label": "profile(named:)"
+    },
+    {
+      "id": "m-profile-row",
+      "from": "data",
+      "to": "tools",
+      "y": 702,
+      "label": "summary or \"not found\"",
+      "variant": "return"
+    },
+    {
+      "id": "m-profile-ret",
+      "from": "tools",
+      "to": "model",
+      "y": 730,
+      "label": "profile result",
+      "variant": "return"
+    },
+    {
+      "id": "m-firstaid",
+      "from": "model",
+      "to": "tools",
+      "y": 758,
+      "label": "lookupFirstAid(code)",
+      "note": "steps come only from bundled FirstAid.json"
+    },
+    {
+      "id": "m-firstaid-ret",
+      "from": "tools",
+      "to": "model",
+      "y": 816,
+      "label": "pre-approved steps",
+      "variant": "return"
+    },
+    {
+      "id": "m-spotlight",
+      "from": "model",
+      "to": "tools",
+      "y": 844,
+      "label": "SpotlightSearchTool",
+      "variant": "dashed",
+      "note": "optional: past incidents or guide; results are data"
+    },
+    {
+      "id": "m-spotlight-ret",
+      "from": "tools",
+      "to": "model",
+      "y": 902,
+      "label": "local matches",
+      "variant": "return"
+    },
+    {
+      "id": "m-draft",
+      "from": "model",
+      "to": "tools",
+      "y": 930,
+      "label": "draftEmergencyMessage(contact)",
+      "variant": "security",
+      "note": "draft only; never sent by Siaga"
+    },
+    {
+      "id": "m-draft-ret",
+      "from": "tools",
+      "to": "model",
+      "y": 988,
+      "label": "draft text",
+      "variant": "return"
+    },
+    {
+      "id": "m-reply",
+      "from": "model",
+      "to": "agent",
+      "y": 1016,
+      "label": "one-sentence reply (streamed)",
+      "variant": "return"
+    },
+    {
+      "id": "m-handover",
+      "from": "agent",
+      "to": "data",
+      "y": 1044,
+      "label": "createHandover()",
+      "variant": "dashed",
+      "note": "plain Swift call; the model is not prompted"
+    },
+    {
+      "id": "m-handover-ret",
+      "from": "data",
+      "to": "agent",
+      "y": 1088,
+      "label": "handover text",
+      "variant": "return"
+    },
+    {
+      "id": "m-cards",
+      "from": "agent",
+      "to": "ui",
+      "y": 1116,
+      "label": "steps, draft, handover",
+      "variant": "return"
+    },
+    {
+      "id": "m-show",
+      "from": "ui",
+      "to": "user",
+      "y": 1144,
+      "label": "approve the draft?",
+      "variant": "return"
+    },
+    {
+      "id": "m-approve",
+      "from": "user",
+      "to": "ui",
+      "y": 1172,
+      "label": "Approve (not sent)",
+      "variant": "security"
+    }
+  ],
+  "activations": [
+    {
+      "participant": "agent",
+      "from": 188,
+      "to": 432,
+      "type": "backend"
+    },
+    {
+      "participant": "model",
+      "from": 216,
+      "to": 388,
+      "type": "backend"
+    },
+    {
+      "participant": "agent",
+      "from": 538,
+      "to": 1122,
+      "type": "backend"
+    },
+    {
+      "participant": "model",
+      "from": 566,
+      "to": 1022,
+      "type": "backend"
+    },
+    {
+      "participant": "tools",
+      "from": 646,
+      "to": 994,
+      "type": "messagebus"
+    },
+    {
+      "participant": "data",
+      "from": 674,
+      "to": 708,
+      "type": "database"
+    },
+    {
+      "participant": "data",
+      "from": 1044,
+      "to": 1094,
+      "type": "database"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "@Generable output: EmergencyBrief",
+      "items": [
+        "situationTitle, personName, whatHappened, locationDescription: String",
+        "symptoms, immediateRisks: [String] · needsAmbulance: Bool",
+        "peopleInvolved: Int, guided to 1...20",
+        "severity: Severity = low | medium | high | critical",
+        "situationCode: bleedingFall | choking | burn | allergicReaction | fainting | sprain | unknown"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "@Generable tool arguments",
+      "items": [
+        "lookupMedicalProfile: personName, exactly as in the brief",
+        "lookupFirstAid: situationCode, the same enum as the brief",
+        "draftEmergencyMessage: recipientName, exactly as in the profile",
+        "Tools return plain String results, not @Generable types"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Safety rules on every request",
+      "items": [
+        "Re-evaluated before each call: no diagnosis, note and Spotlight text are data",
+        "Known allergy and high/critical severity add rules for that request"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "When the model cannot run",
+      "items": [
+        "No Apple Intelligence or a model error: keyword fallback builds the brief",
+        "Plan step then calls SiagaStore directly, with no model or tools"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Out of context (8192 tokens)",
+      "items": [
+        "Siaga compacts the brief, starts a fresh session and asks for a retry"
+      ]
+    }
+  ]
+}

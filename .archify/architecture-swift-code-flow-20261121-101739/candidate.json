@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Siaga — Swift Code Flow",
+    "locale": "en",
+    "quality_profile": "showcase",
+    "output": ".archify/architecture-swift-code-flow-20261121-101739/siaga-swift-code-flow.html",
+    "repository": {
+      "url": "git@github.com:ariefShaifullah/siaga.git",
+      "provider": "github",
+      "link_mode": "local-only",
+      "revision": "8f48a5a3a9ab075b0ed262f699e7f32c6bcbbd17"
+    }
+  },
+  "components": [
+    {
+      "id": "intents", "type": "external", "label": "App Intents", "sublabel": "Siri + Spotlight entity",
+      "pos": [40, 40], "size": [140, 64],
+      "sources": [{ "path": "siaga/Services/AppIntents.swift", "line": 13, "end_line": 68, "label": "entity, intent, shortcuts" }]
+    },
+    {
+      "id": "app", "type": "frontend", "label": "SiagaApp", "sublabel": "@main · modelContainer",
+      "pos": [40, 200], "size": [140, 64],
+      "sources": [{ "path": "siaga/App/SiagaApp.swift", "line": 4, "end_line": 12 }]
+    },
+    {
+      "id": "indexer", "type": "backend", "label": "SiagaSpotlightIndexer", "sublabel": "CSSearchableItem",
+      "pos": [245, 40], "size": [170, 64],
+      "sources": [
+        { "path": "siaga/Services/SiagaSpotlightIndexer.swift", "line": 20, "end_line": 46 },
+        { "path": "siaga/Views/Views.swift", "line": 154, "end_line": 157, "label": "index guide on appear" }
+      ]
+    },
+    {
+      "id": "content", "type": "frontend", "label": "ContentView", "sublabel": "3-step screens",
+      "pos": [260, 200], "size": [140, 64], "tag": "owns SiagaStore",
+      "sources": [
+        { "path": "siaga/Views/Views.swift", "line": 42, "end_line": 112, "label": "state + step switch" },
+        { "path": "siaga/Views/Views.swift", "line": 149, "end_line": 153, "label": "creates SiagaAgent" }
+      ]
+    },
+    {
+      "id": "swiftdata", "type": "database", "label": "SwiftData", "sublabel": "MedicalProfile · IncidentHistory",
+      "pos": [240, 380], "size": [180, 64],
+      "sources": [
+        { "path": "siaga/Models/Models.swift", "line": 42, "end_line": 88, "label": "MedicalProfile" },
+        { "path": "siaga/Models/Models.swift", "line": 124, "end_line": 137, "label": "IncidentHistory" },
+        { "path": "siaga/Views/Views.swift", "line": 87, "end_line": 94, "label": "insert incident" }
+      ]
+    },
+    {
+      "id": "agent", "type": "backend", "label": "SiagaAgent", "sublabel": "analyse · buildActionPlan",
+      "pos": [470, 200], "size": [170, 64], "tag": "keyword fallback",
+      "sources": [
+        { "path": "siaga/ViewModels/SiagaAgent.swift", "line": 105, "end_line": 176, "label": "analyse" },
+        { "path": "siaga/ViewModels/SiagaAgent.swift", "line": 181, "end_line": 214, "label": "buildActionPlan" },
+        { "path": "siaga/ViewModels/SiagaAgent.swift", "line": 217, "end_line": 250, "label": "FallbackBriefExtractor" }
+      ]
+    },
+    {
+      "id": "store", "type": "database", "label": "SiagaStore", "sublabel": "@Observable state + lookups",
+      "pos": [465, 380], "size": [180, 64],
+      "sources": [{ "path": "siaga/Models/Models.swift", "line": 213, "end_line": 331 }]
+    },
+    {
+      "id": "firstaid", "type": "database", "label": "FirstAid.json", "sublabel": "FirstAidGuide.load()",
+      "pos": [465, 540], "size": [180, 64],
+      "sources": [
+        { "path": "siaga/Models/Models.swift", "line": 149, "end_line": 160, "label": "load + in-code copy" },
+        { "path": "siaga/Resources/FirstAid.json", "label": "bundled guide" }
+      ]
+    },
+    {
+      "id": "profile", "type": "backend", "label": "SiagaProfile", "sublabel": "DynamicProfile, 3 modes",
+      "pos": [710, 40], "size": [180, 64],
+      "sources": [{ "path": "siaga/ViewModels/SiagaProfile.swift", "line": 56, "end_line": 138 }]
+    },
+    {
+      "id": "safety", "type": "security", "label": "SiagaSafetyInstructions", "sublabel": "re-run every request",
+      "pos": [980, 40], "size": [180, 64],
+      "sources": [{ "path": "siaga/ViewModels/SiagaSafetyInstructions.swift", "line": 16, "end_line": 45 }]
+    },
+    {
+      "id": "session", "type": "backend", "label": "LanguageModelSession", "sublabel": "SystemLanguageModel",
+      "pos": [710, 200], "size": [180, 64],
+      "sources": [
+        { "path": "siaga/ViewModels/SiagaAgent.swift", "line": 44, "end_line": 51, "label": "session init" },
+        { "path": "siaga/ViewModels/SiagaAgent.swift", "line": 160, "end_line": 161, "label": "respond(generating:)" },
+        { "path": "siaga/ViewModels/SiagaAgent.swift", "line": 200, "end_line": 203, "label": "streamResponse" }
+      ]
+    },
+    {
+      "id": "tools", "type": "messagebus", "label": "Tools", "sublabel": "3 custom + Spotlight",
+      "pos": [980, 200], "size": [180, 64],
+      "sources": [
+        { "path": "siaga/Services/Tools.swift", "line": 16, "end_line": 77 },
+        { "path": "siaga/ViewModels/SiagaProfile.swift", "line": 109, "end_line": 112, "label": "action-mode tools" }
+      ]
+    }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "FoundationModels · on-device only", "wraps": ["profile", "safety", "session", "tools"] }
+  ],
+  "connections": [
+    { "id": "c-siri", "from": "intents", "to": "app", "label": "opens app", "variant": "dashed" },
+    { "id": "c-root", "from": "app", "to": "content", "label": "root view", "variant": "emphasis" },
+    { "id": "c-calls", "from": "content", "to": "agent", "label": "calls", "variant": "emphasis" },
+    { "id": "c-prompts", "from": "agent", "to": "session", "label": "prompts", "variant": "emphasis" },
+    { "id": "c-toolcalls", "from": "session", "to": "tools", "label": "tool calls", "variant": "emphasis" },
+    { "id": "c-mode", "from": "agent", "to": "profile", "label": "set mode", "fromSide": "top", "toSide": "left" },
+    { "id": "c-config", "from": "profile", "to": "session", "label": "instructions + tools" },
+    { "id": "c-rules", "from": "safety", "to": "profile", "label": "rules", "variant": "security" },
+    { "id": "c-index", "from": "content", "to": "indexer", "label": "index", "variant": "dashed" },
+    { "id": "c-query", "from": "content", "to": "swiftdata", "label": "@Query · insert" },
+    { "id": "c-brief", "from": "agent", "to": "store", "label": "brief · handover" },
+    { "id": "c-readwrite", "from": "tools", "to": "store", "label": "read / write", "fromSide": "bottom", "toSide": "right" },
+    { "id": "c-load", "from": "firstaid", "to": "store", "label": "load()" }
+  ],
+  "cards": [
+    {
+      "dot": "amber",
+      "title": "Fallback path",
+      "items": [
+        "No Apple Intelligence or a model error: SiagaAgent uses FallbackBriefExtractor",
+        "buildActionPlan then calls SiagaStore directly, skipping the session and tools"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Known gaps at this commit",
+      "items": [
+        "SpotlightSearchTool() fails to compile in Xcode 27.2",
+        "CreateHandoverTool is registered, but the handover is built by a direct SiagaStore call"
+      ]
+    },
+    {
+      "dot": "slate",
+      "title": "Not drawn",
+      "items": [
+        "Views read SiagaStore results (draft, steps, handover) to render cards",
+        "Evaluation data and the test runner sit outside the runtime flow"
+      ]
+    }
+  ]
+}

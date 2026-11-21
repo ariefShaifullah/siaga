@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/architecture-swift-code-flow-20261121-101739/candidate.json",
+    "sha256": "ad70e73063b93e25225909a7e8a93ecde598501a7e2cf68d063fc3ff1f487423",
+    "bytes": 7281
+  },
+  "artifact": {
+    "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/architecture-swift-code-flow-20261121-101739/siaga-swift-code-flow.html",
+    "sha256": "aaffe13422703a1abed5412d91bf8a0738557158e945656bc6a0eab24b0c3149",
+    "bytes": 857235
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/architecture-swift-code-flow-20261121-101739/siaga-swift-code-flow.finalize.json",
+    "summaryReceipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/architecture-swift-code-flow-20261121-101739/siaga-swift-code-flow.finalize-summary.json",
+    "browserCheckReceipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/architecture-swift-code-flow-20261121-101739/siaga-swift-code-flow.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-21T03:03:51.779Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 2436,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "f304bed1-18f3-4276-8d4e-8e188d1bf20f",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/architecture-swift-code-flow-20261121-101739/candidate.json",
+  "output": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/architecture-swift-code-flow-20261121-101739/siaga-swift-code-flow.html",
+  "specification": {
+    "sha256": "ad70e73063b93e25225909a7e8a93ecde598501a7e2cf68d063fc3ff1f487423",
+    "bytes": 7281
+  },
+  "artifact": {
+    "sha256": "aaffe13422703a1abed5412d91bf8a0738557158e945656bc6a0eab24b0c3149",
+    "bytes": 857235
+  }
+}

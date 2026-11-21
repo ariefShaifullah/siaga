@@ -1,0 +1,79 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "How Siaga Helps You in an Emergency",
+    "locale": "en",
+    "quality_profile": "showcase",
+    "output": ".archify/workflow-end-user-flow-20261121-100750/siaga-how-it-helps.html",
+    "legend": {
+      "entries": {
+        "external": { "label": "What you do" },
+        "backend": { "label": "What Siaga does" },
+        "database": { "label": "Kept on your phone" },
+        "security": { "label": "Emergency help" }
+      }
+    }
+  },
+  "lanes": [
+    { "id": "you", "label": "You" },
+    { "id": "siaga", "label": "Siaga on your phone" },
+    { "id": "help", "label": "Emergency help", "variant": "exception" }
+  ],
+  "phases": [
+    { "id": "tell_phase", "label": "1 · Tell", "fromCol": 0, "toCol": 2 },
+    { "id": "check_phase", "label": "2 · Check", "fromCol": 3, "toCol": 3, "variant": "emphasis" },
+    { "id": "act_phase", "label": "3 · Act", "fromCol": 4, "toCol": 5 }
+  ],
+  "mainPath": ["happens", "tell", "understand", "check", "prepare", "summary", "paramedics"],
+  "nodes": [
+    { "id": "happens", "lane": "you", "col": 0, "type": "external", "icon": "flag", "label": "Something happens", "sublabel": "e.g. Mum falls" },
+    { "id": "tell", "lane": "you", "col": 1, "type": "external", "icon": "person", "label": "Tell Siaga", "sublabel": "type, speak or photo" },
+    { "id": "check", "lane": "you", "col": 3, "type": "external", "icon": "person", "label": "Check the summary", "sublabel": "fix anything wrong" },
+    { "id": "approve", "lane": "you", "col": 4, "type": "external", "icon": "success", "label": "Approve message", "sublabel": "you send it yourself" },
+    { "id": "family", "lane": "siaga", "col": 0, "type": "database", "label": "Family info", "sublabel": "allergies, blood type", "tag": "set up beforehand" },
+    { "id": "understand", "lane": "siaga", "col": 2, "type": "backend", "icon": "decision", "label": "Understands it", "sublabel": "how serious, what kind" },
+    { "id": "prepare", "lane": "siaga", "col": 4, "type": "backend", "icon": "active", "label": "Prepares help", "sublabel": "first-aid steps + message" },
+    { "id": "summary", "lane": "siaga", "col": 5, "type": "backend", "icon": "flag", "label": "Paramedic summary", "sublabel": "who, what, allergies" },
+    { "id": "call112", "lane": "help", "col": 3, "type": "security", "icon": "stop", "label": "Call 112", "sublabel": "one tap, always there" },
+    { "id": "paramedics", "lane": "help", "col": 5, "type": "security", "icon": "success", "label": "Paramedics arrive", "sublabel": "read the summary" }
+  ],
+  "edges": [
+    { "id": "u-start", "from": "happens", "to": "tell", "label": "open Siaga" },
+    { "id": "u-tell", "from": "tell", "to": "understand", "label": "your words", "variant": "emphasis" },
+    { "id": "u-know", "from": "family", "to": "understand", "label": "who it is", "role": "branch" },
+    { "id": "u-check", "from": "understand", "to": "check", "label": "short summary", "variant": "emphasis" },
+    { "id": "u-ok", "from": "check", "to": "prepare", "label": "looks right", "variant": "emphasis" },
+    { "id": "u-serious", "from": "check", "to": "call112", "label": "serious? call now", "variant": "security", "role": "branch" },
+    { "id": "u-message", "from": "prepare", "to": "approve", "label": "message to family", "role": "branch" },
+    { "id": "u-summary", "from": "prepare", "to": "summary" },
+    { "id": "u-hand", "from": "summary", "to": "paramedics", "label": "show screen", "variant": "emphasis" }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Works with no signal",
+      "items": [
+        "Everything happens on your phone, even in Airplane Mode",
+        "Nothing you type or photograph leaves the phone"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Siaga is not a doctor",
+      "items": [
+        "It never diagnoses or suggests medicine",
+        "First-aid steps come from a checked guide",
+        "It never calls or sends a message for you"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "If Siaga is unsure",
+      "items": [
+        "It rates the situation as more serious, not less",
+        "If it cannot understand, it says so and you fill in the summary"
+      ]
+    }
+  ]
+}

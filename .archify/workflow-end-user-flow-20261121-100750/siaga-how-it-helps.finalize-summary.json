@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-100750/candidate.json",
+    "sha256": "96ae06956603946e68ebd013d1385b1a33b4dea5acc5125ec97a127108e9afd4",
+    "bytes": 4270
+  },
+  "artifact": {
+    "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-100750/siaga-how-it-helps.html",
+    "sha256": "4a80c3ea33a69b636b0d4ebe53b4dc897a84ac0d02b34d1deef5928d00ff96f5",
+    "bytes": 845239
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-100750/siaga-how-it-helps.finalize.json",
+    "summaryReceipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-100750/siaga-how-it-helps.finalize-summary.json",
+    "browserCheckReceipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-100750/siaga-how-it-helps.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-21T03:03:51.779Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 2416,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

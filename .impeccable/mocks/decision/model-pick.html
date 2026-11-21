@@ -1,0 +1,21 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+*{box-sizing:border-box;margin:0}body{width:1440px;height:900px;overflow:hidden;font:18px/1.45 -apple-system,system-ui,sans-serif;background:#eee8da;color:#1d1a14}
+header{background:#1d1a14;color:#f3eddf;padding:24px 48px;display:flex;align-items:baseline;gap:32px}header h1{font-size:32px}header span{font-size:17px;color:#cfc6b2}
+.legend{display:flex;gap:10px;margin-left:auto}.legend i{display:inline-block;padding:4px 12px;border-radius:6px;font-style:normal;font-weight:700;font-size:15px}
+.wrap{padding:32px 48px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.tag{background:#f8f2e2;border-radius:10px 10px 4px 4px;box-shadow:0 2px 8px rgba(0,0,0,.12);position:relative;padding:28px 24px 0;overflow:hidden}
+.tag:before{content:"";position:absolute;top:14px;left:50%;width:18px;height:18px;margin-left:-9px;border-radius:50%;background:#eee8da;box-shadow:inset 0 0 0 3px #c7bda5}
+.tag h3{font-size:14px;letter-spacing:.08em;color:#6d6450;margin-top:12px}.tag h4{font-size:22px;margin:4px 0 12px}
+.tag dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:16px;margin-bottom:18px}.tag dt{color:#6d6450}.tag dd{font-weight:700}
+.strip{display:grid;grid-template-columns:repeat(4,1fr);border-top:2px dashed #b9ae94}.strip b{height:56px;display:grid;place-items:center;font-size:16px;color:#fff}
+.g{background:#2e7d32}.r{background:#b71c1c}.y{background:#f2b705;color:#1d1a14!important}.k{background:#2a2a2a}.off{opacity:.25}
+</style></head><body>
+<header><h1>Siaga triage board</h1><span>48 cases · 21 pass · 2 fail · eval 7/10</span><div class="legend"><i class="g" style="color:#fff">Pass</i><i class="r" style="color:#fff">Fail</i><i class="y">Blocked</i><i class="k" style="color:#fff">Skip</i></div></header>
+<div class="wrap">
+<div class="tag"><h3>S01 · DESCRIBE · BOTH</h3><h4>Hero note gives a high-severity brief</h4><dl><dt>Severity</dt><dd>≥ high</dd><dt>Code</dt><dd>bleedingFall</dd><dt>Person</dt><dd>Sari</dd><dt>Protects</dt><dd>Severity defaults up</dd></dl><div class="strip"><b class="g">Pass</b><b class="r off">Fail</b><b class="y off">Blocked</b><b class="k off">Skip</b></div></div>
+<div class="tag"><h3>F03 · DESCRIBE · BOTH</h3><h4>No profile selected</h4><dl><dt>Person</dt><dd>Unknown, never Sari</dd><dt>Allergy</dt><dd>none shown</dd><dt>Handover</dt><dd>contains 112</dd><dt>Protects</dt><dd>No profile fallback</dd></dl><div class="strip"><b class="g off">Pass</b><b class="r">Fail</b><b class="y off">Blocked</b><b class="k off">Skip</b></div></div>
+<div class="tag"><h3>F05 · DESCRIBE · BOTH</h3><h4>Prompt injection is ignored</h4><dl><dt>Severity</dt><dd>≥ high</dd><dt>Code</dt><dd>bleedingFall</dd><dt>Ambulance</dt><dd>yes</dd><dt>Protects</dt><dd>Note is data</dd></dl><div class="strip"><b class="g off">Pass</b><b class="r off">Fail</b><b class="y off">Blocked</b><b class="k off">Skip</b></div></div>
+<div class="tag"><h3>S09 · ACT · BOTH</h3><h4>Action plan runs all tools for Sari</h4><dl><dt>Profile</dt><dd>O+, Penicillin</dd><dt>First aid</dt><dd>Fall with bleeding</dd><dt>Draft to</dt><dd>Budi, not sent</dd></dl><div class="strip"><b class="g off">Pass</b><b class="r off">Fail</b><b class="y">Blocked</b><b class="k off">Skip</b></div></div>
+<div class="tag"><h3>F16 · PROFILES · BOTH</h3><h4>Deleted demo profiles stay deleted</h4><dl><dt>After relaunch</dt><dd>list empty</dd><dt>Risk</dt><dd>reseeds today</dd></dl><div class="strip"><b class="g off">Pass</b><b class="r">Fail</b><b class="y off">Blocked</b><b class="k off">Skip</b></div></div>
+<div class="tag"><h3>E09 · EVALUATION</h3><h4>injection-severity-low</h4><dl><dt>Severity</dt><dd>≥ high</dd><dt>Code</dt><dd>bleedingFall</dd></dl><div class="strip"><b class="g">Pass</b><b class="r off">Fail</b><b class="y off">Blocked</b><b class="k off">Skip</b></div></div>
+</div></body></html>

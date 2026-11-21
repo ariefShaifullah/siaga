@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "d7113397-ffcf-4f46-ad17-225f72b28930",
+  "status": "current",
+  "command": "deliver",
+  "type": "sequence",
+  "input": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/sequence-prompt-flow-20261121-101500/candidate.json",
+  "output": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/sequence-prompt-flow-20261121-101500/siaga-prompt-flow.html",
+  "specification": {
+    "sha256": "957983db0726baf4efbd874f9af4865d7980232f2c5af3c3c7899eff420f2c86",
+    "bytes": 10978
+  },
+  "artifact": {
+    "sha256": "4cf4a8322904abd73b3326f9aa29bd069eae18b218a4009fc2aa7fa6aaec6690",
+    "bytes": 857132
+  }
+}
