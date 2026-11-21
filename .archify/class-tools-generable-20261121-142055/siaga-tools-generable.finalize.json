@@ -5,16 +5,16 @@
   "status": "pass",
   "type": "class",
   "quality": "showcase",
-  "startedAt": "2026-11-21T03:25:11.609Z",
+  "startedAt": "2026-11-21T07:23:26.856Z",
   "specification": {
-    "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-102443/candidate.json",
-    "sha256": "956b184cd5232dcba324f59438a2b400f08abbeec65ba0e0a7ddebd2a3ebf750",
-    "bytes": 7792
+    "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-142055/candidate.json",
+    "sha256": "b84e9377a90175d894e02cfeff779e82f5b61e106bb47d7589d7c8e948b6ae9e",
+    "bytes": 10586
   },
   "artifact": {
-    "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-102443/siaga-tools-generable.html",
-    "sha256": "1085f9417af9bb89ad8ae587b4c3a343fe457fdffb667c2b57a2ea6698d0ba4d",
-    "bytes": 865722
+    "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-142055/siaga-tools-generable.html",
+    "sha256": "29853ca87c5f596612e5059d6657291ab768cf40df4b827c09bb55362f195b9d",
+    "bytes": 866095
   },
   "stages": {
     "validate": {
@@ -27,8 +27,8 @@
         "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.agents/skills/archify/bin/archify.mjs",
         "deliver",
         "class",
-        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-102443/candidate.json",
-        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-102443/siaga-tools-generable.html",
+        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-142055/candidate.json",
+        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-142055/siaga-tools-generable.html",
         "--quality",
         "showcase",
         "--repo-root",
@@ -40,8 +40,8 @@
         "ok": true,
         "command": "validate",
         "specification": {
-          "sha256": "956b184cd5232dcba324f59438a2b400f08abbeec65ba0e0a7ddebd2a3ebf750",
-          "bytes": 7792
+          "sha256": "b84e9377a90175d894e02cfeff779e82f5b61e106bb47d7589d7c8e948b6ae9e",
+          "bytes": 10586
         },
         "validation": {
           "checksPassed": 9,
@@ -56,14 +56,14 @@
     "deliver": {
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 319,
+      "durationMs": 501,
       "command": [
         "/Users/nusantaradeveloper/.nvm/versions/node/v22.23.4/bin/node",
         "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.agents/skills/archify/bin/archify.mjs",
         "deliver",
         "class",
-        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-102443/candidate.json",
-        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-102443/siaga-tools-generable.html",
+        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-142055/candidate.json",
+        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-142055/siaga-tools-generable.html",
         "--quality",
         "showcase",
         "--repo-root",
@@ -72,19 +72,19 @@
       ],
       "receipt": {
         "schemaVersion": 1,
-        "receiptId": "7a612d5b-cb2a-4f3d-a89e-2e4c16948bc1",
+        "receiptId": "af95d486-cc17-4bc9-9480-4f8eb589490f",
         "ok": true,
         "command": "deliver",
         "type": "class",
-        "input": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-102443/candidate.json",
-        "output": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-102443/siaga-tools-generable.html",
+        "input": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-142055/candidate.json",
+        "output": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-142055/siaga-tools-generable.html",
         "specification": {
-          "sha256": "956b184cd5232dcba324f59438a2b400f08abbeec65ba0e0a7ddebd2a3ebf750",
-          "bytes": 7792
+          "sha256": "b84e9377a90175d894e02cfeff779e82f5b61e106bb47d7589d7c8e948b6ae9e",
+          "bytes": 10586
         },
         "artifact": {
-          "sha256": "1085f9417af9bb89ad8ae587b4c3a343fe457fdffb667c2b57a2ea6698d0ba4d",
-          "bytes": 865722
+          "sha256": "29853ca87c5f596612e5059d6657291ab768cf40df4b827c09bb55362f195b9d",
+          "bytes": 866095
         },
         "validation": {
           "checksPassed": 9,
@@ -97,7 +97,7 @@
         "evidence": {
           "verified": true,
           "repository": "git@github.com:ariefShaifullah/siaga",
-          "revision": "8f48a5a3a9ab075b0ed262f699e7f32c6bcbbd17",
+          "revision": "bfb838d889953f0d27cc1e529408aff2eed06f67",
           "references": 12,
           "linkMode": "local-only"
         },
@@ -117,20 +117,20 @@
     "check": {
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 130,
+      "durationMs": 213,
       "command": [
         "/Users/nusantaradeveloper/.nvm/versions/node/v22.23.4/bin/node",
         "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.agents/skills/archify/bin/archify.mjs",
         "check",
-        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-102443/siaga-tools-generable.html",
+        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-142055/siaga-tools-generable.html",
         "--require-provenance"
       ],
       "receipt": {
         "ok": true,
-        "file": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-102443/siaga-tools-generable.html",
+        "file": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-142055/siaga-tools-generable.html",
         "artifact": {
-          "sha256": "1085f9417af9bb89ad8ae587b4c3a343fe457fdffb667c2b57a2ea6698d0ba4d",
-          "bytes": 865722
+          "sha256": "29853ca87c5f596612e5059d6657291ab768cf40df4b827c09bb55362f195b9d",
+          "bytes": 866095
         },
         "checks": [
           {
@@ -205,7 +205,7 @@
             "routesOverSuggestedBends": 0,
             "maxStretch": 1,
             "routesOverSuggestedStretch": 0,
-            "minSegmentPx": 114,
+            "minSegmentPx": 104,
             "minInteriorSegmentPx": null,
             "shortSegmentCount": 0,
             "shortEndpointSegmentCount": 0,
@@ -247,23 +247,23 @@
             },
             "minimumSourceTextPx": 9.5,
             "minimumProjectedTextPx": 7.5,
-            "semanticTextCount": 80
+            "semanticTextCount": 81
           },
           "issues": []
         },
         "provenance": "current",
-        "deliveryReceiptId": "7a612d5b-cb2a-4f3d-a89e-2e4c16948bc1"
+        "deliveryReceiptId": "af95d486-cc17-4bc9-9480-4f8eb589490f"
       }
     },
     "browser-check": {
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 1746,
+      "durationMs": 1932,
       "command": [
         "/Users/nusantaradeveloper/.nvm/versions/node/v22.23.4/bin/node",
         "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.agents/skills/archify/bin/archify.mjs",
         "browser-check",
-        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-102443/siaga-tools-generable.html",
+        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-142055/siaga-tools-generable.html",
         "--json",
         "--require-provenance"
       ],
@@ -276,11 +276,11 @@
         "status": "pass",
         "visualReview": "not-requested",
         "provenance": "current",
-        "deliveryReceiptId": "7a612d5b-cb2a-4f3d-a89e-2e4c16948bc1",
+        "deliveryReceiptId": "af95d486-cc17-4bc9-9480-4f8eb589490f",
         "artifact": {
-          "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-102443/siaga-tools-generable.html",
-          "sha256": "1085f9417af9bb89ad8ae587b4c3a343fe457fdffb667c2b57a2ea6698d0ba4d",
-          "bytes": 865722
+          "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-142055/siaga-tools-generable.html",
+          "sha256": "29853ca87c5f596612e5059d6657291ab768cf40df4b827c09bb55362f195b9d",
+          "bytes": 866095
         },
         "state": {
           "detail": "read",
@@ -997,13 +997,13 @@
   },
   "diagnostics": [],
   "evidence": {
-    "receipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-102443/siaga-tools-generable.finalize.json",
-    "summaryReceipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-102443/siaga-tools-generable.finalize-summary.json",
-    "browserCheckReceipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-102443/siaga-tools-generable.browser-check.json"
+    "receipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-142055/siaga-tools-generable.finalize.json",
+    "summaryReceipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-142055/siaga-tools-generable.finalize-summary.json",
+    "browserCheckReceipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-142055/siaga-tools-generable.browser-check.json"
   },
   "visualReview": "not-requested",
-  "finishedAt": "2026-11-21T03:25:13.964Z",
-  "durationMs": 2355,
+  "finishedAt": "2026-11-21T07:23:29.732Z",
+  "durationMs": 2875,
   "update": {
     "status": "current",
     "installedVersion": "3.2.0",

@@ -1,0 +1,534 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Siaga \u2014 User Flow, Chat to Paramedic Handover",
+    "locale": "en",
+    "quality_profile": "showcase",
+    "output": ".archify/workflow-user-flow-20261121-142055/siaga-user-flow.html",
+    "repository": {
+      "url": "git@github.com:ariefShaifullah/siaga.git",
+      "provider": "github",
+      "link_mode": "local-only",
+      "revision": "bfb838d889953f0d27cc1e529408aff2eed06f67"
+    }
+  },
+  "lanes": [
+    {
+      "id": "user",
+      "label": "Caregiver"
+    },
+    {
+      "id": "ui",
+      "label": "Siaga screens"
+    },
+    {
+      "id": "agent",
+      "label": "On-device agent"
+    },
+    {
+      "id": "data",
+      "label": "Local tools & data"
+    },
+    {
+      "id": "recovery",
+      "label": "Fallback & recovery",
+      "variant": "exception"
+    }
+  ],
+  "phases": [
+    {
+      "id": "describe_phase",
+      "label": "1 \u00b7 Describe (chat)",
+      "fromCol": 0,
+      "toCol": 2
+    },
+    {
+      "id": "act_phase",
+      "label": "2 \u00b7 Act",
+      "fromCol": 3,
+      "toCol": 5,
+      "variant": "emphasis"
+    }
+  ],
+  "mainPath": [
+    "emergency",
+    "chat",
+    "triage",
+    "action",
+    "handover",
+    "plan",
+    "send"
+  ],
+  "nodes": [
+    {
+      "id": "emergency",
+      "lane": "user",
+      "col": 0,
+      "type": "external",
+      "icon": "person",
+      "label": "Emergency",
+      "sublabel": "no signal, panic",
+      "sources": [
+        {
+          "path": "README.md",
+          "line": 69,
+          "end_line": 85,
+          "label": "How it works"
+        }
+      ]
+    },
+    {
+      "id": "call112",
+      "lane": "user",
+      "col": 2,
+      "type": "security",
+      "icon": "stop",
+      "label": "Call 112",
+      "sublabel": "always on screen",
+      "tag": "user dials",
+      "sources": [
+        {
+          "path": "siaga/Views/Views.swift",
+          "line": 134,
+          "end_line": 143,
+          "label": "bottom safe area"
+        },
+        {
+          "path": "siaga/Views/Views.swift",
+          "line": 192,
+          "end_line": 206,
+          "label": "tel://112 link"
+        }
+      ]
+    },
+    {
+      "id": "send",
+      "lane": "user",
+      "col": 5,
+      "type": "external",
+      "icon": "success",
+      "label": "Copy or open in Messages",
+      "sublabel": "you send it, not Siaga",
+      "sources": [
+        {
+          "path": "siaga/Views/Views.swift",
+          "line": 834,
+          "end_line": 862,
+          "label": "Copy draft / Open in Messages"
+        }
+      ]
+    },
+    {
+      "id": "chat",
+      "lane": "ui",
+      "col": 1,
+      "type": "frontend",
+      "label": "Chat",
+      "sublabel": "messages \u00b7 photo \u00b7 samples",
+      "sources": [
+        {
+          "path": "siaga/Views/Views.swift",
+          "line": 68,
+          "end_line": 95,
+          "label": "chat step"
+        },
+        {
+          "path": "siaga/Views/Views.swift",
+          "line": 298,
+          "end_line": 530,
+          "label": "EmergencyNoteView"
+        }
+      ]
+    },
+    {
+      "id": "plan",
+      "lane": "ui",
+      "col": 4,
+      "type": "frontend",
+      "label": "Action plan",
+      "sublabel": "brief \u00b7 steps \u00b7 draft \u00b7 handover",
+      "sources": [
+        {
+          "path": "siaga/Views/Views.swift",
+          "line": 689,
+          "end_line": 900,
+          "label": "ActionPlanView"
+        },
+        {
+          "path": "siaga/Views/Views.swift",
+          "line": 97,
+          "end_line": 109,
+          "label": "new incident"
+        }
+      ]
+    },
+    {
+      "id": "chatagent",
+      "lane": "agent",
+      "col": 1,
+      "type": "backend",
+      "label": "Chat agent",
+      "sublabel": "one question at a time",
+      "tag": "no tools, temp 0.3",
+      "sources": [
+        {
+          "path": "siaga/ViewModels/SiagaAgent.swift",
+          "line": 111,
+          "end_line": 166,
+          "label": "sendChat"
+        },
+        {
+          "path": "siaga/ViewModels/SiagaProfile.swift",
+          "line": 86,
+          "end_line": 106,
+          "label": "chat mode"
+        }
+      ]
+    },
+    {
+      "id": "triage",
+      "lane": "agent",
+      "col": 2,
+      "type": "backend",
+      "label": "Triage",
+      "sublabel": "EmergencyBrief",
+      "tag": "no tools, temp 0",
+      "sources": [
+        {
+          "path": "siaga/ViewModels/SiagaAgent.swift",
+          "line": 199,
+          "end_line": 314,
+          "label": "analyse"
+        },
+        {
+          "path": "siaga/ViewModels/SiagaProfile.swift",
+          "line": 108,
+          "end_line": 122,
+          "label": "triage mode"
+        },
+        {
+          "path": "siaga/Views/Views.swift",
+          "line": 84,
+          "end_line": 90,
+          "label": "save + index"
+        }
+      ]
+    },
+    {
+      "id": "action",
+      "lane": "agent",
+      "col": 3,
+      "type": "backend",
+      "label": "Action agent",
+      "sublabel": "stops once the draft exists",
+      "tag": "tools required",
+      "sources": [
+        {
+          "path": "siaga/ViewModels/SiagaAgent.swift",
+          "line": 317,
+          "end_line": 400,
+          "label": "buildActionPlan"
+        },
+        {
+          "path": "siaga/ViewModels/SiagaProfile.swift",
+          "line": 124,
+          "end_line": 154,
+          "label": "action mode"
+        }
+      ]
+    },
+    {
+      "id": "compact",
+      "lane": "recovery",
+      "col": 1,
+      "type": "security",
+      "icon": "waiting",
+      "label": "Fresh session",
+      "sublabel": "compact brief kept",
+      "sources": [
+        {
+          "path": "siaga/ViewModels/SiagaAgent.swift",
+          "line": 156,
+          "end_line": 159,
+          "label": "chat too long"
+        },
+        {
+          "path": "siaga/ViewModels/SiagaAgent.swift",
+          "line": 280,
+          "end_line": 285,
+          "label": "budget check"
+        }
+      ]
+    },
+    {
+      "id": "fallback",
+      "lane": "recovery",
+      "col": 2,
+      "type": "security",
+      "icon": "decision",
+      "label": "Keyword brief",
+      "sublabel": "labelled on screen",
+      "sources": [
+        {
+          "path": "siaga/ViewModels/SiagaAgent.swift",
+          "line": 208,
+          "end_line": 213,
+          "label": "model unavailable"
+        },
+        {
+          "path": "siaga/ViewModels/SiagaAgent.swift",
+          "line": 306,
+          "end_line": 312,
+          "label": "model error"
+        }
+      ]
+    },
+    {
+      "id": "planfallback",
+      "lane": "recovery",
+      "col": 4,
+      "type": "security",
+      "icon": "decision",
+      "label": "Pre-approved plan",
+      "sublabel": "same tools, no model",
+      "sources": [
+        {
+          "path": "siaga/ViewModels/SiagaAgent.swift",
+          "line": 324,
+          "end_line": 331,
+          "label": "offline plan"
+        },
+        {
+          "path": "siaga/ViewModels/SiagaAgent.swift",
+          "line": 387,
+          "end_line": 398,
+          "label": "plan error"
+        }
+      ]
+    },
+    {
+      "id": "profiles",
+      "lane": "data",
+      "col": 2,
+      "type": "database",
+      "label": "Family profiles",
+      "sublabel": "SwiftData, on device",
+      "sources": [
+        {
+          "path": "siaga/Views/Views.swift",
+          "line": 162,
+          "end_line": 176,
+          "label": "demo seed"
+        },
+        {
+          "path": "siaga/Views/Views.swift",
+          "line": 358,
+          "end_line": 369,
+          "label": "who is this about?"
+        }
+      ]
+    },
+    {
+      "id": "tools",
+      "lane": "data",
+      "col": 3,
+      "type": "messagebus",
+      "label": "3 local tools",
+      "sublabel": "profile \u00b7 first aid \u00b7 draft",
+      "sources": [
+        {
+          "path": "siaga/Services/Tools.swift",
+          "line": 19,
+          "end_line": 64,
+          "label": "tools"
+        },
+        {
+          "path": "siaga/Models/Models.swift",
+          "line": 287,
+          "end_line": 354,
+          "label": "store lookups"
+        }
+      ]
+    },
+    {
+      "id": "handover",
+      "lane": "agent",
+      "col": 4,
+      "type": "backend",
+      "label": "Handover",
+      "sublabel": "built in Swift, not by the model",
+      "sources": [
+        {
+          "path": "siaga/ViewModels/SiagaAgent.swift",
+          "line": 376,
+          "end_line": 382,
+          "label": "after the draft"
+        },
+        {
+          "path": "siaga/Models/Models.swift",
+          "line": 356,
+          "end_line": 366,
+          "label": "createHandover"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-open",
+      "from": "emergency",
+      "to": "chat",
+      "label": "open app"
+    },
+    {
+      "id": "e-message",
+      "from": "chat",
+      "to": "chatagent",
+      "label": "message \u00b7 reply",
+      "role": "branch"
+    },
+    {
+      "id": "e-build",
+      "from": "chat",
+      "to": "triage",
+      "label": "Build action plan",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-brief",
+      "from": "triage",
+      "to": "action",
+      "label": "brief",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-send",
+      "from": "plan",
+      "to": "send",
+      "label": "act on draft",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-who",
+      "from": "profiles",
+      "to": "triage",
+      "label": "known person",
+      "role": "branch"
+    },
+    {
+      "id": "e-call",
+      "from": "chat",
+      "to": "call112",
+      "label": "any time",
+      "variant": "security",
+      "role": "branch"
+    },
+    {
+      "id": "e-tools",
+      "from": "action",
+      "to": "tools",
+      "label": "call each once",
+      "role": "branch"
+    },
+    {
+      "id": "e-handover",
+      "from": "action",
+      "to": "handover",
+      "label": "draft ready",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-budget",
+      "from": "chatagent",
+      "to": "compact",
+      "label": "too long",
+      "variant": "security",
+      "role": "error"
+    },
+    {
+      "id": "e-retry",
+      "from": "compact",
+      "to": "chat",
+      "label": "describe again",
+      "variant": "dashed",
+      "role": "return"
+    },
+    {
+      "id": "e-unavailable",
+      "from": "triage",
+      "to": "fallback",
+      "label": "no model",
+      "variant": "security",
+      "role": "error"
+    },
+    {
+      "id": "e-fallback-plan",
+      "from": "fallback",
+      "to": "planfallback",
+      "label": "keyword brief",
+      "variant": "dashed",
+      "toSide": "left"
+    },
+    {
+      "id": "e-plan-error",
+      "from": "action",
+      "to": "planfallback",
+      "label": "model error",
+      "variant": "security",
+      "role": "error",
+      "toSide": "top"
+    },
+    {
+      "id": "e-edit",
+      "from": "plan",
+      "to": "action",
+      "label": "edit brief, rebuild",
+      "variant": "dashed",
+      "role": "return"
+    },
+    {
+      "id": "e-new",
+      "from": "plan",
+      "to": "chat",
+      "label": "New incident",
+      "variant": "dashed",
+      "role": "return"
+    },
+    {
+      "id": "e-cards",
+      "from": "handover",
+      "to": "plan",
+      "label": "all cards",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-fallback-cards",
+      "from": "planfallback",
+      "to": "handover",
+      "label": "labelled",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "rose",
+      "title": "Safety rules in the flow",
+      "items": [
+        "Call 112 stays in the bottom safe area on every screen",
+        "First-aid steps come only from bundled FirstAid.json",
+        "The draft is copied or opened in Messages by the user; Siaga never sends or calls",
+        "The brief is saved to incident history and indexed in Spotlight before the plan runs"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "One session, four modes",
+      "items": [
+        "Chat, triage and action swap instructions and tools in one LanguageModelSession",
+        "The handover mode exists but is not used: the handover is built in plain Swift",
+        "The action stream is stopped from outside once the draft exists, or after 60 seconds"
+      ]
+    }
+  ]
+}

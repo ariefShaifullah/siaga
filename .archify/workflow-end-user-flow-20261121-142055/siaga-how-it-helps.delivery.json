@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "1834f1dc-d5ce-46e0-ac48-c0ef6295929b",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-142055/candidate.json",
+  "output": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-142055/siaga-how-it-helps.html",
+  "specification": {
+    "sha256": "6b6faebea317f7d89c288e33ed21871ccc17a64a0255233cc3932d52f5c93ec1",
+    "bytes": 4656
+  },
+  "artifact": {
+    "sha256": "74e46147cd466ed8e0096409fba09e13f2be084f357b097aab05bb038a84d88d",
+    "bytes": 847757
+  }
+}

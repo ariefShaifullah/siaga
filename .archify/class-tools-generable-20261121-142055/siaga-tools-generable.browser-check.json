@@ -6,11 +6,11 @@
   "status": "pass",
   "visualReview": "not-requested",
   "provenance": "current",
-  "deliveryReceiptId": "7a612d5b-cb2a-4f3d-a89e-2e4c16948bc1",
+  "deliveryReceiptId": "af95d486-cc17-4bc9-9480-4f8eb589490f",
   "artifact": {
-    "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-102443/siaga-tools-generable.html",
-    "sha256": "1085f9417af9bb89ad8ae587b4c3a343fe457fdffb667c2b57a2ea6698d0ba4d",
-    "bytes": 865722
+    "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-142055/siaga-tools-generable.html",
+    "sha256": "29853ca87c5f596612e5059d6657291ab768cf40df4b827c09bb55362f195b9d",
+    "bytes": 866095
   },
   "state": {
     "detail": "read",

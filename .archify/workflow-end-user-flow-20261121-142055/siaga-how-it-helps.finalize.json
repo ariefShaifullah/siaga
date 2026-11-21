@@ -5,16 +5,16 @@
   "status": "pass",
   "type": "workflow",
   "quality": "showcase",
-  "startedAt": "2026-11-21T03:08:26.043Z",
+  "startedAt": "2026-11-21T07:23:12.380Z",
   "specification": {
-    "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-100750/candidate.json",
-    "sha256": "96ae06956603946e68ebd013d1385b1a33b4dea5acc5125ec97a127108e9afd4",
-    "bytes": 4270
+    "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-142055/candidate.json",
+    "sha256": "6b6faebea317f7d89c288e33ed21871ccc17a64a0255233cc3932d52f5c93ec1",
+    "bytes": 4656
   },
   "artifact": {
-    "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-100750/siaga-how-it-helps.html",
-    "sha256": "4a80c3ea33a69b636b0d4ebe53b4dc897a84ac0d02b34d1deef5928d00ff96f5",
-    "bytes": 845239
+    "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-142055/siaga-how-it-helps.html",
+    "sha256": "74e46147cd466ed8e0096409fba09e13f2be084f357b097aab05bb038a84d88d",
+    "bytes": 847757
   },
   "stages": {
     "validate": {
@@ -27,8 +27,8 @@
         "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.agents/skills/archify/bin/archify.mjs",
         "deliver",
         "workflow",
-        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-100750/candidate.json",
-        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-100750/siaga-how-it-helps.html",
+        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-142055/candidate.json",
+        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-142055/siaga-how-it-helps.html",
         "--quality",
         "showcase",
         "--json"
@@ -38,8 +38,8 @@
         "ok": true,
         "command": "validate",
         "specification": {
-          "sha256": "96ae06956603946e68ebd013d1385b1a33b4dea5acc5125ec97a127108e9afd4",
-          "bytes": 4270
+          "sha256": "6b6faebea317f7d89c288e33ed21871ccc17a64a0255233cc3932d52f5c93ec1",
+          "bytes": 4656
         },
         "validation": {
           "checksPassed": 9,
@@ -54,33 +54,33 @@
     "deliver": {
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 351,
+      "durationMs": 445,
       "command": [
         "/Users/nusantaradeveloper/.nvm/versions/node/v22.23.4/bin/node",
         "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.agents/skills/archify/bin/archify.mjs",
         "deliver",
         "workflow",
-        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-100750/candidate.json",
-        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-100750/siaga-how-it-helps.html",
+        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-142055/candidate.json",
+        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-142055/siaga-how-it-helps.html",
         "--quality",
         "showcase",
         "--json"
       ],
       "receipt": {
         "schemaVersion": 1,
-        "receiptId": "5c727881-cbd4-4675-8294-df20d3bc3abd",
+        "receiptId": "1834f1dc-d5ce-46e0-ac48-c0ef6295929b",
         "ok": true,
         "command": "deliver",
         "type": "workflow",
-        "input": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-100750/candidate.json",
-        "output": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-100750/siaga-how-it-helps.html",
+        "input": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-142055/candidate.json",
+        "output": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-142055/siaga-how-it-helps.html",
         "specification": {
-          "sha256": "96ae06956603946e68ebd013d1385b1a33b4dea5acc5125ec97a127108e9afd4",
-          "bytes": 4270
+          "sha256": "6b6faebea317f7d89c288e33ed21871ccc17a64a0255233cc3932d52f5c93ec1",
+          "bytes": 4656
         },
         "artifact": {
-          "sha256": "4a80c3ea33a69b636b0d4ebe53b4dc897a84ac0d02b34d1deef5928d00ff96f5",
-          "bytes": 845239
+          "sha256": "74e46147cd466ed8e0096409fba09e13f2be084f357b097aab05bb038a84d88d",
+          "bytes": 847757
         },
         "validation": {
           "checksPassed": 9,
@@ -106,20 +106,20 @@
     "check": {
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 132,
+      "durationMs": 137,
       "command": [
         "/Users/nusantaradeveloper/.nvm/versions/node/v22.23.4/bin/node",
         "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.agents/skills/archify/bin/archify.mjs",
         "check",
-        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-100750/siaga-how-it-helps.html",
+        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-142055/siaga-how-it-helps.html",
         "--require-provenance"
       ],
       "receipt": {
         "ok": true,
-        "file": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-100750/siaga-how-it-helps.html",
+        "file": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-142055/siaga-how-it-helps.html",
         "artifact": {
-          "sha256": "4a80c3ea33a69b636b0d4ebe53b4dc897a84ac0d02b34d1deef5928d00ff96f5",
-          "bytes": 845239
+          "sha256": "74e46147cd466ed8e0096409fba09e13f2be084f357b097aab05bb038a84d88d",
+          "bytes": 847757
         },
         "checks": [
           {
@@ -186,18 +186,18 @@
             "containerBorderRuns": 0,
             "labelRouteClearanceIssues": 0,
             "labelCanvasOverflowIssues": 0,
-            "minLabelRouteClearance": 8.6,
+            "minLabelRouteClearance": 18,
             "desktopReadabilityIssues": 0,
             "viewportHeightIssues": 0,
-            "minProjectedNodeTextPx": 6.3,
+            "minProjectedNodeTextPx": 6.1465517241379315,
             "maxBends": 0,
             "routesOverSuggestedBends": 0,
             "maxStretch": 1,
             "routesOverSuggestedStretch": 0,
-            "minSegmentPx": 8,
+            "minSegmentPx": 32,
             "minInteriorSegmentPx": null,
-            "shortSegmentCount": 4,
-            "shortEndpointSegmentCount": 4,
+            "shortSegmentCount": 0,
+            "shortEndpointSegmentCount": 0,
             "shortInteriorSegmentCount": 0,
             "microSegmentCount": 0
           },
@@ -227,27 +227,27 @@
             "hardFloorMet": true,
             "minimumOwner": {
               "kind": "node",
-              "id": "understand"
+              "id": "call112"
             },
-            "minimumSourceTextPx": 6.3,
-            "minimumProjectedTextPx": 6.3,
-            "semanticTextCount": 28
+            "minimumSourceTextPx": 6.9,
+            "minimumProjectedTextPx": 6.1465517241379315,
+            "semanticTextCount": 31
           },
           "issues": []
         },
         "provenance": "current",
-        "deliveryReceiptId": "5c727881-cbd4-4675-8294-df20d3bc3abd"
+        "deliveryReceiptId": "1834f1dc-d5ce-46e0-ac48-c0ef6295929b"
       }
     },
     "browser-check": {
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 1771,
+      "durationMs": 1900,
       "command": [
         "/Users/nusantaradeveloper/.nvm/versions/node/v22.23.4/bin/node",
         "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.agents/skills/archify/bin/archify.mjs",
         "browser-check",
-        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-100750/siaga-how-it-helps.html",
+        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-142055/siaga-how-it-helps.html",
         "--json",
         "--require-provenance"
       ],
@@ -260,11 +260,11 @@
         "status": "pass",
         "visualReview": "not-requested",
         "provenance": "current",
-        "deliveryReceiptId": "5c727881-cbd4-4675-8294-df20d3bc3abd",
+        "deliveryReceiptId": "1834f1dc-d5ce-46e0-ac48-c0ef6295929b",
         "artifact": {
-          "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-100750/siaga-how-it-helps.html",
-          "sha256": "4a80c3ea33a69b636b0d4ebe53b4dc897a84ac0d02b34d1deef5928d00ff96f5",
-          "bytes": 845239
+          "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-142055/siaga-how-it-helps.html",
+          "sha256": "74e46147cd466ed8e0096409fba09e13f2be084f357b097aab05bb038a84d88d",
+          "bytes": 847757
         },
         "state": {
           "detail": "read",
@@ -295,67 +295,78 @@
               "readerOverflow": null,
               "readerFit": null,
               "ok": true,
-              "readerWidth": 1259,
-              "diagramWidth": 1229,
+              "readerWidth": 1210,
+              "diagramWidth": 1180,
               "pageComposition": {
                 "bodyPaddingPx": 12,
                 "headerPx": 52,
                 "diagramChromePx": 78,
                 "svgPx": 746,
                 "cardsPx": 0,
-                "viewBoxHeight": 534
+                "viewBoxHeight": 660
               },
-              "viewBoxWidth": 880,
+              "viewBoxWidth": 1044,
               "workflowLanes": [
                 {
                   "frameId": "lane-0",
-                  "heightPx": 148,
+                  "heightPx": 120,
                   "nodeCount": 4,
                   "nodeIds": [
                     "happens",
                     "tell",
                     "check",
-                    "approve"
+                    "send"
                   ],
-                  "nodeSpanPx": 73,
-                  "spaceAboveNodesPx": 59,
-                  "spaceBelowNodesPx": 17
+                  "nodeSpanPx": 59,
+                  "spaceAboveNodesPx": 47,
+                  "spaceBelowNodesPx": 14
                 },
                 {
                   "frameId": "lane-1",
-                  "heightPx": 148,
-                  "nodeCount": 4,
-                  "nodeIds": [
-                    "family",
-                    "understand",
-                    "prepare",
-                    "summary"
-                  ],
-                  "nodeSpanPx": 95,
-                  "spaceAboveNodesPx": 47,
-                  "spaceBelowNodesPx": 6
-                },
-                {
-                  "frameId": "lane-2",
-                  "heightPx": 148,
+                  "heightPx": 120,
                   "nodeCount": 2,
                   "nodeIds": [
                     "call112",
                     "paramedics"
                   ],
-                  "nodeSpanPx": 73,
-                  "spaceAboveNodesPx": 59,
-                  "spaceBelowNodesPx": 17
+                  "nodeSpanPx": 59,
+                  "spaceAboveNodesPx": 47,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-2",
+                  "heightPx": 120,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "asks",
+                    "understand",
+                    "prepare",
+                    "summary"
+                  ],
+                  "nodeSpanPx": 59,
+                  "spaceAboveNodesPx": 47,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-3",
+                  "heightPx": 120,
+                  "nodeCount": 1,
+                  "nodeIds": [
+                    "family"
+                  ],
+                  "nodeSpanPx": 77,
+                  "spaceAboveNodesPx": 38,
+                  "spaceBelowNodesPx": 5
                 }
               ],
-              "minimumProjectedNodeTextPx": 6.3,
-              "minimumProjectedNonEdgeTextPx": 6.3,
+              "minimumProjectedNodeTextPx": 6.9,
+              "minimumProjectedNonEdgeTextPx": 6.9,
               "minimumProjectedEdgeTextPx": 8,
-              "minimumProjectedNodeText": "how serious, what kind",
+              "minimumProjectedNodeText": "one tap, always there",
               "minimumProjectedNodeTextDetail": "context",
               "minimumProjectedNodeTextOwner": {
                 "kind": "node",
-                "id": "understand"
+                "id": "call112"
               },
               "minimumRequiredNodeTextPx": 6,
               "readabilityOk": true,
@@ -387,67 +398,78 @@
               "readerOverflow": null,
               "readerFit": null,
               "ok": true,
-              "readerWidth": 1315,
-              "diagramWidth": 1285,
+              "readerWidth": 1264,
+              "diagramWidth": 1234,
               "pageComposition": {
                 "bodyPaddingPx": 64,
                 "headerPx": 60,
                 "diagramChromePx": 84,
                 "svgPx": 780,
                 "cardsPx": 0,
-                "viewBoxHeight": 534
+                "viewBoxHeight": 660
               },
-              "viewBoxWidth": 880,
+              "viewBoxWidth": 1044,
               "workflowLanes": [
                 {
                   "frameId": "lane-0",
-                  "heightPx": 155,
+                  "heightPx": 125,
                   "nodeCount": 4,
                   "nodeIds": [
                     "happens",
                     "tell",
                     "check",
-                    "approve"
+                    "send"
                   ],
-                  "nodeSpanPx": 76,
-                  "spaceAboveNodesPx": 61,
-                  "spaceBelowNodesPx": 18
+                  "nodeSpanPx": 61,
+                  "spaceAboveNodesPx": 50,
+                  "spaceBelowNodesPx": 14
                 },
                 {
                   "frameId": "lane-1",
-                  "heightPx": 155,
-                  "nodeCount": 4,
-                  "nodeIds": [
-                    "family",
-                    "understand",
-                    "prepare",
-                    "summary"
-                  ],
-                  "nodeSpanPx": 99,
-                  "spaceAboveNodesPx": 50,
-                  "spaceBelowNodesPx": 6
-                },
-                {
-                  "frameId": "lane-2",
-                  "heightPx": 155,
+                  "heightPx": 125,
                   "nodeCount": 2,
                   "nodeIds": [
                     "call112",
                     "paramedics"
                   ],
-                  "nodeSpanPx": 76,
-                  "spaceAboveNodesPx": 61,
-                  "spaceBelowNodesPx": 18
+                  "nodeSpanPx": 61,
+                  "spaceAboveNodesPx": 50,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-2",
+                  "heightPx": 125,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "asks",
+                    "understand",
+                    "prepare",
+                    "summary"
+                  ],
+                  "nodeSpanPx": 61,
+                  "spaceAboveNodesPx": 50,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-3",
+                  "heightPx": 125,
+                  "nodeCount": 1,
+                  "nodeIds": [
+                    "family"
+                  ],
+                  "nodeSpanPx": 80,
+                  "spaceAboveNodesPx": 40,
+                  "spaceBelowNodesPx": 5
                 }
               ],
-              "minimumProjectedNodeTextPx": 6.3,
-              "minimumProjectedNonEdgeTextPx": 6.3,
+              "minimumProjectedNodeTextPx": 6.9,
+              "minimumProjectedNonEdgeTextPx": 6.9,
               "minimumProjectedEdgeTextPx": 8,
-              "minimumProjectedNodeText": "how serious, what kind",
+              "minimumProjectedNodeText": "one tap, always there",
               "minimumProjectedNodeTextDetail": "context",
               "minimumProjectedNodeTextOwner": {
                 "kind": "node",
-                "id": "understand"
+                "id": "call112"
               },
               "minimumRequiredNodeTextPx": 6,
               "readabilityOk": true,
@@ -479,67 +501,78 @@
               "readerOverflow": null,
               "readerFit": null,
               "ok": true,
-              "readerWidth": 1447,
-              "diagramWidth": 1417,
+              "readerWidth": 1390,
+              "diagramWidth": 1360,
               "pageComposition": {
                 "bodyPaddingPx": 64,
                 "headerPx": 60,
                 "diagramChromePx": 84,
                 "svgPx": 860,
                 "cardsPx": 0,
-                "viewBoxHeight": 534
+                "viewBoxHeight": 660
               },
-              "viewBoxWidth": 880,
+              "viewBoxWidth": 1044,
               "workflowLanes": [
                 {
                   "frameId": "lane-0",
-                  "heightPx": 171,
+                  "heightPx": 138,
                   "nodeCount": 4,
                   "nodeIds": [
                     "happens",
                     "tell",
                     "check",
-                    "approve"
+                    "send"
                   ],
-                  "nodeSpanPx": 84,
-                  "spaceAboveNodesPx": 68,
-                  "spaceBelowNodesPx": 19
+                  "nodeSpanPx": 68,
+                  "spaceAboveNodesPx": 55,
+                  "spaceBelowNodesPx": 16
                 },
                 {
                   "frameId": "lane-1",
-                  "heightPx": 171,
-                  "nodeCount": 4,
-                  "nodeIds": [
-                    "family",
-                    "understand",
-                    "prepare",
-                    "summary"
-                  ],
-                  "nodeSpanPx": 109,
-                  "spaceAboveNodesPx": 55,
-                  "spaceBelowNodesPx": 6
-                },
-                {
-                  "frameId": "lane-2",
-                  "heightPx": 171,
+                  "heightPx": 138,
                   "nodeCount": 2,
                   "nodeIds": [
                     "call112",
                     "paramedics"
                   ],
-                  "nodeSpanPx": 84,
-                  "spaceAboveNodesPx": 68,
-                  "spaceBelowNodesPx": 19
+                  "nodeSpanPx": 68,
+                  "spaceAboveNodesPx": 55,
+                  "spaceBelowNodesPx": 16
+                },
+                {
+                  "frameId": "lane-2",
+                  "heightPx": 138,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "asks",
+                    "understand",
+                    "prepare",
+                    "summary"
+                  ],
+                  "nodeSpanPx": 68,
+                  "spaceAboveNodesPx": 55,
+                  "spaceBelowNodesPx": 16
+                },
+                {
+                  "frameId": "lane-3",
+                  "heightPx": 138,
+                  "nodeCount": 1,
+                  "nodeIds": [
+                    "family"
+                  ],
+                  "nodeSpanPx": 89,
+                  "spaceAboveNodesPx": 44,
+                  "spaceBelowNodesPx": 5
                 }
               ],
-              "minimumProjectedNodeTextPx": 6.3,
-              "minimumProjectedNonEdgeTextPx": 6.3,
+              "minimumProjectedNodeTextPx": 6.9,
+              "minimumProjectedNonEdgeTextPx": 6.9,
               "minimumProjectedEdgeTextPx": 8,
-              "minimumProjectedNodeText": "how serious, what kind",
+              "minimumProjectedNodeText": "one tap, always there",
               "minimumProjectedNodeTextDetail": "context",
               "minimumProjectedNodeTextOwner": {
                 "kind": "node",
-                "id": "understand"
+                "id": "call112"
               },
               "minimumRequiredNodeTextPx": 6,
               "readabilityOk": true,
@@ -571,67 +604,78 @@
               "readerOverflow": null,
               "readerFit": null,
               "ok": true,
-              "readerWidth": 1833,
-              "diagramWidth": 1783,
+              "readerWidth": 1762,
+              "diagramWidth": 1712,
               "pageComposition": {
                 "bodyPaddingPx": 64,
                 "headerPx": 68,
                 "diagramChromePx": 94,
                 "svgPx": 1082,
                 "cardsPx": 0,
-                "viewBoxHeight": 534
+                "viewBoxHeight": 660
               },
-              "viewBoxWidth": 880,
+              "viewBoxWidth": 1044,
               "workflowLanes": [
                 {
                   "frameId": "lane-0",
-                  "heightPx": 215,
+                  "heightPx": 174,
                   "nodeCount": 4,
                   "nodeIds": [
                     "happens",
                     "tell",
                     "check",
-                    "approve"
+                    "send"
                   ],
-                  "nodeSpanPx": 105,
-                  "spaceAboveNodesPx": 85,
-                  "spaceBelowNodesPx": 24
+                  "nodeSpanPx": 85,
+                  "spaceAboveNodesPx": 69,
+                  "spaceBelowNodesPx": 20
                 },
                 {
                   "frameId": "lane-1",
-                  "heightPx": 215,
-                  "nodeCount": 4,
-                  "nodeIds": [
-                    "family",
-                    "understand",
-                    "prepare",
-                    "summary"
-                  ],
-                  "nodeSpanPx": 138,
-                  "spaceAboveNodesPx": 69,
-                  "spaceBelowNodesPx": 8
-                },
-                {
-                  "frameId": "lane-2",
-                  "heightPx": 215,
+                  "heightPx": 174,
                   "nodeCount": 2,
                   "nodeIds": [
                     "call112",
                     "paramedics"
                   ],
-                  "nodeSpanPx": 105,
-                  "spaceAboveNodesPx": 85,
-                  "spaceBelowNodesPx": 24
+                  "nodeSpanPx": 85,
+                  "spaceAboveNodesPx": 69,
+                  "spaceBelowNodesPx": 20
+                },
+                {
+                  "frameId": "lane-2",
+                  "heightPx": 174,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "asks",
+                    "understand",
+                    "prepare",
+                    "summary"
+                  ],
+                  "nodeSpanPx": 85,
+                  "spaceAboveNodesPx": 69,
+                  "spaceBelowNodesPx": 20
+                },
+                {
+                  "frameId": "lane-3",
+                  "heightPx": 174,
+                  "nodeCount": 1,
+                  "nodeIds": [
+                    "family"
+                  ],
+                  "nodeSpanPx": 112,
+                  "spaceAboveNodesPx": 56,
+                  "spaceBelowNodesPx": 7
                 }
               ],
-              "minimumProjectedNodeTextPx": 6.3,
-              "minimumProjectedNonEdgeTextPx": 6.3,
+              "minimumProjectedNodeTextPx": 6.9,
+              "minimumProjectedNonEdgeTextPx": 6.9,
               "minimumProjectedEdgeTextPx": 8,
-              "minimumProjectedNodeText": "how serious, what kind",
+              "minimumProjectedNodeText": "one tap, always there",
               "minimumProjectedNodeTextDetail": "context",
               "minimumProjectedNodeTextOwner": {
                 "kind": "node",
-                "id": "understand"
+                "id": "call112"
               },
               "minimumRequiredNodeTextPx": 6,
               "readabilityOk": true,
@@ -716,67 +760,78 @@
               "readerOverflow": null,
               "readerFit": null,
               "ok": true,
-              "readerWidth": 1259,
-              "diagramWidth": 1229,
+              "readerWidth": 1210,
+              "diagramWidth": 1180,
               "pageComposition": {
                 "bodyPaddingPx": 12,
                 "headerPx": 52,
                 "diagramChromePx": 78,
                 "svgPx": 746,
                 "cardsPx": 0,
-                "viewBoxHeight": 534
+                "viewBoxHeight": 660
               },
-              "viewBoxWidth": 880,
+              "viewBoxWidth": 1044,
               "workflowLanes": [
                 {
                   "frameId": "lane-0",
-                  "heightPx": 148,
+                  "heightPx": 120,
                   "nodeCount": 4,
                   "nodeIds": [
                     "happens",
                     "tell",
                     "check",
-                    "approve"
+                    "send"
                   ],
-                  "nodeSpanPx": 73,
-                  "spaceAboveNodesPx": 59,
-                  "spaceBelowNodesPx": 17
+                  "nodeSpanPx": 59,
+                  "spaceAboveNodesPx": 47,
+                  "spaceBelowNodesPx": 14
                 },
                 {
                   "frameId": "lane-1",
-                  "heightPx": 148,
-                  "nodeCount": 4,
-                  "nodeIds": [
-                    "family",
-                    "understand",
-                    "prepare",
-                    "summary"
-                  ],
-                  "nodeSpanPx": 95,
-                  "spaceAboveNodesPx": 47,
-                  "spaceBelowNodesPx": 6
-                },
-                {
-                  "frameId": "lane-2",
-                  "heightPx": 148,
+                  "heightPx": 120,
                   "nodeCount": 2,
                   "nodeIds": [
                     "call112",
                     "paramedics"
                   ],
-                  "nodeSpanPx": 73,
-                  "spaceAboveNodesPx": 59,
-                  "spaceBelowNodesPx": 17
+                  "nodeSpanPx": 59,
+                  "spaceAboveNodesPx": 47,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-2",
+                  "heightPx": 120,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "asks",
+                    "understand",
+                    "prepare",
+                    "summary"
+                  ],
+                  "nodeSpanPx": 59,
+                  "spaceAboveNodesPx": 47,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-3",
+                  "heightPx": 120,
+                  "nodeCount": 1,
+                  "nodeIds": [
+                    "family"
+                  ],
+                  "nodeSpanPx": 77,
+                  "spaceAboveNodesPx": 38,
+                  "spaceBelowNodesPx": 5
                 }
               ],
-              "minimumProjectedNodeTextPx": 6.3,
-              "minimumProjectedNonEdgeTextPx": 6.3,
+              "minimumProjectedNodeTextPx": 6.9,
+              "minimumProjectedNonEdgeTextPx": 6.9,
               "minimumProjectedEdgeTextPx": 8,
-              "minimumProjectedNodeText": "how serious, what kind",
+              "minimumProjectedNodeText": "one tap, always there",
               "minimumProjectedNodeTextDetail": "context",
               "minimumProjectedNodeTextOwner": {
                 "kind": "node",
-                "id": "understand"
+                "id": "call112"
               },
               "minimumRequiredNodeTextPx": 6,
               "readabilityOk": true,
@@ -808,67 +863,78 @@
               "readerOverflow": null,
               "readerFit": null,
               "ok": true,
-              "readerWidth": 1315,
-              "diagramWidth": 1285,
+              "readerWidth": 1264,
+              "diagramWidth": 1234,
               "pageComposition": {
                 "bodyPaddingPx": 64,
                 "headerPx": 60,
                 "diagramChromePx": 84,
                 "svgPx": 780,
                 "cardsPx": 0,
-                "viewBoxHeight": 534
+                "viewBoxHeight": 660
               },
-              "viewBoxWidth": 880,
+              "viewBoxWidth": 1044,
               "workflowLanes": [
                 {
                   "frameId": "lane-0",
-                  "heightPx": 155,
+                  "heightPx": 125,
                   "nodeCount": 4,
                   "nodeIds": [
                     "happens",
                     "tell",
                     "check",
-                    "approve"
+                    "send"
                   ],
-                  "nodeSpanPx": 76,
-                  "spaceAboveNodesPx": 61,
-                  "spaceBelowNodesPx": 18
+                  "nodeSpanPx": 61,
+                  "spaceAboveNodesPx": 50,
+                  "spaceBelowNodesPx": 14
                 },
                 {
                   "frameId": "lane-1",
-                  "heightPx": 155,
-                  "nodeCount": 4,
-                  "nodeIds": [
-                    "family",
-                    "understand",
-                    "prepare",
-                    "summary"
-                  ],
-                  "nodeSpanPx": 99,
-                  "spaceAboveNodesPx": 50,
-                  "spaceBelowNodesPx": 6
-                },
-                {
-                  "frameId": "lane-2",
-                  "heightPx": 155,
+                  "heightPx": 125,
                   "nodeCount": 2,
                   "nodeIds": [
                     "call112",
                     "paramedics"
                   ],
-                  "nodeSpanPx": 76,
-                  "spaceAboveNodesPx": 61,
-                  "spaceBelowNodesPx": 18
+                  "nodeSpanPx": 61,
+                  "spaceAboveNodesPx": 50,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-2",
+                  "heightPx": 125,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "asks",
+                    "understand",
+                    "prepare",
+                    "summary"
+                  ],
+                  "nodeSpanPx": 61,
+                  "spaceAboveNodesPx": 50,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-3",
+                  "heightPx": 125,
+                  "nodeCount": 1,
+                  "nodeIds": [
+                    "family"
+                  ],
+                  "nodeSpanPx": 80,
+                  "spaceAboveNodesPx": 40,
+                  "spaceBelowNodesPx": 5
                 }
               ],
-              "minimumProjectedNodeTextPx": 6.3,
-              "minimumProjectedNonEdgeTextPx": 6.3,
+              "minimumProjectedNodeTextPx": 6.9,
+              "minimumProjectedNonEdgeTextPx": 6.9,
               "minimumProjectedEdgeTextPx": 8,
-              "minimumProjectedNodeText": "how serious, what kind",
+              "minimumProjectedNodeText": "one tap, always there",
               "minimumProjectedNodeTextDetail": "context",
               "minimumProjectedNodeTextOwner": {
                 "kind": "node",
-                "id": "understand"
+                "id": "call112"
               },
               "minimumRequiredNodeTextPx": 6,
               "readabilityOk": true,
@@ -900,67 +966,78 @@
               "readerOverflow": null,
               "readerFit": null,
               "ok": true,
-              "readerWidth": 1447,
-              "diagramWidth": 1417,
+              "readerWidth": 1390,
+              "diagramWidth": 1360,
               "pageComposition": {
                 "bodyPaddingPx": 64,
                 "headerPx": 60,
                 "diagramChromePx": 84,
                 "svgPx": 860,
                 "cardsPx": 0,
-                "viewBoxHeight": 534
+                "viewBoxHeight": 660
               },
-              "viewBoxWidth": 880,
+              "viewBoxWidth": 1044,
               "workflowLanes": [
                 {
                   "frameId": "lane-0",
-                  "heightPx": 171,
+                  "heightPx": 138,
                   "nodeCount": 4,
                   "nodeIds": [
                     "happens",
                     "tell",
                     "check",
-                    "approve"
+                    "send"
                   ],
-                  "nodeSpanPx": 84,
-                  "spaceAboveNodesPx": 68,
-                  "spaceBelowNodesPx": 19
+                  "nodeSpanPx": 68,
+                  "spaceAboveNodesPx": 55,
+                  "spaceBelowNodesPx": 16
                 },
                 {
                   "frameId": "lane-1",
-                  "heightPx": 171,
-                  "nodeCount": 4,
-                  "nodeIds": [
-                    "family",
-                    "understand",
-                    "prepare",
-                    "summary"
-                  ],
-                  "nodeSpanPx": 109,
-                  "spaceAboveNodesPx": 55,
-                  "spaceBelowNodesPx": 6
-                },
-                {
-                  "frameId": "lane-2",
-                  "heightPx": 171,
+                  "heightPx": 138,
                   "nodeCount": 2,
                   "nodeIds": [
                     "call112",
                     "paramedics"
                   ],
-                  "nodeSpanPx": 84,
-                  "spaceAboveNodesPx": 68,
-                  "spaceBelowNodesPx": 19
+                  "nodeSpanPx": 68,
+                  "spaceAboveNodesPx": 55,
+                  "spaceBelowNodesPx": 16
+                },
+                {
+                  "frameId": "lane-2",
+                  "heightPx": 138,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "asks",
+                    "understand",
+                    "prepare",
+                    "summary"
+                  ],
+                  "nodeSpanPx": 68,
+                  "spaceAboveNodesPx": 55,
+                  "spaceBelowNodesPx": 16
+                },
+                {
+                  "frameId": "lane-3",
+                  "heightPx": 138,
+                  "nodeCount": 1,
+                  "nodeIds": [
+                    "family"
+                  ],
+                  "nodeSpanPx": 89,
+                  "spaceAboveNodesPx": 44,
+                  "spaceBelowNodesPx": 5
                 }
               ],
-              "minimumProjectedNodeTextPx": 6.3,
-              "minimumProjectedNonEdgeTextPx": 6.3,
+              "minimumProjectedNodeTextPx": 6.9,
+              "minimumProjectedNonEdgeTextPx": 6.9,
               "minimumProjectedEdgeTextPx": 8,
-              "minimumProjectedNodeText": "how serious, what kind",
+              "minimumProjectedNodeText": "one tap, always there",
               "minimumProjectedNodeTextDetail": "context",
               "minimumProjectedNodeTextOwner": {
                 "kind": "node",
-                "id": "understand"
+                "id": "call112"
               },
               "minimumRequiredNodeTextPx": 6,
               "readabilityOk": true,
@@ -992,67 +1069,78 @@
               "readerOverflow": null,
               "readerFit": null,
               "ok": true,
-              "readerWidth": 1833,
-              "diagramWidth": 1783,
+              "readerWidth": 1762,
+              "diagramWidth": 1712,
               "pageComposition": {
                 "bodyPaddingPx": 64,
                 "headerPx": 68,
                 "diagramChromePx": 94,
                 "svgPx": 1082,
                 "cardsPx": 0,
-                "viewBoxHeight": 534
+                "viewBoxHeight": 660
               },
-              "viewBoxWidth": 880,
+              "viewBoxWidth": 1044,
               "workflowLanes": [
                 {
                   "frameId": "lane-0",
-                  "heightPx": 215,
+                  "heightPx": 174,
                   "nodeCount": 4,
                   "nodeIds": [
                     "happens",
                     "tell",
                     "check",
-                    "approve"
+                    "send"
                   ],
-                  "nodeSpanPx": 105,
-                  "spaceAboveNodesPx": 85,
-                  "spaceBelowNodesPx": 24
+                  "nodeSpanPx": 85,
+                  "spaceAboveNodesPx": 69,
+                  "spaceBelowNodesPx": 20
                 },
                 {
                   "frameId": "lane-1",
-                  "heightPx": 215,
-                  "nodeCount": 4,
-                  "nodeIds": [
-                    "family",
-                    "understand",
-                    "prepare",
-                    "summary"
-                  ],
-                  "nodeSpanPx": 138,
-                  "spaceAboveNodesPx": 69,
-                  "spaceBelowNodesPx": 8
-                },
-                {
-                  "frameId": "lane-2",
-                  "heightPx": 215,
+                  "heightPx": 174,
                   "nodeCount": 2,
                   "nodeIds": [
                     "call112",
                     "paramedics"
                   ],
-                  "nodeSpanPx": 105,
-                  "spaceAboveNodesPx": 85,
-                  "spaceBelowNodesPx": 24
+                  "nodeSpanPx": 85,
+                  "spaceAboveNodesPx": 69,
+                  "spaceBelowNodesPx": 20
+                },
+                {
+                  "frameId": "lane-2",
+                  "heightPx": 174,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "asks",
+                    "understand",
+                    "prepare",
+                    "summary"
+                  ],
+                  "nodeSpanPx": 85,
+                  "spaceAboveNodesPx": 69,
+                  "spaceBelowNodesPx": 20
+                },
+                {
+                  "frameId": "lane-3",
+                  "heightPx": 174,
+                  "nodeCount": 1,
+                  "nodeIds": [
+                    "family"
+                  ],
+                  "nodeSpanPx": 112,
+                  "spaceAboveNodesPx": 56,
+                  "spaceBelowNodesPx": 7
                 }
               ],
-              "minimumProjectedNodeTextPx": 6.3,
-              "minimumProjectedNonEdgeTextPx": 6.3,
+              "minimumProjectedNodeTextPx": 6.9,
+              "minimumProjectedNonEdgeTextPx": 6.9,
               "minimumProjectedEdgeTextPx": 8,
-              "minimumProjectedNodeText": "how serious, what kind",
+              "minimumProjectedNodeText": "one tap, always there",
               "minimumProjectedNodeTextDetail": "context",
               "minimumProjectedNodeTextOwner": {
                 "kind": "node",
-                "id": "understand"
+                "id": "call112"
               },
               "minimumRequiredNodeTextPx": 6,
               "readabilityOk": true,
@@ -1089,67 +1177,78 @@
               "readerOverflow": null,
               "readerFit": null,
               "ok": true,
-              "readerWidth": 1259,
-              "diagramWidth": 1229,
+              "readerWidth": 1210,
+              "diagramWidth": 1180,
               "pageComposition": {
                 "bodyPaddingPx": 12,
                 "headerPx": 52,
                 "diagramChromePx": 78,
                 "svgPx": 746,
                 "cardsPx": 0,
-                "viewBoxHeight": 534
+                "viewBoxHeight": 660
               },
-              "viewBoxWidth": 880,
+              "viewBoxWidth": 1044,
               "workflowLanes": [
                 {
                   "frameId": "lane-0",
-                  "heightPx": 148,
+                  "heightPx": 120,
                   "nodeCount": 4,
                   "nodeIds": [
                     "happens",
                     "tell",
                     "check",
-                    "approve"
+                    "send"
                   ],
-                  "nodeSpanPx": 73,
-                  "spaceAboveNodesPx": 59,
-                  "spaceBelowNodesPx": 17
+                  "nodeSpanPx": 59,
+                  "spaceAboveNodesPx": 47,
+                  "spaceBelowNodesPx": 14
                 },
                 {
                   "frameId": "lane-1",
-                  "heightPx": 148,
-                  "nodeCount": 4,
-                  "nodeIds": [
-                    "family",
-                    "understand",
-                    "prepare",
-                    "summary"
-                  ],
-                  "nodeSpanPx": 95,
-                  "spaceAboveNodesPx": 47,
-                  "spaceBelowNodesPx": 6
-                },
-                {
-                  "frameId": "lane-2",
-                  "heightPx": 148,
+                  "heightPx": 120,
                   "nodeCount": 2,
                   "nodeIds": [
                     "call112",
                     "paramedics"
                   ],
-                  "nodeSpanPx": 73,
-                  "spaceAboveNodesPx": 59,
-                  "spaceBelowNodesPx": 17
+                  "nodeSpanPx": 59,
+                  "spaceAboveNodesPx": 47,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-2",
+                  "heightPx": 120,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "asks",
+                    "understand",
+                    "prepare",
+                    "summary"
+                  ],
+                  "nodeSpanPx": 59,
+                  "spaceAboveNodesPx": 47,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-3",
+                  "heightPx": 120,
+                  "nodeCount": 1,
+                  "nodeIds": [
+                    "family"
+                  ],
+                  "nodeSpanPx": 77,
+                  "spaceAboveNodesPx": 38,
+                  "spaceBelowNodesPx": 5
                 }
               ],
-              "minimumProjectedNodeTextPx": 6.3,
-              "minimumProjectedNonEdgeTextPx": 6.3,
+              "minimumProjectedNodeTextPx": 6.9,
+              "minimumProjectedNonEdgeTextPx": 6.9,
               "minimumProjectedEdgeTextPx": 8,
-              "minimumProjectedNodeText": "how serious, what kind",
+              "minimumProjectedNodeText": "one tap, always there",
               "minimumProjectedNodeTextDetail": "context",
               "minimumProjectedNodeTextOwner": {
                 "kind": "node",
-                "id": "understand"
+                "id": "call112"
               },
               "minimumRequiredNodeTextPx": 6,
               "readabilityOk": true,
@@ -1181,67 +1280,78 @@
               "readerOverflow": null,
               "readerFit": null,
               "ok": true,
-              "readerWidth": 1315,
-              "diagramWidth": 1285,
+              "readerWidth": 1264,
+              "diagramWidth": 1234,
               "pageComposition": {
                 "bodyPaddingPx": 64,
                 "headerPx": 60,
                 "diagramChromePx": 84,
                 "svgPx": 780,
                 "cardsPx": 0,
-                "viewBoxHeight": 534
+                "viewBoxHeight": 660
               },
-              "viewBoxWidth": 880,
+              "viewBoxWidth": 1044,
               "workflowLanes": [
                 {
                   "frameId": "lane-0",
-                  "heightPx": 155,
+                  "heightPx": 125,
                   "nodeCount": 4,
                   "nodeIds": [
                     "happens",
                     "tell",
                     "check",
-                    "approve"
+                    "send"
                   ],
-                  "nodeSpanPx": 76,
-                  "spaceAboveNodesPx": 61,
-                  "spaceBelowNodesPx": 18
+                  "nodeSpanPx": 61,
+                  "spaceAboveNodesPx": 50,
+                  "spaceBelowNodesPx": 14
                 },
                 {
                   "frameId": "lane-1",
-                  "heightPx": 155,
-                  "nodeCount": 4,
-                  "nodeIds": [
-                    "family",
-                    "understand",
-                    "prepare",
-                    "summary"
-                  ],
-                  "nodeSpanPx": 99,
-                  "spaceAboveNodesPx": 50,
-                  "spaceBelowNodesPx": 6
-                },
-                {
-                  "frameId": "lane-2",
-                  "heightPx": 155,
+                  "heightPx": 125,
                   "nodeCount": 2,
                   "nodeIds": [
                     "call112",
                     "paramedics"
                   ],
-                  "nodeSpanPx": 76,
-                  "spaceAboveNodesPx": 61,
-                  "spaceBelowNodesPx": 18
+                  "nodeSpanPx": 61,
+                  "spaceAboveNodesPx": 50,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-2",
+                  "heightPx": 125,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "asks",
+                    "understand",
+                    "prepare",
+                    "summary"
+                  ],
+                  "nodeSpanPx": 61,
+                  "spaceAboveNodesPx": 50,
+                  "spaceBelowNodesPx": 14
+                },
+                {
+                  "frameId": "lane-3",
+                  "heightPx": 125,
+                  "nodeCount": 1,
+                  "nodeIds": [
+                    "family"
+                  ],
+                  "nodeSpanPx": 80,
+                  "spaceAboveNodesPx": 40,
+                  "spaceBelowNodesPx": 5
                 }
               ],
-              "minimumProjectedNodeTextPx": 6.3,
-              "minimumProjectedNonEdgeTextPx": 6.3,
+              "minimumProjectedNodeTextPx": 6.9,
+              "minimumProjectedNonEdgeTextPx": 6.9,
               "minimumProjectedEdgeTextPx": 8,
-              "minimumProjectedNodeText": "how serious, what kind",
+              "minimumProjectedNodeText": "one tap, always there",
               "minimumProjectedNodeTextDetail": "context",
               "minimumProjectedNodeTextOwner": {
                 "kind": "node",
-                "id": "understand"
+                "id": "call112"
               },
               "minimumRequiredNodeTextPx": 6,
               "readabilityOk": true,
@@ -1273,67 +1383,78 @@
               "readerOverflow": null,
               "readerFit": null,
               "ok": true,
-              "readerWidth": 1447,
-              "diagramWidth": 1417,
+              "readerWidth": 1390,
+              "diagramWidth": 1360,
               "pageComposition": {
                 "bodyPaddingPx": 64,
                 "headerPx": 60,
                 "diagramChromePx": 84,
                 "svgPx": 860,
                 "cardsPx": 0,
-                "viewBoxHeight": 534
+                "viewBoxHeight": 660
               },
-              "viewBoxWidth": 880,
+              "viewBoxWidth": 1044,
               "workflowLanes": [
                 {
                   "frameId": "lane-0",
-                  "heightPx": 171,
+                  "heightPx": 138,
                   "nodeCount": 4,
                   "nodeIds": [
                     "happens",
                     "tell",
                     "check",
-                    "approve"
+                    "send"
                   ],
-                  "nodeSpanPx": 84,
-                  "spaceAboveNodesPx": 68,
-                  "spaceBelowNodesPx": 19
+                  "nodeSpanPx": 68,
+                  "spaceAboveNodesPx": 55,
+                  "spaceBelowNodesPx": 16
                 },
                 {
                   "frameId": "lane-1",
-                  "heightPx": 171,
-                  "nodeCount": 4,
-                  "nodeIds": [
-                    "family",
-                    "understand",
-                    "prepare",
-                    "summary"
-                  ],
-                  "nodeSpanPx": 109,
-                  "spaceAboveNodesPx": 55,
-                  "spaceBelowNodesPx": 6
-                },
-                {
-                  "frameId": "lane-2",
-                  "heightPx": 171,
+                  "heightPx": 138,
                   "nodeCount": 2,
                   "nodeIds": [
                     "call112",
                     "paramedics"
                   ],
-                  "nodeSpanPx": 84,
-                  "spaceAboveNodesPx": 68,
-                  "spaceBelowNodesPx": 19
+                  "nodeSpanPx": 68,
+                  "spaceAboveNodesPx": 55,
+                  "spaceBelowNodesPx": 16
+                },
+                {
+                  "frameId": "lane-2",
+                  "heightPx": 138,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "asks",
+                    "understand",
+                    "prepare",
+                    "summary"
+                  ],
+                  "nodeSpanPx": 68,
+                  "spaceAboveNodesPx": 55,
+                  "spaceBelowNodesPx": 16
+                },
+                {
+                  "frameId": "lane-3",
+                  "heightPx": 138,
+                  "nodeCount": 1,
+                  "nodeIds": [
+                    "family"
+                  ],
+                  "nodeSpanPx": 89,
+                  "spaceAboveNodesPx": 44,
+                  "spaceBelowNodesPx": 5
                 }
               ],
-              "minimumProjectedNodeTextPx": 6.3,
-              "minimumProjectedNonEdgeTextPx": 6.3,
+              "minimumProjectedNodeTextPx": 6.9,
+              "minimumProjectedNonEdgeTextPx": 6.9,
               "minimumProjectedEdgeTextPx": 8,
-              "minimumProjectedNodeText": "how serious, what kind",
+              "minimumProjectedNodeText": "one tap, always there",
               "minimumProjectedNodeTextDetail": "context",
               "minimumProjectedNodeTextOwner": {
                 "kind": "node",
-                "id": "understand"
+                "id": "call112"
               },
               "minimumRequiredNodeTextPx": 6,
               "readabilityOk": true,
@@ -1365,67 +1486,78 @@
               "readerOverflow": null,
               "readerFit": null,
               "ok": true,
-              "readerWidth": 1833,
-              "diagramWidth": 1783,
+              "readerWidth": 1762,
+              "diagramWidth": 1712,
               "pageComposition": {
                 "bodyPaddingPx": 64,
                 "headerPx": 68,
                 "diagramChromePx": 94,
                 "svgPx": 1082,
                 "cardsPx": 0,
-                "viewBoxHeight": 534
+                "viewBoxHeight": 660
               },
-              "viewBoxWidth": 880,
+              "viewBoxWidth": 1044,
               "workflowLanes": [
                 {
                   "frameId": "lane-0",
-                  "heightPx": 215,
+                  "heightPx": 174,
                   "nodeCount": 4,
                   "nodeIds": [
                     "happens",
                     "tell",
                     "check",
-                    "approve"
+                    "send"
                   ],
-                  "nodeSpanPx": 105,
-                  "spaceAboveNodesPx": 85,
-                  "spaceBelowNodesPx": 24
+                  "nodeSpanPx": 85,
+                  "spaceAboveNodesPx": 69,
+                  "spaceBelowNodesPx": 20
                 },
                 {
                   "frameId": "lane-1",
-                  "heightPx": 215,
-                  "nodeCount": 4,
-                  "nodeIds": [
-                    "family",
-                    "understand",
-                    "prepare",
-                    "summary"
-                  ],
-                  "nodeSpanPx": 138,
-                  "spaceAboveNodesPx": 69,
-                  "spaceBelowNodesPx": 8
-                },
-                {
-                  "frameId": "lane-2",
-                  "heightPx": 215,
+                  "heightPx": 174,
                   "nodeCount": 2,
                   "nodeIds": [
                     "call112",
                     "paramedics"
                   ],
-                  "nodeSpanPx": 105,
-                  "spaceAboveNodesPx": 85,
-                  "spaceBelowNodesPx": 24
+                  "nodeSpanPx": 85,
+                  "spaceAboveNodesPx": 69,
+                  "spaceBelowNodesPx": 20
+                },
+                {
+                  "frameId": "lane-2",
+                  "heightPx": 174,
+                  "nodeCount": 4,
+                  "nodeIds": [
+                    "asks",
+                    "understand",
+                    "prepare",
+                    "summary"
+                  ],
+                  "nodeSpanPx": 85,
+                  "spaceAboveNodesPx": 69,
+                  "spaceBelowNodesPx": 20
+                },
+                {
+                  "frameId": "lane-3",
+                  "heightPx": 174,
+                  "nodeCount": 1,
+                  "nodeIds": [
+                    "family"
+                  ],
+                  "nodeSpanPx": 112,
+                  "spaceAboveNodesPx": 56,
+                  "spaceBelowNodesPx": 7
                 }
               ],
-              "minimumProjectedNodeTextPx": 6.3,
-              "minimumProjectedNonEdgeTextPx": 6.3,
+              "minimumProjectedNodeTextPx": 6.9,
+              "minimumProjectedNonEdgeTextPx": 6.9,
               "minimumProjectedEdgeTextPx": 8,
-              "minimumProjectedNodeText": "how serious, what kind",
+              "minimumProjectedNodeText": "one tap, always there",
               "minimumProjectedNodeTextDetail": "context",
               "minimumProjectedNodeTextOwner": {
                 "kind": "node",
-                "id": "understand"
+                "id": "call112"
               },
               "minimumRequiredNodeTextPx": 6,
               "readabilityOk": true,
@@ -1461,13 +1593,13 @@
   },
   "diagnostics": [],
   "evidence": {
-    "receipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-100750/siaga-how-it-helps.finalize.json",
-    "summaryReceipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-100750/siaga-how-it-helps.finalize-summary.json",
-    "browserCheckReceipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-100750/siaga-how-it-helps.browser-check.json"
+    "receipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-142055/siaga-how-it-helps.finalize.json",
+    "summaryReceipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-142055/siaga-how-it-helps.finalize-summary.json",
+    "browserCheckReceipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-end-user-flow-20261121-142055/siaga-how-it-helps.browser-check.json"
   },
   "visualReview": "not-requested",
-  "finishedAt": "2026-11-21T03:08:28.460Z",
-  "durationMs": 2416,
+  "finishedAt": "2026-11-21T07:23:15.035Z",
+  "durationMs": 2655,
   "update": {
     "status": "current",
     "installedVersion": "3.2.0",

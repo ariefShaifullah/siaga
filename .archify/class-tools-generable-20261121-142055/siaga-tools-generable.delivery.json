@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "af95d486-cc17-4bc9-9480-4f8eb589490f",
+  "status": "current",
+  "command": "deliver",
+  "type": "class",
+  "input": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-142055/candidate.json",
+  "output": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/class-tools-generable-20261121-142055/siaga-tools-generable.html",
+  "specification": {
+    "sha256": "b84e9377a90175d894e02cfeff779e82f5b61e106bb47d7589d7c8e948b6ae9e",
+    "bytes": 10586
+  },
+  "artifact": {
+    "sha256": "29853ca87c5f596612e5059d6657291ab768cf40df4b827c09bb55362f195b9d",
+    "bytes": 866095
+  }
+}

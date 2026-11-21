@@ -1,0 +1,485 @@
+{
+  "schema_version": 1,
+  "diagram_type": "class",
+  "meta": {
+    "title": "Siaga \u2014 Tool Protocol and @Generable Types",
+    "locale": "en",
+    "quality_profile": "showcase",
+    "output": ".archify/class-tools-generable-20261121-142055/siaga-tools-generable.html",
+    "repository": {
+      "url": "git@github.com:ariefShaifullah/siaga.git",
+      "provider": "github",
+      "link_mode": "local-only",
+      "revision": "bfb838d889953f0d27cc1e529408aff2eed06f67"
+    }
+  },
+  "layout": {
+    "mode": "grid"
+  },
+  "types": [
+    {
+      "id": "tool",
+      "label": "Tool",
+      "kind": "interface",
+      "sublabel": "FoundationModels protocol",
+      "row": 0,
+      "col": 1.5,
+      "attributes": [
+        {
+          "name": "name",
+          "type": "String"
+        },
+        {
+          "name": "description",
+          "type": "String"
+        },
+        {
+          "name": "Arguments",
+          "type": "@Generable"
+        }
+      ],
+      "methods": [
+        {
+          "name": "call",
+          "parameters": "arguments: Arguments",
+          "returns": "async throws -> Output",
+          "abstract": true
+        }
+      ],
+      "sources": [
+        {
+          "path": "siaga/Services/Tools.swift",
+          "line": 1,
+          "end_line": 17,
+          "label": "tool pattern"
+        }
+      ]
+    },
+    {
+      "id": "profile_tool",
+      "label": "LookupMedicalProfileTool",
+      "kind": "class",
+      "sublabel": "lookupMedicalProfile \u00b7 read-only",
+      "row": 1,
+      "col": 0,
+      "attributes": [
+        {
+          "name": "store",
+          "type": "SiagaStore"
+        }
+      ],
+      "methods": [
+        {
+          "name": "call",
+          "parameters": "arguments: Arguments",
+          "returns": "String"
+        }
+      ],
+      "sources": [
+        {
+          "path": "siaga/Services/Tools.swift",
+          "line": 34,
+          "end_line": 48
+        }
+      ]
+    },
+    {
+      "id": "firstaid_tool",
+      "label": "LookupFirstAidTool",
+      "kind": "class",
+      "sublabel": "lookupFirstAid \u00b7 read-only",
+      "row": 1,
+      "col": 1,
+      "attributes": [
+        {
+          "name": "store",
+          "type": "SiagaStore"
+        }
+      ],
+      "methods": [
+        {
+          "name": "call",
+          "parameters": "arguments: Arguments",
+          "returns": "String"
+        }
+      ],
+      "sources": [
+        {
+          "path": "siaga/Services/Tools.swift",
+          "line": 19,
+          "end_line": 32
+        }
+      ]
+    },
+    {
+      "id": "draft_tool",
+      "label": "DraftEmergencyMessageTool",
+      "kind": "class",
+      "sublabel": "draftEmergencyMessage \u00b7 draft only",
+      "row": 1,
+      "col": 2,
+      "attributes": [
+        {
+          "name": "store",
+          "type": "SiagaStore"
+        }
+      ],
+      "methods": [
+        {
+          "name": "call",
+          "parameters": "arguments: Arguments",
+          "returns": "String"
+        }
+      ],
+      "sources": [
+        {
+          "path": "siaga/Services/Tools.swift",
+          "line": 50,
+          "end_line": 64
+        }
+      ]
+    },
+    {
+      "id": "handover_tool",
+      "label": "CreateHandoverTool",
+      "kind": "class",
+      "sublabel": "createHandover \u00b7 registered, not called",
+      "row": 1,
+      "col": 3,
+      "attributes": [
+        {
+          "name": "store",
+          "type": "SiagaStore"
+        }
+      ],
+      "methods": [
+        {
+          "name": "call",
+          "parameters": "arguments: Arguments",
+          "returns": "String"
+        }
+      ],
+      "sources": [
+        {
+          "path": "siaga/Services/Tools.swift",
+          "line": 66,
+          "end_line": 80
+        }
+      ]
+    },
+    {
+      "id": "profile_args",
+      "label": "Arguments",
+      "kind": "record",
+      "sublabel": "@Generable \u00b7 profile lookup",
+      "row": 2,
+      "col": 0,
+      "attributes": [
+        {
+          "name": "personName",
+          "type": "String"
+        }
+      ],
+      "sources": [
+        {
+          "path": "siaga/Services/Tools.swift",
+          "line": 39,
+          "end_line": 43,
+          "label": "@Guide: name as in brief"
+        }
+      ]
+    },
+    {
+      "id": "firstaid_args",
+      "label": "Arguments",
+      "kind": "record",
+      "sublabel": "@Generable \u00b7 first-aid lookup",
+      "row": 2,
+      "col": 1,
+      "attributes": [
+        {
+          "name": "situationCode",
+          "type": "SituationCode"
+        }
+      ],
+      "sources": [
+        {
+          "path": "siaga/Services/Tools.swift",
+          "line": 24,
+          "end_line": 27
+        }
+      ]
+    },
+    {
+      "id": "draft_args",
+      "label": "Arguments",
+      "kind": "record",
+      "sublabel": "@Generable \u00b7 draft message",
+      "row": 2,
+      "col": 2,
+      "attributes": [
+        {
+          "name": "recipientName",
+          "type": "String"
+        }
+      ],
+      "sources": [
+        {
+          "path": "siaga/Services/Tools.swift",
+          "line": 55,
+          "end_line": 59,
+          "label": "@Guide: name as in profile"
+        }
+      ]
+    },
+    {
+      "id": "handover_args",
+      "label": "Arguments",
+      "kind": "record",
+      "sublabel": "@Generable \u00b7 handover",
+      "row": 2,
+      "col": 3,
+      "attributes": [
+        {
+          "name": "includeStepsTaken",
+          "type": "Bool"
+        }
+      ],
+      "sources": [
+        {
+          "path": "siaga/Services/Tools.swift",
+          "line": 71,
+          "end_line": 75,
+          "label": "@Guide: include steps"
+        }
+      ]
+    },
+    {
+      "id": "situation_code",
+      "label": "SituationCode",
+      "kind": "enum",
+      "sublabel": "@Generable",
+      "row": 3,
+      "col": 1,
+      "attributes": [
+        {
+          "name": "bleedingFall"
+        },
+        {
+          "name": "choking"
+        },
+        {
+          "name": "burn"
+        },
+        {
+          "name": "allergicReaction"
+        },
+        {
+          "name": "fainting"
+        },
+        {
+          "name": "sprain"
+        },
+        {
+          "name": "heartAttack"
+        },
+        {
+          "name": "unknown"
+        }
+      ],
+      "sources": [
+        {
+          "path": "siaga/Models/Models.swift",
+          "line": 12,
+          "end_line": 22
+        }
+      ]
+    },
+    {
+      "id": "brief",
+      "label": "EmergencyBrief",
+      "kind": "record",
+      "sublabel": "@Generable \u00b7 triage output",
+      "row": 3,
+      "col": 2,
+      "attributes": [
+        {
+          "name": "situationTitle",
+          "type": "String"
+        },
+        {
+          "name": "personName",
+          "type": "String"
+        },
+        {
+          "name": "whatHappened",
+          "type": "String"
+        },
+        {
+          "name": "symptoms",
+          "type": "[String]"
+        },
+        {
+          "name": "severity",
+          "type": "Severity"
+        },
+        {
+          "name": "situationCode",
+          "type": "SituationCode"
+        },
+        {
+          "name": "locationDescription",
+          "type": "String"
+        },
+        {
+          "name": "peopleInvolved",
+          "type": "Int (1...20)"
+        },
+        {
+          "name": "immediateRisks",
+          "type": "[String]"
+        },
+        {
+          "name": "needsAmbulance",
+          "type": "Bool"
+        }
+      ],
+      "sources": [
+        {
+          "path": "siaga/Models/Models.swift",
+          "line": 24,
+          "end_line": 43
+        }
+      ]
+    },
+    {
+      "id": "severity",
+      "label": "Severity",
+      "kind": "enum",
+      "sublabel": "@Generable",
+      "row": 3,
+      "col": 3,
+      "attributes": [
+        {
+          "name": "low"
+        },
+        {
+          "name": "medium"
+        },
+        {
+          "name": "high"
+        },
+        {
+          "name": "critical"
+        }
+      ],
+      "sources": [
+        {
+          "path": "siaga/Models/Models.swift",
+          "line": 7,
+          "end_line": 10
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "id": "r-profile-tool",
+      "from": "profile_tool",
+      "to": "tool",
+      "kind": "realization"
+    },
+    {
+      "id": "r-firstaid-tool",
+      "from": "firstaid_tool",
+      "to": "tool",
+      "kind": "realization"
+    },
+    {
+      "id": "r-draft-tool",
+      "from": "draft_tool",
+      "to": "tool",
+      "kind": "realization"
+    },
+    {
+      "id": "r-handover-tool",
+      "from": "handover_tool",
+      "to": "tool",
+      "kind": "realization"
+    },
+    {
+      "id": "r-profile-args",
+      "from": "profile_tool",
+      "to": "profile_args",
+      "kind": "composition",
+      "label": "nested"
+    },
+    {
+      "id": "r-firstaid-args",
+      "from": "firstaid_tool",
+      "to": "firstaid_args",
+      "kind": "composition",
+      "label": "nested"
+    },
+    {
+      "id": "r-draft-args",
+      "from": "draft_tool",
+      "to": "draft_args",
+      "kind": "composition",
+      "label": "nested"
+    },
+    {
+      "id": "r-handover-args",
+      "from": "handover_tool",
+      "to": "handover_args",
+      "kind": "composition",
+      "label": "nested"
+    },
+    {
+      "id": "r-args-code",
+      "from": "firstaid_args",
+      "to": "situation_code",
+      "kind": "association"
+    },
+    {
+      "id": "r-brief-code",
+      "from": "brief",
+      "to": "situation_code",
+      "kind": "association"
+    },
+    {
+      "id": "r-brief-severity",
+      "from": "brief",
+      "to": "severity",
+      "kind": "association"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Who fills what",
+      "items": [
+        "The model generates each Arguments value; the app's call(arguments:) runs plain Swift",
+        "Every call returns a String the model reads, recorded in SiagaStore",
+        "EmergencyBrief is the triage output from respond(generating:)"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Registered per mode",
+      "items": [
+        "Action: LookupMedicalProfile, LookupFirstAid, DraftEmergencyMessage, each called at most once",
+        "Handover: CreateHandoverTool is registered, but that mode never runs; the app calls SiagaStore.createHandover directly",
+        "SpotlightSearchTool was removed on 21 Nov: its on-device asset is unavailable"
+      ]
+    },
+    {
+      "dot": "slate",
+      "title": "Reading this diagram",
+      "items": [
+        "Tool requirements come from FoundationModels, not this repo",
+        "All four tools hold a SiagaStore; it is shown as a field, not a separate box"
+      ]
+    }
+  ]
+}

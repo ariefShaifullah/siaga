@@ -5,16 +5,16 @@
   "status": "pass",
   "type": "workflow",
   "quality": "showcase",
-  "startedAt": "2026-11-21T03:03:51.675Z",
+  "startedAt": "2026-11-21T07:22:36.657Z",
   "specification": {
-    "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-100315/candidate.json",
-    "sha256": "fc73214d9fc47e1d49e95c2d026f20c7cb36e058bead3969697db7f6e04f14ba",
-    "bytes": 9048
+    "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-142055/candidate.json",
+    "sha256": "3d9907f5e1cc848cf49ccb825f321bc6afb09120084cef08e829f50e92d2cd18",
+    "bytes": 12154
   },
   "artifact": {
-    "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-100315/siaga-user-flow.html",
-    "sha256": "e05df9d51abc2f5e31fe46e1372788699cb015f76c0d37cfbc8e03c252093d0a",
-    "bytes": 860998
+    "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-142055/siaga-user-flow.html",
+    "sha256": "6a899937e94a5fdedbc3cc6d6f05c28069997d47676e67bd897367db857481e1",
+    "bytes": 863008
   },
   "stages": {
     "validate": {
@@ -27,8 +27,8 @@
         "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.agents/skills/archify/bin/archify.mjs",
         "deliver",
         "workflow",
-        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-100315/candidate.json",
-        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-100315/siaga-user-flow.html",
+        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-142055/candidate.json",
+        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-142055/siaga-user-flow.html",
         "--quality",
         "showcase",
         "--repo-root",
@@ -40,8 +40,8 @@
         "ok": true,
         "command": "validate",
         "specification": {
-          "sha256": "fc73214d9fc47e1d49e95c2d026f20c7cb36e058bead3969697db7f6e04f14ba",
-          "bytes": 9048
+          "sha256": "3d9907f5e1cc848cf49ccb825f321bc6afb09120084cef08e829f50e92d2cd18",
+          "bytes": 12154
         },
         "validation": {
           "checksPassed": 9,
@@ -56,14 +56,14 @@
     "deliver": {
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 628,
+      "durationMs": 479,
       "command": [
         "/Users/nusantaradeveloper/.nvm/versions/node/v22.23.4/bin/node",
         "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.agents/skills/archify/bin/archify.mjs",
         "deliver",
         "workflow",
-        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-100315/candidate.json",
-        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-100315/siaga-user-flow.html",
+        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-142055/candidate.json",
+        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-142055/siaga-user-flow.html",
         "--quality",
         "showcase",
         "--repo-root",
@@ -72,19 +72,19 @@
       ],
       "receipt": {
         "schemaVersion": 1,
-        "receiptId": "7581285c-0467-4d8e-8f10-e52daceadeb3",
+        "receiptId": "82452c57-ee90-4f73-bdae-b666c530f245",
         "ok": true,
         "command": "deliver",
         "type": "workflow",
-        "input": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-100315/candidate.json",
-        "output": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-100315/siaga-user-flow.html",
+        "input": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-142055/candidate.json",
+        "output": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-142055/siaga-user-flow.html",
         "specification": {
-          "sha256": "fc73214d9fc47e1d49e95c2d026f20c7cb36e058bead3969697db7f6e04f14ba",
-          "bytes": 9048
+          "sha256": "3d9907f5e1cc848cf49ccb825f321bc6afb09120084cef08e829f50e92d2cd18",
+          "bytes": 12154
         },
         "artifact": {
-          "sha256": "e05df9d51abc2f5e31fe46e1372788699cb015f76c0d37cfbc8e03c252093d0a",
-          "bytes": 860998
+          "sha256": "6a899937e94a5fdedbc3cc6d6f05c28069997d47676e67bd897367db857481e1",
+          "bytes": 863008
         },
         "validation": {
           "checksPassed": 9,
@@ -97,8 +97,8 @@
         "evidence": {
           "verified": true,
           "repository": "git@github.com:ariefShaifullah/siaga",
-          "revision": "8f48a5a3a9ab075b0ed262f699e7f32c6bcbbd17",
-          "references": 28,
+          "revision": "bfb838d889953f0d27cc1e529408aff2eed06f67",
+          "references": 27,
           "linkMode": "local-only"
         },
         "update": {
@@ -117,20 +117,20 @@
     "check": {
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 140,
+      "durationMs": 143,
       "command": [
         "/Users/nusantaradeveloper/.nvm/versions/node/v22.23.4/bin/node",
         "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.agents/skills/archify/bin/archify.mjs",
         "check",
-        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-100315/siaga-user-flow.html",
+        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-142055/siaga-user-flow.html",
         "--require-provenance"
       ],
       "receipt": {
         "ok": true,
-        "file": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-100315/siaga-user-flow.html",
+        "file": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-142055/siaga-user-flow.html",
         "artifact": {
-          "sha256": "e05df9d51abc2f5e31fe46e1372788699cb015f76c0d37cfbc8e03c252093d0a",
-          "bytes": 860998
+          "sha256": "6a899937e94a5fdedbc3cc6d6f05c28069997d47676e67bd897367db857481e1",
+          "bytes": 863008
         },
         "checks": [
           {
@@ -197,18 +197,18 @@
             "containerBorderRuns": 0,
             "labelRouteClearanceIssues": 0,
             "labelCanvasOverflowIssues": 0,
-            "minLabelRouteClearance": 9,
+            "minLabelRouteClearance": 13,
             "desktopReadabilityIssues": 0,
             "viewportHeightIssues": 0,
-            "minProjectedNodeTextPx": 7.3,
+            "minProjectedNodeTextPx": 6.213149522799576,
             "maxBends": 0,
             "routesOverSuggestedBends": 0,
             "maxStretch": 1,
             "routesOverSuggestedStretch": 0,
             "minSegmentPx": 8,
             "minInteriorSegmentPx": null,
-            "shortSegmentCount": 5,
-            "shortEndpointSegmentCount": 5,
+            "shortSegmentCount": 4,
+            "shortEndpointSegmentCount": 4,
             "shortInteriorSegmentCount": 0,
             "microSegmentCount": 0
           },
@@ -238,27 +238,27 @@
             "hardFloorMet": true,
             "minimumOwner": {
               "kind": "node",
-              "id": "review"
+              "id": "chatagent"
             },
-            "minimumSourceTextPx": 7.3,
-            "minimumProjectedTextPx": 7.3,
-            "semanticTextCount": 43
+            "minimumSourceTextPx": 6.3,
+            "minimumProjectedTextPx": 6.213149522799576,
+            "semanticTextCount": 46
           },
           "issues": []
         },
         "provenance": "current",
-        "deliveryReceiptId": "7581285c-0467-4d8e-8f10-e52daceadeb3"
+        "deliveryReceiptId": "82452c57-ee90-4f73-bdae-b666c530f245"
       }
     },
     "browser-check": {
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 1918,
+      "durationMs": 2327,
       "command": [
         "/Users/nusantaradeveloper/.nvm/versions/node/v22.23.4/bin/node",
         "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.agents/skills/archify/bin/archify.mjs",
         "browser-check",
-        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-100315/siaga-user-flow.html",
+        "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-142055/siaga-user-flow.html",
         "--json",
         "--require-provenance"
       ],
@@ -271,11 +271,11 @@
         "status": "pass",
         "visualReview": "not-requested",
         "provenance": "current",
-        "deliveryReceiptId": "7581285c-0467-4d8e-8f10-e52daceadeb3",
+        "deliveryReceiptId": "82452c57-ee90-4f73-bdae-b666c530f245",
         "artifact": {
-          "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-100315/siaga-user-flow.html",
-          "sha256": "e05df9d51abc2f5e31fe46e1372788699cb015f76c0d37cfbc8e03c252093d0a",
-          "bytes": 860998
+          "path": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-142055/siaga-user-flow.html",
+          "sha256": "6a899937e94a5fdedbc3cc6d6f05c28069997d47676e67bd897367db857481e1",
+          "bytes": 863008
         },
         "state": {
           "detail": "read",
@@ -297,7 +297,7 @@
               "innerWidth": 1440,
               "innerHeight": 900,
               "scrollWidth": 1440,
-              "scrollHeight": 1321,
+              "scrollHeight": 1264,
               "overflowX": false,
               "overflowY": true,
               "verticalScrollAccepted": true,
@@ -307,90 +307,90 @@
               "readerFit": "width-first",
               "ok": true,
               "readerWidth": 1376,
-              "diagramWidth": 1246.5,
+              "diagramWidth": 1346,
               "pageComposition": {
                 "bodyPaddingPx": 12,
                 "headerPx": 52,
                 "diagramChromePx": 78,
-                "svgPx": 1179,
+                "svgPx": 1122,
                 "cardsPx": 0,
                 "viewBoxHeight": 786
               },
-              "viewBoxWidth": 831,
+              "viewBoxWidth": 943,
               "workflowLanes": [
                 {
                   "frameId": "lane-0",
-                  "heightPx": 159,
+                  "heightPx": 151,
                   "nodeCount": 3,
                   "nodeIds": [
                     "emergency",
                     "call112",
-                    "approve"
+                    "send"
                   ],
-                  "nodeSpanPx": 102,
-                  "spaceAboveNodesPx": 51,
+                  "nodeSpanPx": 97,
+                  "spaceAboveNodesPx": 49,
                   "spaceBelowNodesPx": 6
                 },
                 {
                   "frameId": "lane-1",
-                  "heightPx": 159,
-                  "nodeCount": 3,
+                  "heightPx": 151,
+                  "nodeCount": 2,
                   "nodeIds": [
-                    "describe",
-                    "review",
-                    "act"
+                    "chat",
+                    "plan"
                   ],
-                  "nodeSpanPx": 102,
-                  "spaceAboveNodesPx": 51,
-                  "spaceBelowNodesPx": 6
+                  "nodeSpanPx": 74,
+                  "spaceAboveNodesPx": 60,
+                  "spaceBelowNodesPx": 17
                 },
                 {
                   "frameId": "lane-2",
-                  "heightPx": 159,
-                  "nodeCount": 3,
+                  "heightPx": 151,
+                  "nodeCount": 4,
                   "nodeIds": [
+                    "chatagent",
                     "triage",
                     "action",
                     "handover"
                   ],
-                  "nodeSpanPx": 102,
-                  "spaceAboveNodesPx": 51,
+                  "nodeSpanPx": 97,
+                  "spaceAboveNodesPx": 49,
                   "spaceBelowNodesPx": 6
                 },
                 {
                   "frameId": "lane-3",
-                  "heightPx": 159,
+                  "heightPx": 151,
                   "nodeCount": 2,
                   "nodeIds": [
-                    "compact",
-                    "fallback"
+                    "profiles",
+                    "tools"
                   ],
-                  "nodeSpanPx": 78,
-                  "spaceAboveNodesPx": 63,
-                  "spaceBelowNodesPx": 18
+                  "nodeSpanPx": 74,
+                  "spaceAboveNodesPx": 60,
+                  "spaceBelowNodesPx": 17
                 },
                 {
                   "frameId": "lane-4",
-                  "heightPx": 159,
+                  "heightPx": 151,
                   "nodeCount": 3,
                   "nodeIds": [
-                    "profiles",
-                    "history",
-                    "tools"
+                    "compact",
+                    "fallback",
+                    "planfallback"
                   ],
-                  "nodeSpanPx": 78,
-                  "spaceAboveNodesPx": 63,
-                  "spaceBelowNodesPx": 18
+                  "nodeSpanPx": 74,
+                  "spaceAboveNodesPx": 60,
+                  "spaceBelowNodesPx": 17
                 }
               ],
-              "minimumProjectedNodeTextPx": 7.3,
-              "minimumProjectedNonEdgeTextPx": 7.3,
+              "minimumProjectedNodeTextPx": 6.3,
+              "minimumProjectedNonEdgeTextPx": 6.3,
               "minimumProjectedEdgeTextPx": 8,
-              "minimumProjectedNodeText": "edit severity, code",
+              "minimumProjectedNodeText": "one question at a time",
               "minimumProjectedNodeTextDetail": "context",
               "minimumProjectedNodeTextOwner": {
                 "kind": "node",
-                "id": "review"
+                "id": "chatagent"
               },
               "minimumRequiredNodeTextPx": 6,
               "readabilityOk": true,
@@ -423,7 +423,7 @@
               "readerFit": "width-first",
               "ok": true,
               "readerWidth": 1536,
-              "diagramWidth": 1246.5,
+              "diagramWidth": 1414.5,
               "pageComposition": {
                 "bodyPaddingPx": 64,
                 "headerPx": 60,
@@ -432,7 +432,7 @@
                 "cardsPx": 0,
                 "viewBoxHeight": 786
               },
-              "viewBoxWidth": 831,
+              "viewBoxWidth": 943,
               "workflowLanes": [
                 {
                   "frameId": "lane-0",
@@ -441,7 +441,7 @@
                   "nodeIds": [
                     "emergency",
                     "call112",
-                    "approve"
+                    "send"
                   ],
                   "nodeSpanPx": 102,
                   "spaceAboveNodesPx": 51,
@@ -450,21 +450,21 @@
                 {
                   "frameId": "lane-1",
                   "heightPx": 159,
-                  "nodeCount": 3,
+                  "nodeCount": 2,
                   "nodeIds": [
-                    "describe",
-                    "review",
-                    "act"
+                    "chat",
+                    "plan"
                   ],
-                  "nodeSpanPx": 102,
-                  "spaceAboveNodesPx": 51,
-                  "spaceBelowNodesPx": 6
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 63,
+                  "spaceBelowNodesPx": 18
                 },
                 {
                   "frameId": "lane-2",
                   "heightPx": 159,
-                  "nodeCount": 3,
+                  "nodeCount": 4,
                   "nodeIds": [
+                    "chatagent",
                     "triage",
                     "action",
                     "handover"
@@ -478,8 +478,8 @@
                   "heightPx": 159,
                   "nodeCount": 2,
                   "nodeIds": [
-                    "compact",
-                    "fallback"
+                    "profiles",
+                    "tools"
                   ],
                   "nodeSpanPx": 78,
                   "spaceAboveNodesPx": 63,
@@ -490,23 +490,23 @@
                   "heightPx": 159,
                   "nodeCount": 3,
                   "nodeIds": [
-                    "profiles",
-                    "history",
-                    "tools"
+                    "compact",
+                    "fallback",
+                    "planfallback"
                   ],
                   "nodeSpanPx": 78,
                   "spaceAboveNodesPx": 63,
                   "spaceBelowNodesPx": 18
                 }
               ],
-              "minimumProjectedNodeTextPx": 7.3,
-              "minimumProjectedNonEdgeTextPx": 7.3,
+              "minimumProjectedNodeTextPx": 6.3,
+              "minimumProjectedNonEdgeTextPx": 6.3,
               "minimumProjectedEdgeTextPx": 8,
-              "minimumProjectedNodeText": "edit severity, code",
+              "minimumProjectedNodeText": "one question at a time",
               "minimumProjectedNodeTextDetail": "context",
               "minimumProjectedNodeTextOwner": {
                 "kind": "node",
-                "id": "review"
+                "id": "chatagent"
               },
               "minimumRequiredNodeTextPx": 6,
               "readabilityOk": true,
@@ -539,7 +539,7 @@
               "readerFit": "width-first",
               "ok": true,
               "readerWidth": 1856,
-              "diagramWidth": 1246.5,
+              "diagramWidth": 1414.5,
               "pageComposition": {
                 "bodyPaddingPx": 64,
                 "headerPx": 60,
@@ -548,7 +548,7 @@
                 "cardsPx": 0,
                 "viewBoxHeight": 786
               },
-              "viewBoxWidth": 831,
+              "viewBoxWidth": 943,
               "workflowLanes": [
                 {
                   "frameId": "lane-0",
@@ -557,7 +557,7 @@
                   "nodeIds": [
                     "emergency",
                     "call112",
-                    "approve"
+                    "send"
                   ],
                   "nodeSpanPx": 102,
                   "spaceAboveNodesPx": 51,
@@ -566,21 +566,21 @@
                 {
                   "frameId": "lane-1",
                   "heightPx": 159,
-                  "nodeCount": 3,
+                  "nodeCount": 2,
                   "nodeIds": [
-                    "describe",
-                    "review",
-                    "act"
+                    "chat",
+                    "plan"
                   ],
-                  "nodeSpanPx": 102,
-                  "spaceAboveNodesPx": 51,
-                  "spaceBelowNodesPx": 6
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 63,
+                  "spaceBelowNodesPx": 18
                 },
                 {
                   "frameId": "lane-2",
                   "heightPx": 159,
-                  "nodeCount": 3,
+                  "nodeCount": 4,
                   "nodeIds": [
+                    "chatagent",
                     "triage",
                     "action",
                     "handover"
@@ -594,8 +594,8 @@
                   "heightPx": 159,
                   "nodeCount": 2,
                   "nodeIds": [
-                    "compact",
-                    "fallback"
+                    "profiles",
+                    "tools"
                   ],
                   "nodeSpanPx": 78,
                   "spaceAboveNodesPx": 63,
@@ -606,23 +606,23 @@
                   "heightPx": 159,
                   "nodeCount": 3,
                   "nodeIds": [
-                    "profiles",
-                    "history",
-                    "tools"
+                    "compact",
+                    "fallback",
+                    "planfallback"
                   ],
                   "nodeSpanPx": 78,
                   "spaceAboveNodesPx": 63,
                   "spaceBelowNodesPx": 18
                 }
               ],
-              "minimumProjectedNodeTextPx": 7.3,
-              "minimumProjectedNonEdgeTextPx": 7.3,
+              "minimumProjectedNodeTextPx": 6.3,
+              "minimumProjectedNonEdgeTextPx": 6.3,
               "minimumProjectedEdgeTextPx": 8,
-              "minimumProjectedNodeText": "edit severity, code",
+              "minimumProjectedNodeText": "one question at a time",
               "minimumProjectedNodeTextDetail": "context",
               "minimumProjectedNodeTextOwner": {
                 "kind": "node",
-                "id": "review"
+                "id": "chatagent"
               },
               "minimumRequiredNodeTextPx": 6,
               "readabilityOk": true,
@@ -655,7 +655,7 @@
               "readerFit": "width-first",
               "ok": true,
               "readerWidth": 1920,
-              "diagramWidth": 1246.5,
+              "diagramWidth": 1414.5,
               "pageComposition": {
                 "bodyPaddingPx": 64,
                 "headerPx": 68,
@@ -664,7 +664,7 @@
                 "cardsPx": 0,
                 "viewBoxHeight": 786
               },
-              "viewBoxWidth": 831,
+              "viewBoxWidth": 943,
               "workflowLanes": [
                 {
                   "frameId": "lane-0",
@@ -673,7 +673,7 @@
                   "nodeIds": [
                     "emergency",
                     "call112",
-                    "approve"
+                    "send"
                   ],
                   "nodeSpanPx": 102,
                   "spaceAboveNodesPx": 51,
@@ -682,21 +682,21 @@
                 {
                   "frameId": "lane-1",
                   "heightPx": 159,
-                  "nodeCount": 3,
+                  "nodeCount": 2,
                   "nodeIds": [
-                    "describe",
-                    "review",
-                    "act"
+                    "chat",
+                    "plan"
                   ],
-                  "nodeSpanPx": 102,
-                  "spaceAboveNodesPx": 51,
-                  "spaceBelowNodesPx": 6
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 63,
+                  "spaceBelowNodesPx": 18
                 },
                 {
                   "frameId": "lane-2",
                   "heightPx": 159,
-                  "nodeCount": 3,
+                  "nodeCount": 4,
                   "nodeIds": [
+                    "chatagent",
                     "triage",
                     "action",
                     "handover"
@@ -710,8 +710,8 @@
                   "heightPx": 159,
                   "nodeCount": 2,
                   "nodeIds": [
-                    "compact",
-                    "fallback"
+                    "profiles",
+                    "tools"
                   ],
                   "nodeSpanPx": 78,
                   "spaceAboveNodesPx": 63,
@@ -722,23 +722,23 @@
                   "heightPx": 159,
                   "nodeCount": 3,
                   "nodeIds": [
-                    "profiles",
-                    "history",
-                    "tools"
+                    "compact",
+                    "fallback",
+                    "planfallback"
                   ],
                   "nodeSpanPx": 78,
                   "spaceAboveNodesPx": 63,
                   "spaceBelowNodesPx": 18
                 }
               ],
-              "minimumProjectedNodeTextPx": 7.3,
-              "minimumProjectedNonEdgeTextPx": 7.3,
+              "minimumProjectedNodeTextPx": 6.3,
+              "minimumProjectedNonEdgeTextPx": 6.3,
               "minimumProjectedEdgeTextPx": 8,
-              "minimumProjectedNodeText": "edit severity, code",
+              "minimumProjectedNodeText": "one question at a time",
               "minimumProjectedNodeTextDetail": "context",
               "minimumProjectedNodeTextOwner": {
                 "kind": "node",
-                "id": "review"
+                "id": "chatagent"
               },
               "minimumRequiredNodeTextPx": 6,
               "readabilityOk": true,
@@ -814,7 +814,7 @@
               "innerWidth": 1440,
               "innerHeight": 900,
               "scrollWidth": 1440,
-              "scrollHeight": 1321,
+              "scrollHeight": 1264,
               "overflowX": false,
               "overflowY": true,
               "verticalScrollAccepted": true,
@@ -824,90 +824,90 @@
               "readerFit": "width-first",
               "ok": true,
               "readerWidth": 1376,
-              "diagramWidth": 1246.5,
+              "diagramWidth": 1346,
               "pageComposition": {
                 "bodyPaddingPx": 12,
                 "headerPx": 52,
                 "diagramChromePx": 78,
-                "svgPx": 1179,
+                "svgPx": 1122,
                 "cardsPx": 0,
                 "viewBoxHeight": 786
               },
-              "viewBoxWidth": 831,
+              "viewBoxWidth": 943,
               "workflowLanes": [
                 {
                   "frameId": "lane-0",
-                  "heightPx": 159,
+                  "heightPx": 151,
                   "nodeCount": 3,
                   "nodeIds": [
                     "emergency",
                     "call112",
-                    "approve"
+                    "send"
                   ],
-                  "nodeSpanPx": 102,
-                  "spaceAboveNodesPx": 51,
+                  "nodeSpanPx": 97,
+                  "spaceAboveNodesPx": 49,
                   "spaceBelowNodesPx": 6
                 },
                 {
                   "frameId": "lane-1",
-                  "heightPx": 159,
-                  "nodeCount": 3,
+                  "heightPx": 151,
+                  "nodeCount": 2,
                   "nodeIds": [
-                    "describe",
-                    "review",
-                    "act"
+                    "chat",
+                    "plan"
                   ],
-                  "nodeSpanPx": 102,
-                  "spaceAboveNodesPx": 51,
-                  "spaceBelowNodesPx": 6
+                  "nodeSpanPx": 74,
+                  "spaceAboveNodesPx": 60,
+                  "spaceBelowNodesPx": 17
                 },
                 {
                   "frameId": "lane-2",
-                  "heightPx": 159,
-                  "nodeCount": 3,
+                  "heightPx": 151,
+                  "nodeCount": 4,
                   "nodeIds": [
+                    "chatagent",
                     "triage",
                     "action",
                     "handover"
                   ],
-                  "nodeSpanPx": 102,
-                  "spaceAboveNodesPx": 51,
+                  "nodeSpanPx": 97,
+                  "spaceAboveNodesPx": 49,
                   "spaceBelowNodesPx": 6
                 },
                 {
                   "frameId": "lane-3",
-                  "heightPx": 159,
+                  "heightPx": 151,
                   "nodeCount": 2,
                   "nodeIds": [
-                    "compact",
-                    "fallback"
+                    "profiles",
+                    "tools"
                   ],
-                  "nodeSpanPx": 78,
-                  "spaceAboveNodesPx": 63,
-                  "spaceBelowNodesPx": 18
+                  "nodeSpanPx": 74,
+                  "spaceAboveNodesPx": 60,
+                  "spaceBelowNodesPx": 17
                 },
                 {
                   "frameId": "lane-4",
-                  "heightPx": 159,
+                  "heightPx": 151,
                   "nodeCount": 3,
                   "nodeIds": [
-                    "profiles",
-                    "history",
-                    "tools"
+                    "compact",
+                    "fallback",
+                    "planfallback"
                   ],
-                  "nodeSpanPx": 78,
-                  "spaceAboveNodesPx": 63,
-                  "spaceBelowNodesPx": 18
+                  "nodeSpanPx": 74,
+                  "spaceAboveNodesPx": 60,
+                  "spaceBelowNodesPx": 17
                 }
               ],
-              "minimumProjectedNodeTextPx": 7.3,
-              "minimumProjectedNonEdgeTextPx": 7.3,
+              "minimumProjectedNodeTextPx": 6.3,
+              "minimumProjectedNonEdgeTextPx": 6.3,
               "minimumProjectedEdgeTextPx": 8,
-              "minimumProjectedNodeText": "edit severity, code",
+              "minimumProjectedNodeText": "one question at a time",
               "minimumProjectedNodeTextDetail": "context",
               "minimumProjectedNodeTextOwner": {
                 "kind": "node",
-                "id": "review"
+                "id": "chatagent"
               },
               "minimumRequiredNodeTextPx": 6,
               "readabilityOk": true,
@@ -940,7 +940,7 @@
               "readerFit": "width-first",
               "ok": true,
               "readerWidth": 1536,
-              "diagramWidth": 1246.5,
+              "diagramWidth": 1414.5,
               "pageComposition": {
                 "bodyPaddingPx": 64,
                 "headerPx": 60,
@@ -949,7 +949,7 @@
                 "cardsPx": 0,
                 "viewBoxHeight": 786
               },
-              "viewBoxWidth": 831,
+              "viewBoxWidth": 943,
               "workflowLanes": [
                 {
                   "frameId": "lane-0",
@@ -958,7 +958,7 @@
                   "nodeIds": [
                     "emergency",
                     "call112",
-                    "approve"
+                    "send"
                   ],
                   "nodeSpanPx": 102,
                   "spaceAboveNodesPx": 51,
@@ -967,21 +967,21 @@
                 {
                   "frameId": "lane-1",
                   "heightPx": 159,
-                  "nodeCount": 3,
+                  "nodeCount": 2,
                   "nodeIds": [
-                    "describe",
-                    "review",
-                    "act"
+                    "chat",
+                    "plan"
                   ],
-                  "nodeSpanPx": 102,
-                  "spaceAboveNodesPx": 51,
-                  "spaceBelowNodesPx": 6
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 63,
+                  "spaceBelowNodesPx": 18
                 },
                 {
                   "frameId": "lane-2",
                   "heightPx": 159,
-                  "nodeCount": 3,
+                  "nodeCount": 4,
                   "nodeIds": [
+                    "chatagent",
                     "triage",
                     "action",
                     "handover"
@@ -995,8 +995,8 @@
                   "heightPx": 159,
                   "nodeCount": 2,
                   "nodeIds": [
-                    "compact",
-                    "fallback"
+                    "profiles",
+                    "tools"
                   ],
                   "nodeSpanPx": 78,
                   "spaceAboveNodesPx": 63,
@@ -1007,23 +1007,23 @@
                   "heightPx": 159,
                   "nodeCount": 3,
                   "nodeIds": [
-                    "profiles",
-                    "history",
-                    "tools"
+                    "compact",
+                    "fallback",
+                    "planfallback"
                   ],
                   "nodeSpanPx": 78,
                   "spaceAboveNodesPx": 63,
                   "spaceBelowNodesPx": 18
                 }
               ],
-              "minimumProjectedNodeTextPx": 7.3,
-              "minimumProjectedNonEdgeTextPx": 7.3,
+              "minimumProjectedNodeTextPx": 6.3,
+              "minimumProjectedNonEdgeTextPx": 6.3,
               "minimumProjectedEdgeTextPx": 8,
-              "minimumProjectedNodeText": "edit severity, code",
+              "minimumProjectedNodeText": "one question at a time",
               "minimumProjectedNodeTextDetail": "context",
               "minimumProjectedNodeTextOwner": {
                 "kind": "node",
-                "id": "review"
+                "id": "chatagent"
               },
               "minimumRequiredNodeTextPx": 6,
               "readabilityOk": true,
@@ -1056,7 +1056,7 @@
               "readerFit": "width-first",
               "ok": true,
               "readerWidth": 1856,
-              "diagramWidth": 1246.5,
+              "diagramWidth": 1414.5,
               "pageComposition": {
                 "bodyPaddingPx": 64,
                 "headerPx": 60,
@@ -1065,7 +1065,7 @@
                 "cardsPx": 0,
                 "viewBoxHeight": 786
               },
-              "viewBoxWidth": 831,
+              "viewBoxWidth": 943,
               "workflowLanes": [
                 {
                   "frameId": "lane-0",
@@ -1074,7 +1074,7 @@
                   "nodeIds": [
                     "emergency",
                     "call112",
-                    "approve"
+                    "send"
                   ],
                   "nodeSpanPx": 102,
                   "spaceAboveNodesPx": 51,
@@ -1083,21 +1083,21 @@
                 {
                   "frameId": "lane-1",
                   "heightPx": 159,
-                  "nodeCount": 3,
+                  "nodeCount": 2,
                   "nodeIds": [
-                    "describe",
-                    "review",
-                    "act"
+                    "chat",
+                    "plan"
                   ],
-                  "nodeSpanPx": 102,
-                  "spaceAboveNodesPx": 51,
-                  "spaceBelowNodesPx": 6
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 63,
+                  "spaceBelowNodesPx": 18
                 },
                 {
                   "frameId": "lane-2",
                   "heightPx": 159,
-                  "nodeCount": 3,
+                  "nodeCount": 4,
                   "nodeIds": [
+                    "chatagent",
                     "triage",
                     "action",
                     "handover"
@@ -1111,8 +1111,8 @@
                   "heightPx": 159,
                   "nodeCount": 2,
                   "nodeIds": [
-                    "compact",
-                    "fallback"
+                    "profiles",
+                    "tools"
                   ],
                   "nodeSpanPx": 78,
                   "spaceAboveNodesPx": 63,
@@ -1123,23 +1123,23 @@
                   "heightPx": 159,
                   "nodeCount": 3,
                   "nodeIds": [
-                    "profiles",
-                    "history",
-                    "tools"
+                    "compact",
+                    "fallback",
+                    "planfallback"
                   ],
                   "nodeSpanPx": 78,
                   "spaceAboveNodesPx": 63,
                   "spaceBelowNodesPx": 18
                 }
               ],
-              "minimumProjectedNodeTextPx": 7.3,
-              "minimumProjectedNonEdgeTextPx": 7.3,
+              "minimumProjectedNodeTextPx": 6.3,
+              "minimumProjectedNonEdgeTextPx": 6.3,
               "minimumProjectedEdgeTextPx": 8,
-              "minimumProjectedNodeText": "edit severity, code",
+              "minimumProjectedNodeText": "one question at a time",
               "minimumProjectedNodeTextDetail": "context",
               "minimumProjectedNodeTextOwner": {
                 "kind": "node",
-                "id": "review"
+                "id": "chatagent"
               },
               "minimumRequiredNodeTextPx": 6,
               "readabilityOk": true,
@@ -1172,7 +1172,7 @@
               "readerFit": "width-first",
               "ok": true,
               "readerWidth": 1920,
-              "diagramWidth": 1246.5,
+              "diagramWidth": 1414.5,
               "pageComposition": {
                 "bodyPaddingPx": 64,
                 "headerPx": 68,
@@ -1181,7 +1181,7 @@
                 "cardsPx": 0,
                 "viewBoxHeight": 786
               },
-              "viewBoxWidth": 831,
+              "viewBoxWidth": 943,
               "workflowLanes": [
                 {
                   "frameId": "lane-0",
@@ -1190,7 +1190,7 @@
                   "nodeIds": [
                     "emergency",
                     "call112",
-                    "approve"
+                    "send"
                   ],
                   "nodeSpanPx": 102,
                   "spaceAboveNodesPx": 51,
@@ -1199,21 +1199,21 @@
                 {
                   "frameId": "lane-1",
                   "heightPx": 159,
-                  "nodeCount": 3,
+                  "nodeCount": 2,
                   "nodeIds": [
-                    "describe",
-                    "review",
-                    "act"
+                    "chat",
+                    "plan"
                   ],
-                  "nodeSpanPx": 102,
-                  "spaceAboveNodesPx": 51,
-                  "spaceBelowNodesPx": 6
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 63,
+                  "spaceBelowNodesPx": 18
                 },
                 {
                   "frameId": "lane-2",
                   "heightPx": 159,
-                  "nodeCount": 3,
+                  "nodeCount": 4,
                   "nodeIds": [
+                    "chatagent",
                     "triage",
                     "action",
                     "handover"
@@ -1227,8 +1227,8 @@
                   "heightPx": 159,
                   "nodeCount": 2,
                   "nodeIds": [
-                    "compact",
-                    "fallback"
+                    "profiles",
+                    "tools"
                   ],
                   "nodeSpanPx": 78,
                   "spaceAboveNodesPx": 63,
@@ -1239,23 +1239,23 @@
                   "heightPx": 159,
                   "nodeCount": 3,
                   "nodeIds": [
-                    "profiles",
-                    "history",
-                    "tools"
+                    "compact",
+                    "fallback",
+                    "planfallback"
                   ],
                   "nodeSpanPx": 78,
                   "spaceAboveNodesPx": 63,
                   "spaceBelowNodesPx": 18
                 }
               ],
-              "minimumProjectedNodeTextPx": 7.3,
-              "minimumProjectedNonEdgeTextPx": 7.3,
+              "minimumProjectedNodeTextPx": 6.3,
+              "minimumProjectedNonEdgeTextPx": 6.3,
               "minimumProjectedEdgeTextPx": 8,
-              "minimumProjectedNodeText": "edit severity, code",
+              "minimumProjectedNodeText": "one question at a time",
               "minimumProjectedNodeTextDetail": "context",
               "minimumProjectedNodeTextOwner": {
                 "kind": "node",
-                "id": "review"
+                "id": "chatagent"
               },
               "minimumRequiredNodeTextPx": 6,
               "readabilityOk": true,
@@ -1283,7 +1283,7 @@
               "innerWidth": 1440,
               "innerHeight": 900,
               "scrollWidth": 1440,
-              "scrollHeight": 1321,
+              "scrollHeight": 1264,
               "overflowX": false,
               "overflowY": true,
               "verticalScrollAccepted": true,
@@ -1293,90 +1293,90 @@
               "readerFit": "width-first",
               "ok": true,
               "readerWidth": 1376,
-              "diagramWidth": 1246.5,
+              "diagramWidth": 1346,
               "pageComposition": {
                 "bodyPaddingPx": 12,
                 "headerPx": 52,
                 "diagramChromePx": 78,
-                "svgPx": 1179,
+                "svgPx": 1122,
                 "cardsPx": 0,
                 "viewBoxHeight": 786
               },
-              "viewBoxWidth": 831,
+              "viewBoxWidth": 943,
               "workflowLanes": [
                 {
                   "frameId": "lane-0",
-                  "heightPx": 159,
+                  "heightPx": 151,
                   "nodeCount": 3,
                   "nodeIds": [
                     "emergency",
                     "call112",
-                    "approve"
+                    "send"
                   ],
-                  "nodeSpanPx": 102,
-                  "spaceAboveNodesPx": 51,
+                  "nodeSpanPx": 97,
+                  "spaceAboveNodesPx": 49,
                   "spaceBelowNodesPx": 6
                 },
                 {
                   "frameId": "lane-1",
-                  "heightPx": 159,
-                  "nodeCount": 3,
+                  "heightPx": 151,
+                  "nodeCount": 2,
                   "nodeIds": [
-                    "describe",
-                    "review",
-                    "act"
+                    "chat",
+                    "plan"
                   ],
-                  "nodeSpanPx": 102,
-                  "spaceAboveNodesPx": 51,
-                  "spaceBelowNodesPx": 6
+                  "nodeSpanPx": 74,
+                  "spaceAboveNodesPx": 60,
+                  "spaceBelowNodesPx": 17
                 },
                 {
                   "frameId": "lane-2",
-                  "heightPx": 159,
-                  "nodeCount": 3,
+                  "heightPx": 151,
+                  "nodeCount": 4,
                   "nodeIds": [
+                    "chatagent",
                     "triage",
                     "action",
                     "handover"
                   ],
-                  "nodeSpanPx": 102,
-                  "spaceAboveNodesPx": 51,
+                  "nodeSpanPx": 97,
+                  "spaceAboveNodesPx": 49,
                   "spaceBelowNodesPx": 6
                 },
                 {
                   "frameId": "lane-3",
-                  "heightPx": 159,
+                  "heightPx": 151,
                   "nodeCount": 2,
                   "nodeIds": [
-                    "compact",
-                    "fallback"
+                    "profiles",
+                    "tools"
                   ],
-                  "nodeSpanPx": 78,
-                  "spaceAboveNodesPx": 63,
-                  "spaceBelowNodesPx": 18
+                  "nodeSpanPx": 74,
+                  "spaceAboveNodesPx": 60,
+                  "spaceBelowNodesPx": 17
                 },
                 {
                   "frameId": "lane-4",
-                  "heightPx": 159,
+                  "heightPx": 151,
                   "nodeCount": 3,
                   "nodeIds": [
-                    "profiles",
-                    "history",
-                    "tools"
+                    "compact",
+                    "fallback",
+                    "planfallback"
                   ],
-                  "nodeSpanPx": 78,
-                  "spaceAboveNodesPx": 63,
-                  "spaceBelowNodesPx": 18
+                  "nodeSpanPx": 74,
+                  "spaceAboveNodesPx": 60,
+                  "spaceBelowNodesPx": 17
                 }
               ],
-              "minimumProjectedNodeTextPx": 7.3,
-              "minimumProjectedNonEdgeTextPx": 7.3,
+              "minimumProjectedNodeTextPx": 6.3,
+              "minimumProjectedNonEdgeTextPx": 6.3,
               "minimumProjectedEdgeTextPx": 8,
-              "minimumProjectedNodeText": "edit severity, code",
+              "minimumProjectedNodeText": "one question at a time",
               "minimumProjectedNodeTextDetail": "context",
               "minimumProjectedNodeTextOwner": {
                 "kind": "node",
-                "id": "review"
+                "id": "chatagent"
               },
               "minimumRequiredNodeTextPx": 6,
               "readabilityOk": true,
@@ -1409,7 +1409,7 @@
               "readerFit": "width-first",
               "ok": true,
               "readerWidth": 1536,
-              "diagramWidth": 1246.5,
+              "diagramWidth": 1414.5,
               "pageComposition": {
                 "bodyPaddingPx": 64,
                 "headerPx": 60,
@@ -1418,7 +1418,7 @@
                 "cardsPx": 0,
                 "viewBoxHeight": 786
               },
-              "viewBoxWidth": 831,
+              "viewBoxWidth": 943,
               "workflowLanes": [
                 {
                   "frameId": "lane-0",
@@ -1427,7 +1427,7 @@
                   "nodeIds": [
                     "emergency",
                     "call112",
-                    "approve"
+                    "send"
                   ],
                   "nodeSpanPx": 102,
                   "spaceAboveNodesPx": 51,
@@ -1436,21 +1436,21 @@
                 {
                   "frameId": "lane-1",
                   "heightPx": 159,
-                  "nodeCount": 3,
+                  "nodeCount": 2,
                   "nodeIds": [
-                    "describe",
-                    "review",
-                    "act"
+                    "chat",
+                    "plan"
                   ],
-                  "nodeSpanPx": 102,
-                  "spaceAboveNodesPx": 51,
-                  "spaceBelowNodesPx": 6
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 63,
+                  "spaceBelowNodesPx": 18
                 },
                 {
                   "frameId": "lane-2",
                   "heightPx": 159,
-                  "nodeCount": 3,
+                  "nodeCount": 4,
                   "nodeIds": [
+                    "chatagent",
                     "triage",
                     "action",
                     "handover"
@@ -1464,8 +1464,8 @@
                   "heightPx": 159,
                   "nodeCount": 2,
                   "nodeIds": [
-                    "compact",
-                    "fallback"
+                    "profiles",
+                    "tools"
                   ],
                   "nodeSpanPx": 78,
                   "spaceAboveNodesPx": 63,
@@ -1476,23 +1476,23 @@
                   "heightPx": 159,
                   "nodeCount": 3,
                   "nodeIds": [
-                    "profiles",
-                    "history",
-                    "tools"
+                    "compact",
+                    "fallback",
+                    "planfallback"
                   ],
                   "nodeSpanPx": 78,
                   "spaceAboveNodesPx": 63,
                   "spaceBelowNodesPx": 18
                 }
               ],
-              "minimumProjectedNodeTextPx": 7.3,
-              "minimumProjectedNonEdgeTextPx": 7.3,
+              "minimumProjectedNodeTextPx": 6.3,
+              "minimumProjectedNonEdgeTextPx": 6.3,
               "minimumProjectedEdgeTextPx": 8,
-              "minimumProjectedNodeText": "edit severity, code",
+              "minimumProjectedNodeText": "one question at a time",
               "minimumProjectedNodeTextDetail": "context",
               "minimumProjectedNodeTextOwner": {
                 "kind": "node",
-                "id": "review"
+                "id": "chatagent"
               },
               "minimumRequiredNodeTextPx": 6,
               "readabilityOk": true,
@@ -1525,7 +1525,7 @@
               "readerFit": "width-first",
               "ok": true,
               "readerWidth": 1856,
-              "diagramWidth": 1246.5,
+              "diagramWidth": 1414.5,
               "pageComposition": {
                 "bodyPaddingPx": 64,
                 "headerPx": 60,
@@ -1534,7 +1534,7 @@
                 "cardsPx": 0,
                 "viewBoxHeight": 786
               },
-              "viewBoxWidth": 831,
+              "viewBoxWidth": 943,
               "workflowLanes": [
                 {
                   "frameId": "lane-0",
@@ -1543,7 +1543,7 @@
                   "nodeIds": [
                     "emergency",
                     "call112",
-                    "approve"
+                    "send"
                   ],
                   "nodeSpanPx": 102,
                   "spaceAboveNodesPx": 51,
@@ -1552,21 +1552,21 @@
                 {
                   "frameId": "lane-1",
                   "heightPx": 159,
-                  "nodeCount": 3,
+                  "nodeCount": 2,
                   "nodeIds": [
-                    "describe",
-                    "review",
-                    "act"
+                    "chat",
+                    "plan"
                   ],
-                  "nodeSpanPx": 102,
-                  "spaceAboveNodesPx": 51,
-                  "spaceBelowNodesPx": 6
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 63,
+                  "spaceBelowNodesPx": 18
                 },
                 {
                   "frameId": "lane-2",
                   "heightPx": 159,
-                  "nodeCount": 3,
+                  "nodeCount": 4,
                   "nodeIds": [
+                    "chatagent",
                     "triage",
                     "action",
                     "handover"
@@ -1580,8 +1580,8 @@
                   "heightPx": 159,
                   "nodeCount": 2,
                   "nodeIds": [
-                    "compact",
-                    "fallback"
+                    "profiles",
+                    "tools"
                   ],
                   "nodeSpanPx": 78,
                   "spaceAboveNodesPx": 63,
@@ -1592,23 +1592,23 @@
                   "heightPx": 159,
                   "nodeCount": 3,
                   "nodeIds": [
-                    "profiles",
-                    "history",
-                    "tools"
+                    "compact",
+                    "fallback",
+                    "planfallback"
                   ],
                   "nodeSpanPx": 78,
                   "spaceAboveNodesPx": 63,
                   "spaceBelowNodesPx": 18
                 }
               ],
-              "minimumProjectedNodeTextPx": 7.3,
-              "minimumProjectedNonEdgeTextPx": 7.3,
+              "minimumProjectedNodeTextPx": 6.3,
+              "minimumProjectedNonEdgeTextPx": 6.3,
               "minimumProjectedEdgeTextPx": 8,
-              "minimumProjectedNodeText": "edit severity, code",
+              "minimumProjectedNodeText": "one question at a time",
               "minimumProjectedNodeTextDetail": "context",
               "minimumProjectedNodeTextOwner": {
                 "kind": "node",
-                "id": "review"
+                "id": "chatagent"
               },
               "minimumRequiredNodeTextPx": 6,
               "readabilityOk": true,
@@ -1641,7 +1641,7 @@
               "readerFit": "width-first",
               "ok": true,
               "readerWidth": 1920,
-              "diagramWidth": 1246.5,
+              "diagramWidth": 1414.5,
               "pageComposition": {
                 "bodyPaddingPx": 64,
                 "headerPx": 68,
@@ -1650,7 +1650,7 @@
                 "cardsPx": 0,
                 "viewBoxHeight": 786
               },
-              "viewBoxWidth": 831,
+              "viewBoxWidth": 943,
               "workflowLanes": [
                 {
                   "frameId": "lane-0",
@@ -1659,7 +1659,7 @@
                   "nodeIds": [
                     "emergency",
                     "call112",
-                    "approve"
+                    "send"
                   ],
                   "nodeSpanPx": 102,
                   "spaceAboveNodesPx": 51,
@@ -1668,21 +1668,21 @@
                 {
                   "frameId": "lane-1",
                   "heightPx": 159,
-                  "nodeCount": 3,
+                  "nodeCount": 2,
                   "nodeIds": [
-                    "describe",
-                    "review",
-                    "act"
+                    "chat",
+                    "plan"
                   ],
-                  "nodeSpanPx": 102,
-                  "spaceAboveNodesPx": 51,
-                  "spaceBelowNodesPx": 6
+                  "nodeSpanPx": 78,
+                  "spaceAboveNodesPx": 63,
+                  "spaceBelowNodesPx": 18
                 },
                 {
                   "frameId": "lane-2",
                   "heightPx": 159,
-                  "nodeCount": 3,
+                  "nodeCount": 4,
                   "nodeIds": [
+                    "chatagent",
                     "triage",
                     "action",
                     "handover"
@@ -1696,8 +1696,8 @@
                   "heightPx": 159,
                   "nodeCount": 2,
                   "nodeIds": [
-                    "compact",
-                    "fallback"
+                    "profiles",
+                    "tools"
                   ],
                   "nodeSpanPx": 78,
                   "spaceAboveNodesPx": 63,
@@ -1708,23 +1708,23 @@
                   "heightPx": 159,
                   "nodeCount": 3,
                   "nodeIds": [
-                    "profiles",
-                    "history",
-                    "tools"
+                    "compact",
+                    "fallback",
+                    "planfallback"
                   ],
                   "nodeSpanPx": 78,
                   "spaceAboveNodesPx": 63,
                   "spaceBelowNodesPx": 18
                 }
               ],
-              "minimumProjectedNodeTextPx": 7.3,
-              "minimumProjectedNonEdgeTextPx": 7.3,
+              "minimumProjectedNodeTextPx": 6.3,
+              "minimumProjectedNonEdgeTextPx": 6.3,
               "minimumProjectedEdgeTextPx": 8,
-              "minimumProjectedNodeText": "edit severity, code",
+              "minimumProjectedNodeText": "one question at a time",
               "minimumProjectedNodeTextDetail": "context",
               "minimumProjectedNodeTextOwner": {
                 "kind": "node",
-                "id": "review"
+                "id": "chatagent"
               },
               "minimumRequiredNodeTextPx": 6,
               "readabilityOk": true,
@@ -1760,20 +1760,20 @@
   },
   "diagnostics": [],
   "evidence": {
-    "receipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-100315/siaga-user-flow.finalize.json",
-    "summaryReceipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-100315/siaga-user-flow.finalize-summary.json",
-    "browserCheckReceipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-100315/siaga-user-flow.browser-check.json"
+    "receipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-142055/siaga-user-flow.finalize.json",
+    "summaryReceipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-142055/siaga-user-flow.finalize-summary.json",
+    "browserCheckReceipt": "/Users/nusantaradeveloper/Documents/Coding/appleinstitute/siaga/siaga/.archify/workflow-user-flow-20261121-142055/siaga-user-flow.browser-check.json"
   },
   "visualReview": "not-requested",
-  "finishedAt": "2026-11-21T03:03:54.517Z",
-  "durationMs": 2842,
+  "finishedAt": "2026-11-21T07:22:39.807Z",
+  "durationMs": 3150,
   "update": {
     "status": "current",
     "installedVersion": "3.2.0",
     "availableVersion": "3.2.0",
     "releaseNotes": null,
     "checkedAt": "2026-11-21T03:03:51.779Z",
-    "source": "network",
+    "source": "cache",
     "noticeRequired": false,
     "noticeText": null
   }
