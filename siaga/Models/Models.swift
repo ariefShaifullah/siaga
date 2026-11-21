@@ -25,6 +25,7 @@ enum SituationCode: String, CaseIterable {
 struct EmergencyBrief {
     @Guide(description: "Short title, e.g. Mother fell in bathroom")
     var situationTitle: String
+    @Guide(description: "The person the emergency is about: the name in the note, or the relationship word (Mother, Father, Wife, Husband, Son, Daughter) if the note names nobody by name. Never 'Siaga' — that is the assistant's name, not a person. 'Unknown' only if the note names nobody at all.")
     var personName: String
     @Guide(description: "A factual description of the emergency in one or two sentences. Never a question. If the user's note is a question or has no facts (e.g. 'what happened to this man?'), describe what the photo shows instead — never copy the question.")
     var whatHappened: String
@@ -203,6 +204,17 @@ enum FirstAidGuide {
             "Elevate the injured area.",
             "Call 112 or go to a clinic if the person cannot move it, the pain is severe, or the shape looks wrong."
         ]),
+        // 21 Nov 2026, audit: this case was missing here while FirstAid.json
+        // has it — a heart attack with an unloadable JSON fell back to the
+        // generic "unknown" steps. The fallback must mirror the JSON.
+        FirstAidCase(code: "heartAttack", title: "Suspected heart attack", call112First: true, steps: [
+            "Call 112 now. Say 'suspected heart attack' and give your location.",
+            "Keep the person still and resting — sitting or lying down. Do not let them walk, drive, or exert themselves.",
+            "Loosen tight clothing around the neck, chest, and waist.",
+            "If they have prescribed heart medication (such as nitroglycerin), help them take it as directed. Do not give medicine that was not prescribed to them.",
+            "If they become unresponsive and are not breathing normally, start CPR if trained and send someone for an AED.",
+            "Note the time the symptoms started and tell paramedics."
+        ]),
         FirstAidCase(code: "unknown", title: "Unknown emergency", call112First: true, steps: [
             "Call 112 now.",
             "Make the area safe. Do not put yourself in danger.",
@@ -233,6 +245,10 @@ final class SiagaStore {
     var lastTokenUsage: String? // e.g. "Brief: 312 in / 48 out tokens (context 8192)"
 
     func record(_ action: String) {
+        // 21 Nov 2026: the model can call the same tool several times in
+        // one agentic loop (draftEmergencyMessage ran 5x in the simulator
+        // test) — identical consecutive entries are noise, not information.
+        guard actions.last != action else { return }
         actions.append(action)
     }
 
@@ -282,16 +298,34 @@ final class SiagaStore {
         return ([found.title] + found.steps.enumerated().map { "\($0.offset + 1). \($0.element)" }).joined(separator: "\n")
     }
 
+    // Label/value rows for the draft and handover cards. The SMS text
+    // and the card display share these rows: the string joins them with
+    // newlines, the card renders them in a Grid so a wrapped line aligns
+    // under the VALUE, not under the label (21 Nov 2026, UI fix — plain
+    // Text wrapped under "Severity:" / "Person:" / "Symptoms:").
+    // whatHappened usually ends with a period already — appending
+    // another one printed "dizzy.." in the simulator test (21 Nov 2026).
+    private var draftHappened: String {
+        guard let brief = currentBrief else { return "" }
+        return brief.whatHappened.hasSuffix(".") ? String(brief.whatHappened.dropLast()) : brief.whatHappened
+    }
+
+    var draftRows: [(label: String, value: String)] {
+        guard let brief = currentBrief else { return [] }
+        return [
+            ("Severity", "\(brief.severity.rawValue.uppercased()). Ambulance needed: \(brief.needsAmbulance ? "Yes" : "Not sure")."),
+            ("Person", "\(brief.personName). What happened: \(draftHappened)."),
+            ("Symptoms", "\(brief.symptoms.joined(separator: ", "))."),
+            ("Location", "\(brief.locationDescription)."),
+            ("Medical profile", lastProfile?.summary ?? "No medical profile found.")
+        ]
+    }
+
     func draftMessage(to recipientName: String) -> String {
         guard let brief = currentBrief else { return "No emergency brief yet, so no draft was created." }
-        let profileText = lastProfile?.summary ?? "No medical profile found."
         let draft = """
         EMERGENCY — \(brief.situationTitle)
-        Severity: \(brief.severity.rawValue.uppercased()). Ambulance needed: \(brief.needsAmbulance ? "Yes" : "Not sure").
-        Person: \(brief.personName). What happened: \(brief.whatHappened).
-        Symptoms: \(brief.symptoms.joined(separator: ", ")).
-        Location: \(brief.locationDescription).
-        Medical profile: \(profileText)
+        \(draftRows.map { "\($0.label): \($0.value)" }.joined(separator: "\n"))
         Please call 112 if you get this. I am with \(brief.personName) now.
         — Sent from Siaga (draft, not sent yet)
         """
@@ -300,19 +334,31 @@ final class SiagaStore {
         return draft
     }
 
+    // The handover's creation time, so the card shows when it was made
+    // instead of when it is read (the rows are computed at display time).
+    var lastHandoverTime: Date?
+
+    func handoverRows(includeStepsTaken: Bool) -> [(label: String, value: String)] {
+        guard let brief = currentBrief else { return [] }
+        let steps = includeStepsTaken ? (lastFirstAid?.steps ?? []) : []
+        return [
+            ("Time", (lastHandoverTime ?? Date()).formatted(date: .abbreviated, time: .shortened)),
+            ("Person", "\(brief.personName). Severity: \(brief.severity.rawValue). Ambulance: \(brief.needsAmbulance ? "Yes" : "Not sure")."),
+            ("Call 112", "Ambulance requested: \(brief.needsAmbulance ? "Yes" : "Not sure")."),
+            ("What happened", brief.whatHappened),
+            ("Symptoms", brief.symptoms.joined(separator: ", ")),
+            ("Location", "\(brief.locationDescription). People involved: \(brief.peopleInvolved)."),
+            ("Medical profile", lastProfile?.summary ?? "No profile found."),
+            ("First-aid steps shown", steps.isEmpty ? "None" : steps.joined(separator: "; "))
+        ]
+    }
+
     func createHandover(includeStepsTaken: Bool) -> String {
         guard let brief = currentBrief else { return "No emergency brief yet, so no handover was created." }
-        let steps = includeStepsTaken ? (lastFirstAid?.steps ?? []) : []
+        lastHandoverTime = Date()
         let handover = """
         HANDOVER FOR PARAMEDICS — \(brief.situationTitle)
-        Time: \(Date().formatted(date: .abbreviated, time: .shortened))
-        Person: \(brief.personName). Severity: \(brief.severity.rawValue). Ambulance: \(brief.needsAmbulance ? "Yes" : "Not sure").
-        Call 112 — ambulance requested: \(brief.needsAmbulance ? "Yes" : "Not sure").
-        What happened: \(brief.whatHappened)
-        Symptoms: \(brief.symptoms.joined(separator: ", "))
-        Location: \(brief.locationDescription). People involved: \(brief.peopleInvolved).
-        Medical profile: \(lastProfile?.summary ?? "No profile found.")
-        First-aid steps shown: \(steps.isEmpty ? "None" : steps.joined(separator: "; "))
+        \(handoverRows(includeStepsTaken: includeStepsTaken).map { "\($0.label): \($0.value)" }.joined(separator: "\n"))
         """
         lastHandover = handover
         record("Created handover summary for paramedics")
@@ -325,6 +371,7 @@ final class SiagaStore {
         lastProfile = nil
         lastDraft = nil
         lastHandover = nil
+        lastHandoverTime = nil
         // selectedProfile is NOT reset here: the person is usually the same
         // family member across incidents, and re-picking them every time
         // would be friction in an emergency. The user can change it on the

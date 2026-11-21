@@ -94,6 +94,14 @@ final class SiagaAgent {
         }
     }
 
+    // Test-only helper: analyse() reads the conversation from `messages`,
+    // and messages is private(set). The evaluation runner seeds one user
+    // message here instead of driving the whole chat — same pattern as
+    // SiagaStore.setProfilesForTest.
+    func setMessagesForTest(_ messages: [ChatMessage]) {
+        self.messages = messages
+    }
+
     /// The interactive chat, WorkspaceAssistant style: one user message in,
     /// one streamed agent reply out, in the same session transcript as the
     /// brief and the plan. A photo attached to the message is described
@@ -326,18 +334,67 @@ final class SiagaAgent {
         Build the action plan for this brief. Title: \(brief.situationTitle). Person: \(brief.personName). Situation: \(brief.situationCode.rawValue). Severity: \(brief.severity.rawValue). What happened: \(brief.whatHappened).
         """
         do {
-            for try await snapshot in session.streamResponse(to: prompt) {
-                streamingText = snapshot.content
+            // 21 Nov 2026: the model loops on tool calls. With
+            // .toolCallingMode(.required) it must call a tool on every
+            // turn, and after the draft it has nothing left to do — so it
+            // calls draftEmergencyMessage again and again (5x in the
+            // simulator test), and the stream never ends: the "Siaga is
+            // working" spinner spins for minutes and the handover never
+            // runs. A break INSIDE the stream loop does NOT fix it:
+            // tool-call turns yield no text snapshots, so the loop body
+            // never runs to check the condition — the 11:45 build proved
+            // it by running out of context (8192 tokens) instead of
+            // stopping. So the stream runs in a child task and a watcher
+            // task stops it from OUTSIDE: whichever finishes first wins,
+            // then the other is cancelled. The draft is the last tool in
+            // the instruction sequence, so once it exists the plan is
+            // complete. A 60-second cap is the safety net. Stopping the
+            // stream is safe: newIncident() starts a fresh session, so no
+            // stuck session survives.
+            let startedAt = Date()
+            // The child tasks MUST be @MainActor: group.addTask closures
+            // are nonisolated by default, and session / streamingText /
+            // store.lastDraft are all MainActor-isolated. Without the
+            // annotation the build fails with "cannot be accessed from
+            // outside of the actor" (found 21 Nov 12:07).
+            try await withThrowingTaskGroup(of: Void.self) { group in
+                group.addTask { @MainActor in
+                    for try await snapshot in self.session.streamResponse(to: prompt) {
+                        self.streamingText = snapshot.content
+                    }
+                }
+                group.addTask { @MainActor in
+                    while true {
+                        try await Task.sleep(for: .seconds(1))
+                        if self.store.lastDraft != nil { return }
+                        if Date().timeIntervalSince(startedAt) > 60 { return }
+                    }
+                }
+                try await group.next()
+                group.cancelAll()
             }
-            // Handover runs in its own profile branch, same transcript.
-            orchestrator.mode = .handover
+            // The handover is built deterministically by the store, not by
+            // the model: no model request follows here, so switching the
+            // profile to .handover would be a no-op (removed 21 Nov 2026,
+            // audit). The handover profile branch still exists in
+            // SiagaProfile for the mode model — it is just not driven
+            // from this path.
             _ = store.createHandover(includeStepsTaken: true)
         } catch LanguageModelError.contextSizeExceeded {
             _ = compactTranscript()
             newIncident(preservingBrief: true)
             problem = "The on-device model ran out of context, so I started a fresh session from the compact brief. The brief is kept — please try building the plan again."
         } catch {
-            problem = error.localizedDescription
+            // 21 Nov 2026: the plan used to fail silently here (the error
+            // lived only in `problem`, which the plan screen never showed).
+            // Now the error shows on screen AND the deterministic tools run
+            // as a labelled fallback, so the demo still shows steps.
+            problem = "The model could not build the plan (\(error.localizedDescription)). Showing the pre-approved steps instead — please check them."
+            fallbackUsed = true
+            _ = store.lookupProfile(name: brief.personName)
+            _ = store.lookupFirstAid(code: brief.situationCode)
+            _ = store.draftMessage(to: store.lastProfile?.emergencyContactName ?? store.selectedProfile?.emergencyContactName ?? "emergency contact")
+            _ = store.createHandover(includeStepsTaken: true)
         }
     }
 }

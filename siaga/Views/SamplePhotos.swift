@@ -16,8 +16,9 @@ import UIKit
 //    ("ALLERGY: PENICILLIN"). Neither card carries a patient name, blood
 //    type or age — they are generic, usable for any family. The person
 //    comes from the profile the user selected, never from the image.
-//    the on-device model can actually read them as an attached image, so the demo proves the multimodal path
-//    work, instead of pretending a stock photo is a real injury.
+//    The on-device model can actually read them as an attached image, so
+//    the demo proves the multimodal path works instead of pretending a
+//    stock photo is a real injury.
 // 2. IN-APP CAMERA — CameraPicker below. UIImagePickerController with
 //    sourceType .camera, presented as a sheet inside Siaga. The user
 //    never leaves the app, never opens the Photos app. This is the real

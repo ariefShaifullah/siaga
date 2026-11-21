@@ -1,6 +1,8 @@
-import CoreSpotlight
 import FoundationModels
-import Vision
+import Observation // @Observable on SiagaOrchestrator below. This import
+// became necessary when the audit removed `import Vision` (21 Nov 2026):
+// Vision had been the module that (transitively) provided the macro,
+// and without it the build fails with "Unknown attribute 'Observable'".
 
 // iOS 27 — Dynamic Profiles (WWDC26 session 241, "Build agentic app experiences").
 // One session, four agents (chat → triage → action → handover),
@@ -15,26 +17,33 @@ import Vision
 // no Claude / Gemini provider model, no MLX model. The WWDC sample escalates
 // its brainstorm branch to PCC; Siaga deliberately does not.
 //
-// Imports matter here — system tools are cross-import overlays, not plain
-// FoundationModels types:
-// - import CoreSpotlight activates SpotlightSearchTool().
-// - import Vision was expected to activate OCRTool() / BarcodeReaderTool(),
-//   but Xcode 27 on 21 Nov 2026 says "Cannot find 'OCRTool' in scope" —
-//   those two types do not exist in this SDK under those names. They were
-//   removed from the action profile (see below). Photos are still handled:
-//   the agent receives them as Attachment(image) and describes them
-//   on-device, so the demo does not need the OCR tools.
-// Never import the private _Vision_FoundationModels module directly.
+// Removed imports (21 Nov 2026, audit): this file used to import
+// CoreSpotlight and Vision to activate the system tools
+// SpotlightSearchTool() and OCRTool() / BarcodeReaderTool(). All three
+// tools are gone — SpotlightSearchTool made every action request fail
+// with "Resource (Local Model Asset) unavailable", and the OCR tools do
+// not exist in this Xcode 27 SDK ("Cannot find in scope"). The imports
+// went with them: nothing in this file uses a CoreSpotlight or Vision
+// type anymore. The Core Spotlight index itself is still built by
+// SiagaSpotlightIndexer (first-aid guide + incident history); the tool
+// returns if its asset becomes available. Photos reach the model as
+// Attachment(image) and are described on-device, so the demo does not
+// need the OCR tools. Never import the private
+// _Vision_FoundationModels module directly.
 //
 // Round 2 additions (20 Nov, after Round 1):
 // - SiagaSafetyInstructions (DynamicInstructions): re-evaluated before every
 //   request, so allergy / critical-severity rules follow the current brief.
-// - SpotlightSearchTool(): fully local RAG over the Core Spotlight index
-//   built by SiagaSpotlightIndexer (first-aid guide + incident history).
-// - .reasoningLevel(.light) for triage/handover (fast, deterministic),
-//   .reasoningLevel(.moderate) for action (tool orchestration needs more
-//   reasoning; .deep would spend context on reasoning text and risk
-//   contextSizeExceeded on the third turn — see Dodecaidr / WWDC notes).
+// - NO .reasoningLevel anywhere (21 Nov 2026): the on-device model does
+//   NOT support reasoning — it is a Private Cloud Compute capability.
+//   Asking for it throws LanguageModelError.unsupportedCapability ("The
+//   model doesn't support the requested capability") on EVERY request, in
+//   every mode, simulator and real device alike. That one modifier was
+//   the reason the app always fell back to the keyword fallback and never
+//   described a photo. WorkspaceAssistant never asks for it (plain
+//   LanguageModelSession), which is why it works. Reasoning stays out
+//   unless the session ever moves to PCC — which the hackathon rules
+//   forbid. Determinism comes from temperature 0, not from reasoning.
 // - .toolCallingMode(.none) for triage (pure extraction, no tools allowed),
 //   .toolCallingMode(.required) for action (model MUST call the lookup
 //   tools before replying). Verify the exact modifier spelling in Xcode 27
@@ -51,8 +60,10 @@ import Vision
 //
 // Verify in Xcode 27: LanguageModelSession.DynamicProfile, Profile { },
 // Instructions { }, DynamicInstructions, .model(_:), .temperature(_:),
-// .reasoningLevel(_:), .toolCallingMode(_:), and LanguageModelSession(profile:).
+// .toolCallingMode(_:), and LanguageModelSession(profile:).
 // If autocomplete shows a different spelling, use autocomplete, not this file.
+// .reasoningLevel is deliberately NOT in this list: the on-device model
+// does not support it (see the note above).
 
 enum SiagaMode {
     case chat
@@ -92,7 +103,6 @@ struct SiagaProfile: LanguageModelSession.DynamicProfile {
             }
             .model(SystemLanguageModel())
             .temperature(0.3)
-            .reasoningLevel(.light)
             .toolCallingMode(.none)
 
         case .triage:
@@ -109,13 +119,16 @@ struct SiagaProfile: LanguageModelSession.DynamicProfile {
             }
             .model(SystemLanguageModel())
             .temperature(0)
-            .reasoningLevel(.light)
             .toolCallingMode(.none)
 
         case .action:
             // Agentic work: profile + first aid + draft.
-            // SpotlightSearchTool is local RAG: it searches the app's own
-            // first-aid guide and incident history, never the web.
+            // SpotlightSearchTool was here until 21 Nov 2026, when the
+            // action request started failing with "Resource (Local Model
+            // Asset) unavailable" — the chat (no tools) and triage (no
+            // tools) requests both work, so the prime suspect is the
+            // system RAG tool: its asset is not on this device/simulator.
+            // Removed; local RAG returns if the asset becomes available.
             // OCRTool / BarcodeReaderTool were here until 21 Nov 2026, when
             // Xcode 27 reported them as not in scope in this SDK. Removed —
             // photos still reach the model as Attachment(image).
@@ -124,8 +137,9 @@ struct SiagaProfile: LanguageModelSession.DynamicProfile {
                 Instructions {
                     """
                     You are Siaga, an offline first-responder agent. You act ONLY by calling tools.
-                    First call lookupMedicalProfile for the person in the brief, then lookupFirstAid for the brief's situationCode. If the user attached a photo, it is already in the conversation as an image — describe what it shows. Use SpotlightSearchTool only to check whether this person has had a similar incident before, or to re-read the first-aid steps from the app's own guide.
+                    First call lookupMedicalProfile for the person in the brief, then lookupFirstAid for the brief's situationCode. If the user attached a photo, it is already in the conversation as an image — describe what it shows.
                     Then call draftEmergencyMessage to the person's emergency contact.
+                    Call each tool at most ONCE. After draftEmergencyMessage, stop calling tools and reply with one short sentence.
                     Read every tool result. Only say something happened if a tool result says it did.
                     Never send a message or make a call yourself. Drafting is not sending.
                     Reply in one short sentence.
@@ -134,11 +148,9 @@ struct SiagaProfile: LanguageModelSession.DynamicProfile {
                 LookupMedicalProfileTool(store: store)
                 LookupFirstAidTool(store: store)
                 DraftEmergencyMessageTool(store: store)
-                SpotlightSearchTool()
             }
             .model(SystemLanguageModel())
             .temperature(0.2)
-            .reasoningLevel(.moderate)
             .toolCallingMode(.required)
 
         case .handover:
@@ -156,7 +168,6 @@ struct SiagaProfile: LanguageModelSession.DynamicProfile {
             }
             .model(SystemLanguageModel())
             .temperature(0)
-            .reasoningLevel(.light)
             .toolCallingMode(.none)
         }
     }

@@ -82,7 +82,7 @@ Chat (typed / dictated, optional photo)
    - `LookupFirstAid` (read-only) — pre-approved steps for the situation code
    - `DraftEmergencyMessage` (needs approval) — draft only, to the family emergency contact, never to 112 by SMS, never sent by itself
    - `CreateHandover` (needs approval) — brief + profile + steps taken + time, for paramedics
-5. **Handover.** Shown on screen for paramedics. It must contain the person's name, their allergy, and 112 — that is a tested metric, not a hope.
+4. **Handover.** Shown on screen for paramedics. It must contain the person's name, their allergy, and 112 — that is a tested metric, not a hope.
 
 If Apple Intelligence is unavailable, Siaga does not invent a brief with a fake model. It uses a labelled, deterministic keyword fallback, says so on screen, and the user edits the brief by hand.
 
@@ -112,7 +112,7 @@ Expected: severity high, code `bleedingFall`, ambulance needed.
 5. `Cmd+B`, then run on a real iPhone.
 6. **Test file — read this, it broke the build once.** `SiagaEvaluationTests.swift` uses `import Evaluations` and `import Testing`, which exist only in a test target. It lives in `Tests/` next to the project, OUTSIDE the `siaga/` app folder — this project uses folder-based target membership, so any file inside `siaga/` is compiled into the app. Do not move it into `siaga/`. To run it, add a Unit Testing Bundle target (SiagaTests) and add the file to that target only. Until then, the app builds and runs without it.
 
-> **Build status:** not verified in this environment (no Xcode here). The first `Cmd+B` on the Mac is still needed. See "Verification checklist" below for the exact API spellings to check against Xcode 27 autocomplete.
+> **Build status:** verified — builds and runs on the iPhone 18 Pro simulator (Xcode 27, iOS 27.2), last verified 21 Nov 2026 12:25 WIB, including the full chat → brief → action plan flow with all four tools. See "Verification checklist" below for the exact API spellings to check against Xcode 27 autocomplete.
 
 ## Architecture — MVVM
 
@@ -126,7 +126,7 @@ MVVM is a pattern of roles. Files are arranged by role, so the pattern is visibl
 | **Services** | Tools + platform services | `Tools.swift` — 4 custom tools; `SiagaSpotlightIndexer.swift`; `AppIntents.swift` |
 | **App** | Entry point | `SiagaApp.swift` — `ModelContainer` for `MedicalProfile` + `IncidentHistory` |
 | **Evaluation** | Tests, not app code | `SiagaEvaluationData.swift` (app target), `SiagaEvaluationTests.swift` (test target only) |
-| **Resources** | Bundled data | `FirstAid.json` (7 situation codes), `SampleImages/` (2 OCR-readable cards) |
+| **Resources** | Bundled data | `FirstAid.json` (8 situation codes), `SampleImages/` (2 OCR-readable cards) |
 
 ### One session, four agents
 
@@ -134,12 +134,12 @@ iOS 27 Dynamic Profiles replace the two separate sessions of the first version. 
 
 | Mode | Instructions | Tools | Settings |
 |---|---|---|---|
-| **Chat** | Talk back: 1–2 short sentences, one question at a time | None | Temperature 0.3, reasoning `.light`, tool calling `.none` |
-| **Triage** | Extract a brief from the conversation, nothing else | None | Temperature 0, reasoning `.light`, tool calling `.none` |
-| **Action** | Act only by calling tools | 4 custom tools + `SpotlightSearchTool` | Temperature 0.2, reasoning `.moderate`, tool calling `.required` |
-| **Handover** | Facts only, for paramedics | `CreateHandoverTool` | Temperature 0, reasoning `.light`, tool calling `.none` |
+| **Chat** | Talk back: 1–2 short sentences, one question at a time | None | Temperature 0.3, tool calling `.none` |
+| **Triage** | Extract a brief from the conversation, nothing else | None | Temperature 0, tool calling `.none` |
+| **Action** | Act only by calling tools | 3 custom tools (`LookupMedicalProfile`, `LookupFirstAid`, `DraftEmergencyMessage`) | Temperature 0.2, tool calling `.required` |
+| **Handover** | Facts only, for paramedics | `CreateHandoverTool` | Temperature 0, tool calling `.none` |
 
-Every branch uses `SystemLanguageModel()` — on-device only. `.deep` reasoning was deliberately avoided: it spends context on reasoning text and risks running out of context on the third turn.
+Every branch uses `SystemLanguageModel()` — on-device only. No `.reasoningLevel` anywhere: the on-device model does not support reasoning (Private Cloud Compute only) — asking for it throws `LanguageModelError.unsupportedCapability` on every request. Determinism comes from temperature 0, not from reasoning.
 
 ### iOS 27 features used
 
@@ -147,12 +147,12 @@ Every branch uses `SystemLanguageModel()` — on-device only. `.deep` reasoning 
 |---|---|---|
 | Multimodal prompts — `Attachment(image)` | `SiagaAgent.sendChat(_:image:)`, `SiagaAgent.analyse(image:)` | A photo of the injury, a medication bottle or an allergy card is described on-device, then fed as text into the chat and into strict extraction. |
 | Built-in Vision tools — `OCRTool()`, `BarcodeReaderTool()` | *Removed 21 Nov* | Xcode 27 reports them as not in scope in this SDK, despite `import Vision`. Photos still reach the model as `Attachment(image)`. |
-| Spotlight local RAG — `SpotlightSearchTool()` | `SiagaProfile.swift`, `SiagaSpotlightIndexer.swift` | First-aid guide + incident history are indexed as `CSSearchableItem`s once. The model can answer "has she had a fall before?" from the app's own data — no server, no embedding store. Activated by `import CoreSpotlight`. Retrieved text is untrusted data: it never overrides the safety instructions. |
+| Spotlight local RAG — `SpotlightSearchTool()` | `SiagaSpotlightIndexer.swift` (index still built) | REMOVED from the action profile 21 Nov 2026: with it, every action request failed with "Resource (Local Model Asset) unavailable" — its asset is not on this device/simulator. First-aid guide + incident history are still indexed as `CSSearchableItem`s, so the tool returns if the asset becomes available. Retrieved text is untrusted data: it never overrides the safety instructions. |
 | Dynamic Instructions | `SiagaSafetyInstructions.swift` | Re-evaluated before every request. Allergy and critical-severity rules follow the current brief and profile, instead of being frozen at session creation. |
 | Token budgeting | `Models.swift` (`TokenBudget`), `SiagaAgent.swift` | On-device context is 8192 tokens in iOS 27 (4096 in iOS 26). Siaga checks the budget **before** spending it and reports input/output tokens in the Action Plan. |
 | Transcript management | `SiagaAgent.compactTranscript()`, `newIncident(preservingBrief:)` | The framework transcript is mutable in iOS 27, but rewriting it can invalidate the KV cache. Siaga keeps its own compact summary (brief + actions) and starts a fresh session from it when the budget is exceeded. The raw panic note is discarded after extraction — that also protects privacy. |
-| SwiftData — `@Attribute(.codable)`, sectioned `@Query` | `Models.swift`, `Views.swift` (`HistoryView`) | The brief snapshot is stored as one Codable blob; history is grouped by severity with `_history.sections`. |
-| SwiftData — `ResultsObserver` | *Removed 21 Nov, see below* | `SiagaHistoryObserver.swift` did not compile in Xcode 27: an `@Observable` class cannot store `ObservationTracking.Token` (noncopyable, 12 errors). The class was unused — HistoryView already uses a sectioned `@Query`. The file is kept in `Extras/` as a reference for after the hackathon. |
+| SwiftData — `@Attribute(.codable)`, plain `@Query` grouped in Swift | `Models.swift`, `Views.swift` (`HistoryView`) | The brief snapshot is stored as one Codable blob; history is grouped by severity in Swift from a plain `@Query` — the sectioned `@Query(sectionBy:)` did not compile in Xcode 27 (it requires `SectionedResults`, not `[IncidentHistory]`). |
+| SwiftData — `ResultsObserver` | *Removed 21 Nov, see below* | `SiagaHistoryObserver.swift` did not compile in Xcode 27: an `@Observable` class cannot store `ObservationTracking.Token` (noncopyable, 12 errors). The class was unused — HistoryView already groups history with a plain `@Query` + Swift grouping. The file is kept in `Extras/` as a reference for after the hackathon. |
 | Evaluations framework | `SiagaEvaluationTests.swift`, `SiagaEvaluationData.swift` | 10 hand-reviewed samples, deterministic scoring (see "Testing"). The test file lives in the test target only — it caused a build failure on 21 Nov when it was in the app target (see Setup step 6). |
 | App Intents | `AppIntents.swift` | "Hey Siri, start a Siaga emergency" + Spotlight search for a profile. Stable App Intents API. Siri only launches the app; the agent still runs on-device inside it. |
 | AFM 3 on-device model | No code change | `SystemLanguageModel()` automatically uses the rebuilt AFM 3 model on iOS 27 hardware. |
@@ -178,7 +178,7 @@ What the app never does: silently fall back to the first profile when a name doe
 
 Picking from the photo library leaves the emergency screen, needs photo permission, and eats demo time. Siaga uses two in-context options instead:
 
-1. **Bundled sample images** — `UIImage(named:)` directly, one tap, no picker, no permission. The two PNGs in `SampleImages/` are text cards, not fake injury photos: a medication label ("Amlodipine 5 mg") and an allergy card ("ALLERGY: PENICILLIN"). Neither carries a patient name, age or blood type. the on-device model can actually read them as an attached image, so the demo proves the multimodal path works. Each sample button also fills the matching note.
+1. **Bundled sample images** — `UIImage(named:)` directly, one tap, no picker, no permission. The two PNGs in `SampleImages/` are text cards, not fake injury photos: a medication label ("Amlodipine 5 mg") and an allergy card ("ALLERGY: PENICILLIN"). Neither carries a patient name, age or blood type. The on-device model can actually read them as an attached image, so the demo proves the multimodal path works. Each sample button sends its note as a chat message, with the image attached.
 2. **In-app camera** — a sheet inside Siaga, never the Photos app. This is the real emergency path: photograph the actual injury, bottle or card.
 
 The library picker is still there as a third, optional path. SF Symbols (`Image(systemName:)`) are used for UI icons and as a never-crash fallback if a PNG was not added to the target — never as the analysed image, because a "bandage" icon carries no medical detail.
@@ -210,22 +210,21 @@ Run the hero note 3×. Severity must stay high, tools must be called, no network
 
 ## Verification checklist — Xcode 27, in order
 
-The build is unverified (no Xcode in this environment). Check these against autocomplete, in order; if autocomplete shows a different spelling, use autocomplete, not this README:
+The build is verified in the simulator (see Build status above). Keep this list as the pre-demo checklist; if autocomplete shows a different spelling, use autocomplete, not this README:
 
 1. Target iOS 27, Xcode 27. Build the base files first, then add the iOS 27 files one by one.
-2. `LanguageModelSession(profile:)` + `DynamicProfile` / `Profile { }` / `Instructions { }` / `.model(_:)` / `.temperature(_:)` / `.reasoningLevel(_:)` / `.toolCallingMode(_:)` — WWDC26 session 241 / Origami sample.
-3. `OCRTool()` / `BarcodeReaderTool()` were removed 21 Nov 2026 — Xcode 27 reports them as not in scope in this SDK, despite `import Vision`. `SpotlightSearchTool()` works with `import CoreSpotlight`.
+2. `LanguageModelSession(profile:)` + `DynamicProfile` / `Profile { }` / `Instructions { }` / `.model(_:)` / `.temperature(_:)` / `.toolCallingMode(_:)` — WWDC26 session 241 / Origami sample.
+3. `OCRTool()` / `BarcodeReaderTool()` were removed 21 Nov 2026 — Xcode 27 reports them as not in scope in this SDK, despite `import Vision`. `SpotlightSearchTool()` was removed the same day: with it, every action request failed with "Resource (Local Model Asset) unavailable" — its asset is not on this device/simulator.
 4. `Attachment(image)` in a `session.respond { }` prompt builder, for `UIImage`.
 5. `response.usage.input.totalTokenCount` / `output.totalTokenCount`, `SystemLanguageModel().contextSize`.
 6. `import Evaluations` — only in the test target. If the `Evaluator` / `Metric` spellings differ, use autocomplete; the dataset and the plain runner do not change.
-7. `@Query(sort:sectionBy:)` + `_history.sections` — `sectionBy` needs a persisted String property, which is why `IncidentHistory` has `severityName`.
+7. History grouping — plain `@Query` + Swift `Dictionary(grouping:by:)`. The sectioned `@Query(sort:sectionBy:)` does NOT compile in Xcode 27 (it requires `SectionedResults`, not `[IncidentHistory]`). `IncidentHistory` still keeps the persisted `severityName` String as the group key.
 8. `SiagaHistoryObserver.swift` was removed from the build on 21 Nov (see the ResultsObserver row above) — do not re-add it before it compiles in a scratch project.
 9. Run `SiagaEvaluationRunner` in Swift Testing (test target only, Cmd+U), then the Airplane Mode protocol above.
 
 ## Known limits
 
-- Build unverified — see above.
 - `Call 112` uses `tel://112`. On stage, do not confirm the system call prompt.
 - The fallback extractor is keyword-based and labelled as such. It is a safety net, not the model.
 - No real SMS, call, login or backend — by design, per the hackathon cut list.
-- First-aid steps cover 6 situations + `unknown`. For `unknown`, Siaga says honestly it has no specific steps, defaults severity up, and tells the user to call 112 and describe exactly what they see.
+- First-aid steps cover 7 situations + `unknown`. For `unknown`, Siaga says honestly it has no specific steps, defaults severity up, and tells the user to call 112 and describe exactly what they see.

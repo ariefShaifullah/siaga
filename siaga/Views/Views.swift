@@ -60,12 +60,10 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                // HIG: orient the user. A 2-step flow always shows where
-                // they are, so a panicked user never wonders what is next.
-                StepProgressView(current: step)
-                    .padding(.horizontal, 20)
-                    .padding(.top, 8)
-
+                // 21 Nov 2026: the step indicator above the title is gone
+                // (Arief) — in an emergency the screen should show the
+                // task, not the flow. The step state still drives which
+                // screen shows; only the indicator was removed.
                 switch step {
                 case .note:
                     EmergencyNoteView(
@@ -74,7 +72,6 @@ struct ContentView: View {
                         selectedProfile: $store.selectedProfile,
                         isWorking: agent?.isWorking ?? false,
                         streamingText: agent?.streamingText ?? "",
-                        imageDescription: agent?.imageDescription,
                         problem: agent?.problem,
                         fallbackUsed: agent?.fallbackUsed ?? false,
                         unavailableReason: agent?.unavailableReason,
@@ -86,10 +83,11 @@ struct ContentView: View {
                                 if let brief = await agent?.analyse(image: image) {
                                     draftBrief = brief
                                     store.currentBrief = brief
-                                    let incident = IncidentHistory(brief: brief)
-                                    modelContext.insert(incident)
-                                    try? modelContext.save()
-                                    SiagaSpotlightIndexer.indexIncident(incident)
+                                    if let incident = store.saveIncident() {
+                                        modelContext.insert(incident)
+                                        try? modelContext.save()
+                                        SiagaSpotlightIndexer.indexIncident(incident)
+                                    }
                                     step = .plan
                                     await agent?.buildActionPlan()
                                 }
@@ -178,30 +176,6 @@ struct ContentView: View {
     }
 }
 
-// MARK: - Step progress (HIG: orientation)
-
-struct StepProgressView: View {
-    var current: SiagaStep
-
-    var body: some View {
-        HStack(spacing: 8) {
-            ForEach(SiagaStep.allCases, id: \.self) { step in
-                HStack(spacing: 6) {
-                    Image(systemName: step.rawValue < current.rawValue ? "checkmark.circle.fill" : "\(step.rawValue).circle.fill")
-                        .foregroundStyle(step == current ? Color.accentColor : Color.secondary)
-                    Text("Step \(step.rawValue): \(step.title)")
-                        .font(.caption.weight(step == current ? .semibold : .regular))
-                        .foregroundStyle(step == current ? .primary : .secondary)
-                }
-                .accessibilityElement(children: .combine)
-                .accessibilityLabel("Step \(step.rawValue) of 2: \(step.title)\(step == current ? ", current step" : "")")
-                if step != .plan { Spacer(minLength: 4) }
-            }
-        }
-        .accessibilityElement(children: .contain)
-    }
-}
-
 // MARK: - Always-on header
 
 struct OnDeviceBadge: View {
@@ -274,9 +248,31 @@ struct SeverityBadge: View {
     }
 }
 
+// MARK: - Aligned label/value rows (Action Plan cards)
+
+// 21 Nov 2026: the draft and handover cards used to be one plain Text,
+// so a wrapped line started under the LABEL ("Severity:", "Person:",
+// "Symptoms:") instead of under the value. A Grid sizes the label
+// column to the widest label and wraps every value under itself.
+struct LabeledRows: View {
+    var rows: [(label: String, value: String)]
+
+    var body: some View {
+        Grid(alignment: .topLeading, horizontalSpacing: 10, verticalSpacing: 6) {
+            ForEach(rows, id: \.label) { row in
+                GridRow {
+                    Text(row.label + ":")
+                        .font(.body.bold())
+                    Text(row.value)
+                        .font(.body)
+                }
+            }
+        }
+    }
+}
+
 // MARK: - Step 1: Chat (Describe)
 
-// The input knows what it was given (21 Nov 2026): a description of
 // Step 1 is a CHAT now (21 Nov 2026, WorkspaceAssistant pattern): the
 // user talks to Siaga like Claude — messages stream in, the agent asks
 // at most one short question at a time, and the brief is extracted from
@@ -305,7 +301,6 @@ struct EmergencyNoteView: View {
     @Binding var selectedProfile: MedicalProfile?
     var isWorking: Bool
     var streamingText: String
-    var imageDescription: String?
     var problem: String?
     var fallbackUsed: Bool
     var unavailableReason: String?
@@ -318,6 +313,9 @@ struct EmergencyNoteView: View {
     @State private var showCamera = false
     @State private var showLibrary = false
     @State private var photoLoadError: String?
+    // 21 Nov 2026: the keyboard stays up after Send unless focus is
+    // cleared explicitly — the user asked for it to close on send.
+    @FocusState private var isComposerFocused: Bool
 
     private var hasUserMessage: Bool { messages.contains { $0.role == .user } }
 
@@ -382,33 +380,18 @@ struct EmergencyNoteView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 8) {
                                 ForEach(SampleNotes.all, id: \.title) { sample in
-                                    Button(sample.title) { onSend(sample.text, nil) }
+                                    Button(sample.title) {
+                                        // A chip is a send too — the
+                                        // keyboard closes, same as Send.
+                                        isComposerFocused = false
+                                        onSend(sample.text, nil)
+                                    }
                                         .buttonStyle(.bordered)
                                         .frame(minHeight: 44)
                                         .disabled(isWorking)
                                 }
                             }
                         }
-                    }
-
-                    // Attached photo preview. Camera, Library and the
-                    // bundled samples live in the + menu in the composer.
-                    // A failed library load used to fail silently (try?) —
-                    // now it says so.
-                    if let photoImage {
-                        Image(uiImage: photoImage)
-                            .resizable().scaledToFit().frame(maxHeight: 180)
-                            .clipShape(RoundedRectangle(cornerRadius: 16))
-                            .accessibilityLabel("Attached photo")
-                        if let imageDescription, !imageDescription.isEmpty {
-                            Text(imageDescription).font(.subheadline)
-                        } else {
-                            Text("Photo stays on this phone. Siaga describes it on-device.")
-                                .font(.caption).foregroundStyle(.secondary)
-                        }
-                    }
-                    if let photoLoadError {
-                        Text(photoLoadError).font(.subheadline).foregroundStyle(.red)
                     }
 
                     // The conversation. The streaming reply shows as a
@@ -462,8 +445,45 @@ struct EmergencyNoteView: View {
     // which keeps its own bottom safe-area inset in ContentView.
     private var composer: some View {
         VStack(alignment: .leading, spacing: 0) {
+            // Attached photo lives INSIDE the input box, like a chat app:
+            // a small thumbnail with a remove button, above the text.
+            // It used to be a large preview card above the conversation —
+            // in an emergency the composer is where the photo belongs.
+            // A failed library load used to fail silently (try?) — now it
+            // says so, here in the composer.
+            if let photoImage {
+                HStack(alignment: .top, spacing: 8) {
+                    Image(uiImage: photoImage)
+                        .resizable().scaledToFill().frame(width: 64, height: 64)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .accessibilityLabel("Attached photo")
+                    Text("Photo stays on this phone. Siaga describes it on-device.")
+                        .font(.caption).foregroundStyle(.secondary)
+                        .padding(.top, 4)
+                    Spacer()
+                    Button {
+                        self.photoImage = nil
+                        photoItem = nil
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.title3)
+                            .foregroundStyle(.secondary)
+                    }
+                    .frame(minWidth: 44, minHeight: 44)
+                    .accessibilityLabel("Remove photo")
+                }
+                .padding(.horizontal, 8)
+                .padding(.top, 8)
+            }
+            if let photoLoadError {
+                Text(photoLoadError)
+                    .font(.subheadline).foregroundStyle(.red)
+                    .padding(.horizontal, 8)
+                    .padding(.top, 8)
+            }
             ZStack(alignment: .topLeading) {
                 TextEditor(text: $draft)
+                    .focused($isComposerFocused)
                     .frame(minHeight: 44, maxHeight: 120)
                     .scrollContentBackground(.hidden)
                     .padding(8)
@@ -490,9 +510,12 @@ struct EmergencyNoteView: View {
                     Divider()
                     ForEach(SamplePhoto.allCases) { sample in
                         Button {
-                            let image = sample.load()
-                            photoImage = image
-                            onSend(sample.note, image)
+                            // A sample sends immediately as a chat message —
+                            // it never sits in the composer. The photo reaches
+                            // the brief through imageDescription, which
+                            // sendChat sets while describing it.
+                            isComposerFocused = false
+                            onSend(sample.note, sample.load())
                         } label: {
                             Label(sample.title, systemImage: sample.systemImage)
                         }
@@ -549,8 +572,15 @@ struct EmergencyNoteView: View {
 
     private func send() {
         let text = draft
+        let image = photoImage
         draft = ""
-        onSend(text, photoImage)
+        // Like a chat app: sending clears the composer, attachment included.
+        photoImage = nil
+        photoItem = nil
+        // And the keyboard closes: the user reads the reply, they do not
+        // type the next message straight away in an emergency.
+        isComposerFocused = false
+        onSend(text, image)
     }
 
     private func scrollToBottom(_ proxy: ScrollViewProxy) {
@@ -685,6 +715,14 @@ struct ActionPlanView: View {
                 Text("Everything below comes from tools and pre-approved steps — not from the model's imagination.")
                     .font(.body).foregroundStyle(.secondary)
 
+                // 21 Nov 2026: buildActionPlan can fail (e.g. a capability
+                // the model does not support) and the plan screen used to
+                // show nothing at all — a silent failure. The error now
+                // shows here, in red, with what it means.
+                if let problem = agent?.problem {
+                    Text(problem).font(.subheadline).foregroundStyle(.red)
+                }
+
                 // The brief lives here now that Review is not a separate
                 // step. The user sees what Siaga understood at the top of
                 // the plan — and can still correct it. Saving rebuilds
@@ -737,7 +775,15 @@ struct ActionPlanView: View {
                 }
                 if !store.actions.isEmpty {
                     SiagaCard(icon: "checkmark.circle.fill", title: "What Siaga did", tint: .green) {
-                        ForEach(store.actions, id: \.self) { Text("• \($0)").font(.body) }
+                        // Same alignment problem as the label rows below:
+                        // a plain "• text" wraps under the bullet. The
+                        // bullet gets its own column, the text its own.
+                        ForEach(store.actions, id: \.self) { action in
+                            HStack(alignment: .top, spacing: 8) {
+                                Text("•").font(.body)
+                                Text(action).font(.body)
+                            }
+                        }
                     }
                 }
                 if let firstAid = store.lastFirstAid {
@@ -768,7 +814,23 @@ struct ActionPlanView: View {
                         }
                         Text("SMS draft for the family emergency contact — not for 112. Siaga only writes it; you send it from Messages.")
                             .font(.caption).foregroundStyle(.secondary)
-                        Text(draft).font(.body)
+                        // The draft reads as aligned rows, not one block
+                        // of text: same content Copy sends (the plain
+                        // string), laid out so wrapped lines stay under
+                        // their value. The header and footer lines are
+                        // short enough to stand on their own.
+                        if let brief = store.currentBrief {
+                            Text("EMERGENCY — \(brief.situationTitle)").font(.headline)
+                        }
+                        if store.draftRows.isEmpty {
+                            Text(draft).font(.body)
+                        } else {
+                            LabeledRows(rows: store.draftRows)
+                        }
+                        if let personName = store.currentBrief?.personName {
+                            Text("Please call 112 if you get this. I am with \(personName) now.").font(.body)
+                        }
+                        Text("— Sent from Siaga (draft, not sent yet)").font(.caption).foregroundStyle(.secondary)
                         // UX 21 Nov 2026: "Approve" did nothing useful —
                         // the draft's whole point is leaving this app. So
                         // the actions are Copy (paste it anywhere) and Open
@@ -803,7 +865,15 @@ struct ActionPlanView: View {
                 }
                 if let handover = store.lastHandover {
                     SiagaCard(icon: "doc.text.fill", title: "Handover for paramedics", tint: .purple) {
-                        Text(handover).font(.body)
+                        if let brief = store.currentBrief {
+                            Text("HANDOVER FOR PARAMEDICS — \(brief.situationTitle)").font(.headline)
+                        }
+                        let rows = store.handoverRows(includeStepsTaken: true)
+                        if rows.isEmpty {
+                            Text(handover).font(.body)
+                        } else {
+                            LabeledRows(rows: rows)
+                        }
                     }
                 }
                 if let imageDescription = agent?.imageDescription {
@@ -950,20 +1020,34 @@ struct ProfileFormView: View {
     let profile: MedicalProfile?
 
     @State private var name = ""
-    @State private var age = 65
+    // Age is a String, not an Int: it used to be a Stepper, which cannot
+    // be typed at all (21 Nov 2026, Arief). A TextField with a number
+    // pad lets the user type the age; save() parses it back.
+    @State private var ageText = "65"
     @State private var bloodType = "O+"
     @State private var allergies = "None"
     @State private var medications = "None"
     @State private var contactName = ""
     @State private var contactRelation = "Family"
     @State private var contactPhone = ""
+    // The number pad has no Return key, so the keyboard needs its own
+    // Done button — otherwise the user cannot dismiss it.
+    @FocusState private var isAgeFocused: Bool
 
     var body: some View {
         Form {
             Section("Person") {
                 TextField("Full name", text: $name)
                     .textContentType(.name)
-                Stepper("Age: \(age)", value: $age, in: 0...120)
+                TextField("Age", text: $ageText)
+                    .keyboardType(.numberPad)
+                    .focused($isAgeFocused)
+                    .toolbar {
+                        ToolbarItemGroup(placement: .keyboard) {
+                            Spacer()
+                            Button("Done") { isAgeFocused = false }
+                        }
+                    }
                 Picker("Blood type", selection: $bloodType) {
                     ForEach(["O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-", "Unknown"], id: \.self) { Text($0) }
                 }
@@ -993,7 +1077,7 @@ struct ProfileFormView: View {
         .scrollDismissesKeyboard(.interactively)
         .onAppear {
             if let profile {
-                name = profile.name; age = profile.age; bloodType = profile.bloodType
+                name = profile.name; ageText = String(profile.age); bloodType = profile.bloodType
                 allergies = profile.allergies; medications = profile.medications
                 contactName = profile.emergencyContactName; contactRelation = profile.emergencyContactRelation
                 contactPhone = profile.emergencyContactPhone
@@ -1002,13 +1086,16 @@ struct ProfileFormView: View {
     }
 
     private func save() {
+        // Non-numeric or empty input keeps the existing age (or 65 for a
+        // new profile); anything outside 0...120 is clamped.
+        let parsedAge = min(max(Int(ageText.trimmingCharacters(in: .whitespaces)) ?? profile?.age ?? 65, 0), 120)
         if let profile {
-            profile.name = name; profile.age = age; profile.bloodType = bloodType
+            profile.name = name; profile.age = parsedAge; profile.bloodType = bloodType
             profile.allergies = allergies; profile.medications = medications
             profile.emergencyContactName = contactName; profile.emergencyContactRelation = contactRelation
             profile.emergencyContactPhone = contactPhone
         } else {
-            modelContext.insert(MedicalProfile(name: name, age: age, bloodType: bloodType, allergies: allergies, medications: medications, emergencyContactName: contactName, emergencyContactRelation: contactRelation, emergencyContactPhone: contactPhone))
+            modelContext.insert(MedicalProfile(name: name, age: parsedAge, bloodType: bloodType, allergies: allergies, medications: medications, emergencyContactName: contactName, emergencyContactRelation: contactRelation, emergencyContactPhone: contactPhone))
         }
         try? modelContext.save()
         dismiss()

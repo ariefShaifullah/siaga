@@ -2,8 +2,10 @@ import Foundation
 
 // iOS 27 — Evaluations: the DATASET and SCORING, framework-free.
 // This file is the source of truth. It runs in plain Swift Testing tonight,
-// with or without the Evaluations framework. SiagaEvaluation.swift wraps
-// the same dataset in the Evaluations framework (import Evaluations).
+// with or without the Evaluations framework: SiagaEvaluationTests.swift
+// (test target only) wraps this dataset in the Evaluations framework
+// (import Evaluations) and also runs it through the plain Swift Testing
+// runner SiagaEvaluationRunner, which needs no Evaluations import.
 //
 // Metrics (each 0 or 1 per sample, then averaged):
 // - severityCorrect: brief.severity == expected, OR brief.severity is HIGHER

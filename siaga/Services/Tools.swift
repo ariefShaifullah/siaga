@@ -7,11 +7,14 @@ import FoundationModels
 // No tool ever sends a message, makes a call, or touches the network.
 // DraftEmergencyMessageTool and CreateHandoverTool only DRAFT. The user approves in the UI.
 //
-// iOS 27: the action profile (SiagaProfile.swift) adds Apple's built-in
-// system tools alongside these 4: SpotlightSearchTool() only — OCRTool() / BarcodeReaderTool() were removed 21 Nov 2026, Xcode 27 does not have them in scope in this SDK.
-// They are Vision-backed, on-device, and the model calls them on an
-// attached photo — e.g. to read a medication bottle label or scan its
-// barcode. They are NOT in this file because Apple provides them.
+// iOS 27: the action profile (SiagaProfile.swift) used to add Apple's
+// built-in system tools alongside these 4: SpotlightSearchTool() for local
+// RAG, plus OCRTool() / BarcodeReaderTool() for reading a photo. All three
+// are gone as of 21 Nov 2026: the OCR tools do not exist in this Xcode 27
+// SDK ("Cannot find in scope"), and SpotlightSearchTool made every action
+// request fail with "Resource (Local Model Asset) unavailable" — its asset
+// is not on this device/simulator. They are NOT in this file because Apple
+// provides them; the profile documents each removal.
 
 struct LookupFirstAidTool: Tool {
     let name = "lookupFirstAid"

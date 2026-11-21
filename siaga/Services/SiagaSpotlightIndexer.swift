@@ -2,10 +2,18 @@ import CoreSpotlight
 import Foundation
 
 // iOS 27 — Local RAG with Core Spotlight (WWDC26 session 246).
-// App records become CSSearchableItems once, then SpotlightSearchTool lets
-// the model search them locally — no server, no embedding store, no network.
-// Architecture: FirstAidCase / IncidentHistory -> CSSearchableItem ->
-// CSSearchableIndex -> SpotlightSearchTool -> LanguageModelSession.
+// App records become CSSearchableItems once — no server, no embedding
+// store, no network. Architecture: FirstAidCase / IncidentHistory ->
+// CSSearchableItem -> CSSearchableIndex -> SpotlightSearchTool ->
+// LanguageModelSession.
+//
+// NOTE (21 Nov 2026, audit): the last link is currently broken —
+// SpotlightSearchTool was removed from the action profile because its
+// Local Model Asset is unavailable on this device/simulator, so nothing
+// in the app reads the index today. The index is kept because the items
+// are still searchable in system Spotlight, and the tool returns if its
+// asset becomes available. Do not delete the indexer as "dead code" —
+// it writes a live system index, it just has no in-app reader right now.
 //
 // What is indexed (on-device only):
 // - Every first-aid case (title + steps as contentDescription), so the model
