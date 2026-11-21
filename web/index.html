@@ -63,5 +63,5 @@ if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: re
   observer.observe(document.querySelector('.tools'));
 }
 
-document.querySelector(".theme").addEventListener("click",()=>{const r=document.documentElement,cur=r.dataset.theme||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"),next=cur==="dark"?"light":"dark";r.dataset.theme=next;try{localStorage.setItem("siaga-theme",next)}catch(e){}});
+document.querySelector("button.theme").addEventListener("click",()=>{const r=document.documentElement,cur=r.dataset.theme||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"),next=cur==="dark"?"light":"dark";r.dataset.theme=next;try{localStorage.setItem("siaga-theme",next)}catch(e){}});
 </script></body></html>
